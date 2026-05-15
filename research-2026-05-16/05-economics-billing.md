@@ -1,6 +1,6 @@
 # Economics of an Indian CA Firm — Billing, Cost, Margin & WTP Research
 
-**Prepared for:** Jaivardhan Rao
+**Prepared for:** the founder
 **Date:** 16 May 2026
 **Scope:** What Indian CA firms charge, what they pay, what's profitable, what isn't — sized for software willingness-to-pay (WTP).
 

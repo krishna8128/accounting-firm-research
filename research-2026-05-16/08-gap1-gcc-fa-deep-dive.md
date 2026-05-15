@@ -1,5 +1,5 @@
 # Gap-1 Deep Dive: GCC F&A as a Wedge for an AI Accounting Product
-## Author note for Jaivardhan, May 2026
+## Author note for the founder, May 2026
 
 **Bottom line up front:** GCC F&A is the largest concentrated F&A buyer pool in India by an order of magnitude (1,700-1,800 GCCs, 79% with finance functions, average ~800 employees per center, BFSI overweight in compliance pain). It is also the *slowest* segment to close. Below is the unvarnished operational picture, the buyer dynamics, the existing tooling moat, three wedges, and a commit/pass call.
 

@@ -1,6 +1,6 @@
 # Gap 6 — Buyer Journey Map: Indian Mid-Tier CA Firm (3-50 partner segment)
 
-**Prepared for:** Jaivardhan Rao
+**Prepared for:** the founder
 **Date:** 2026-05-16
 **Scope:** Operationalize the warm-CA-network asset into a 6-month sales motion for the ~500 mid-tier Indian CA firms (459 with >10 partners + 13 with >50 partners). Solo CA segment is treated as parallel beta channel, not main ICP.
 

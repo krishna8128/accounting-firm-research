@@ -1,6 +1,6 @@
 # Gap 10 — Customer Discovery Interview Kit for Indian CA Firm Partners
 
-**Prepared for:** Jaivardhan Rao (founder; no accounting background, warm CA network)
+**Prepared for:** the founder (no accounting background, warm CA network)
 **Date compiled:** 2026-05-16
 **Purpose:** Run 30 customer discovery interviews across 6 weeks with Indian CA partners to identify the sharpest wedge among 5 candidate verbs without contaminating signal by pitching.
 **Methodological backbone:** "The Mom Test" (Rob Fitzpatrick), "Talking to Humans" (Giff Constable), Y Combinator customer-discovery canon, behavioral signals over stated intent.
