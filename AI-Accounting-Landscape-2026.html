@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Accounting Landscape — Competitive &amp; Adjacent Map · May 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --c-bk: #3b82f6;   /* bookkeeping / accounting firms */
+    --c-audit: #a855f7; /* audit & SOX */
+    --c-tax: #10b981;   /* tax */
+    --c-spend: #f59e0b; /* AP/AR/spend */
+    --c-close: #ef4444; /* close & FP&A */
+    --c-prac: #06b6d4;  /* practice mgmt */
+    --c-inc: #94a3b8;   /* incumbents */
+  }
+  html, body { background: #08090b; color: #e5e7eb; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; }
+  h2 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.015em; margin: 3.5rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid #27272a; }
+  h3 { font-size: 1.25rem; font-weight: 600; margin: 2rem 0 0.75rem; letter-spacing: -0.01em; }
+  h4 { font-size: 1rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #cbd5e1; }
+  p { line-height: 1.6; margin: 0.6rem 0; color: #d1d5db; }
+  a { color: #93c5fd; text-decoration: none; border-bottom: 1px dotted #334155; }
+  a:hover { color: #bfdbfe; border-bottom-color: #93c5fd; }
+  .container-x { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .stat-num { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .stat-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.4rem; }
+  .stat-card { background: #0f1116; border: 1px solid #1f2937; border-radius: 0.65rem; padding: 1rem 1.1rem; }
+  .chip { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.02em; vertical-align: middle; }
+  .chip-blue { background: rgba(59,130,246,0.18); color: #93c5fd; }
+  .chip-purple { background: rgba(168,85,247,0.18); color: #d8b4fe; }
+  .chip-emerald { background: rgba(16,185,129,0.18); color: #6ee7b7; }
+  .chip-amber { background: rgba(245,158,11,0.18); color: #fcd34d; }
+  .chip-rose { background: rgba(239,68,68,0.18); color: #fca5a5; }
+  .chip-cyan { background: rgba(6,182,212,0.18); color: #67e8f9; }
+  .chip-slate { background: rgba(148,163,184,0.18); color: #cbd5e1; }
+  .status-active { color: #4ade80; font-weight: 600; }
+  .status-hot { color: #fbbf24; font-weight: 600; }
+  .status-distress { color: #fb923c; font-weight: 600; }
+  .status-acquired { color: #c084fc; font-weight: 600; }
+  .status-dead { color: #f87171; font-weight: 600; }
+  .seg-card { border-left: 3px solid var(--c, #475569); padding-left: 1rem; background: linear-gradient(90deg, rgba(255,255,255,0.018), transparent); padding-top: 0.4rem; padding-bottom: 0.4rem; border-radius: 0 0.4rem 0.4rem 0; margin-bottom: 1.5rem; }
+  table.data { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.data th { background: #111418; color: #cbd5e1; padding: 8px 10px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #1f2937; }
+  table.data td { padding: 9px 10px; border-bottom: 1px solid #18181b; vertical-align: top; line-height: 1.45; }
+  table.data tr:hover td { background: rgba(255,255,255,0.02); }
+  table.data td.co { font-weight: 600; color: #f1f5f9; white-space: nowrap; }
+  table.data td.muted { color: #94a3b8; }
+  .callout { padding: 0.9rem 1.1rem; border-radius: 0.5rem; background: #0f1116; border-left: 3px solid #60a5fa; margin: 1.25rem 0; font-size: 13.5px; }
+  .callout.warn { border-color: #f59e0b; background: rgba(245,158,11,0.06); }
+  .callout.crit { border-color: #ef4444; background: rgba(239,68,68,0.06); }
+  .callout.good { border-color: #10b981; background: rgba(16,185,129,0.06); }
+  .callout strong { color: #f1f5f9; }
+  .nav-strip { position: sticky; top: 0; z-index: 30; background: rgba(8,9,11,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid #1f2937; padding: 0.65rem 0; }
+  .nav-strip a { display: inline-block; padding: 0.3rem 0.7rem; margin-right: 0.25rem; font-size: 12.5px; color: #cbd5e1; border: 1px solid #1f2937; border-radius: 0.4rem; background: #0f1116; transition: all 0.15s; border-bottom: 1px solid #1f2937; }
+  .nav-strip a:hover { background: #1f2937; color: #fff; border-color: #334155; }
+  .pill-funding { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; background: #161a20; padding: 1px 6px; border-radius: 4px; font-size: 11.5px; color: #fcd34d; }
+  .pill-arr { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; background: #112a17; padding: 1px 6px; border-radius: 4px; font-size: 11.5px; color: #6ee7b7; }
+  .pill-val { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; background: #1c1530; padding: 1px 6px; border-radius: 4px; font-size: 11.5px; color: #d8b4fe; }
+  details { background: #0f1116; border: 1px solid #1f2937; border-radius: 0.5rem; padding: 0.75rem 1rem; margin: 0.75rem 0; }
+  details summary { cursor: pointer; font-weight: 600; color: #e5e7eb; font-size: 13.5px; }
+  details[open] summary { margin-bottom: 0.6rem; padding-bottom: 0.5rem; border-bottom: 1px solid #1f2937; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; }
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.4rem; }
+    table.data { font-size: 11.5px; }
+    table.data th, table.data td { padding: 6px 6px; }
+  }
+  .hero-grad { background: radial-gradient(ellipse at top left, rgba(59,130,246,0.12), transparent 50%), radial-gradient(ellipse at bottom right, rgba(168,85,247,0.10), transparent 50%); }
+  .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-right: 6px; }
+  .footnote { font-size: 11.5px; color: #94a3b8; margin-top: 0.4rem; }
+  .number-callout { font-family: ui-monospace, monospace; color: #fcd34d; font-weight: 700; }
+  ul { padding-left: 1.25rem; line-height: 1.6; color: #d1d5db; }
+  li { margin: 0.3rem 0; }
+  .ms-list li { margin: 0.55rem 0; }
+</style>
+</head>
+<body class="hero-grad">
+
+<header class="container-x pt-12 pb-6">
+  <div class="text-xs text-slate-400 tracking-widest uppercase mb-3">Competitive &amp; Adjacent Landscape · Compiled May 14, 2026</div>
+  <h1>AI Accounting Landscape</h1>
+  <p class="mt-3 text-lg text-slate-400 max-w-3xl">Where the money is, where the bodies are buried, where the whitespace lives. 70+ companies across 7 segments, mapped for a founder building an AI-native accounting firm/product.</p>
+</header>
+
+<nav class="nav-strip">
+  <div class="container-x">
+    <a href="#tldr">TL;DR</a>
+    <a href="#why-now">Why Now</a>
+    <a href="#map">Landscape Map</a>
+    <a href="#firms">AI Firms</a>
+    <a href="#audit">Audit/SOX</a>
+    <a href="#tax">Tax</a>
+    <a href="#spend">Spend/AP/AR</a>
+    <a href="#close">Close/FP&amp;A</a>
+    <a href="#practice">Practice Mgmt</a>
+    <a href="#incumbents">Incumbents</a>
+    <a href="#mna">M&amp;A Timeline</a>
+    <a href="#positioning">Positioning</a>
+    <a href="#whitespace">Whitespace</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#sources">Sources</a>
+  </div>
+</nav>
+
+<main class="container-x py-8">
+
+<!-- ====== TL;DR ====== -->
+<section id="tldr">
+<h2>TL;DR — Five Things Worth Knowing</h2>
+
+<div class="callout">
+<strong>1. Capital is funding platforms-into-firms, not firms themselves.</strong> Basis hit a <span class="pill-val">$1.15B</span> valuation in Feb 2026 selling AI into accounting firms. Fieldguide raised <span class="pill-funding">$75M Series C</span> at <span class="pill-val">$700M</span> selling audit tooling. Aiwyn raised <span class="pill-funding">$113M Series B</span> from KKR &amp; Bessemer for practice-management/AI tax. Meanwhile Bench shut down in Dec 2024 with 12,000 customers stranded, and Botkeeper went under in Feb 2026 after $90M raised. The "AI bookkeeping firm" graveyard is real.
+</div>
+
+<div class="callout warn">
+<strong>2. The incumbents are no longer asleep.</strong> Intuit Assist became the default for all US QBO customers by Sept 2025. Xero's "Just Ask Xero" shipped Sep 2025 after the $70M Syft acquisition. Sage Copilot has 40,000+ early adopters. CCH Axcess Expert AI rolled embedded agents across the entire stack in Oct 2025. The window for "we have AI, they don't" closes in 12–18 months.
+</div>
+
+<div class="callout good">
+<strong>3. Three structural tailwinds are not hype — they're demography.</strong> ~300K accountants have exited the profession since 2020 (BLS). Only 1.4% of college students chose accounting in 2023 (vs. ~4% a decade ago). 11 states have already passed alternative-pathway CPA licensure laws, with 14 more pending. Something has to fill the gap.
+</div>
+
+<div class="callout">
+<strong>4. PE is the silent giant.</strong> 170 PE accounting-firm transactions in 2025 — more than 2× the prior year. PE now holds stakes in 10 of the top 30 US CPA firms. Six dominant rollup platforms: Ascend, Ryan, Crete, Aprio, Sorren, Doeren Mayhew. <em>If you build a firm, your exit is more likely PE than VC.</em>
+</div>
+
+<div class="callout crit">
+<strong>5. The "AI Accounting Firm for Startups" wedge is dangerously crowded.</strong> Pilot, Zeni, Truewind, Mesh, Afternoon, Finta, Puzzle, Balance, Minerva, Cranston all chase the same VC-backed-startup ICP. Most are sub-$1M ARR with no clear differentiation beyond "AI + CPA review." Pilot itself is at ~$27M revenue on $222M raised — a slow grind, not a rocket. If this is your wedge, you're showing up to a knife fight with 12 other knives.
+</div>
+</section>
+
+<!-- ====== Key Stats Grid ====== -->
+<section>
+<h2 id="key-stats">Twelve Key Numbers</h2>
+<div class="grid-4">
+  <div class="stat-card"><div class="stat-num">$76.5B</div><div class="stat-label">US Payroll &amp; Bookkeeping Services market, 2026 (IBISWorld)</div></div>
+  <div class="stat-card"><div class="stat-num">~$187B</div><div class="stat-label">North America accounting services (broad, incl. audit/tax/CAS) 2025</div></div>
+  <div class="stat-card"><div class="stat-num">17%</div><div class="stat-label">Median CAS practice growth 2023 (AICPA/CPA.com benchmark)</div></div>
+  <div class="stat-card"><div class="stat-num">~300K</div><div class="stat-label">Accountants who've exited the US workforce since 2020 (BLS)</div></div>
+  <div class="stat-card"><div class="stat-num">1.4%</div><div class="stat-label">Share of college students choosing accounting in 2023 (vs ~4% a decade ago)</div></div>
+  <div class="stat-card"><div class="stat-num">170</div><div class="stat-label">Private-equity accounting-firm transactions in 2025 (Cornerstone)</div></div>
+  <div class="stat-card"><div class="stat-num">56.5%</div><div class="stat-label">Share of global accounting service delivery via India/Philippines 2025</div></div>
+  <div class="stat-card"><div class="stat-num">$40B+</div><div class="stat-label">Ramp valuation in talks May 2026 (after $32B Nov 2025)</div></div>
+  <div class="stat-card"><div class="stat-num">$5.15B</div><div class="stat-label">Capital One acquisition price for Brex (Jan 2026, &lt;50% of '22 peak)</div></div>
+  <div class="stat-card"><div class="stat-num">$3B+</div><div class="stat-label">Hg's take-private of AuditBoard (May 2024)</div></div>
+  <div class="stat-card"><div class="stat-num">21%</div><div class="stat-label">Enterprise GenAI adoption in tax/audit/accounting 2025 (vs 8% in 2024) — Thomson Reuters</div></div>
+  <div class="stat-card"><div class="stat-num">85%</div><div class="stat-label">Accounting professionals "excited or intrigued by AI" (Karbon State of AI 2025)</div></div>
+</div>
+<p class="footnote">Primary sources cited inline. Where a number is an analyst estimate, marked accordingly. Disagreements between sources flagged in the <a href="#sources">Sources</a> section.</p>
+</section>
+
+<!-- ====== Why Now ====== -->
+<section id="why-now">
+<h2>Why Now — Four Forces Compounding</h2>
+<div class="grid-2">
+  <div>
+    <h4>1. The supply-side collapse is demographic, not cyclical.</h4>
+    <p>BLS shows ~300K accountants gone since 2020 (~17% of the workforce). Only 1.4% of college students chose accounting in 2023. CPA Exam candidates fell from 72,271 (2021) to 67,335 (2022) — the lowest since 2006. BLS still projects ~136,400 annual openings through 2034. Even if AI doesn't fully work, <em>something</em> must fill the gap.</p>
+    <h4 class="mt-5">2. The 150-hour rule is finally bending.</h4>
+    <p>NASBA + AICPA updated the Uniform Accountancy Act in 2025 to add a 120-hour bachelor's + 2 years experience pathway. Ohio first to sign (HB 238, effective Jan 2026). By May 2025, 11 states had passed alternative pathways; 14 more pending. A bigger licensable pool is coming, but slowly.</p>
+  </div>
+  <div>
+    <h4>3. PE is consolidating the demand side.</h4>
+    <p>170 PE accounting-firm deals in 2025 — 2× prior year. PE now in 10 of top 30 US CPA firms. Ascend alone made 40 acquisitions since Jan 2023 (18 in 2025), reaching $590M net revenue. Carr Riggs &amp; Ingram took Centerbridge/Bessemer money and started rolling up. <strong>The buyer for an AI-native firm is increasingly a PE platform, not a strategic.</strong></p>
+    <h4 class="mt-5">4. Model capability hit the agentic inflection.</h4>
+    <p>Sequoia's Julien Bek: "$1 of software → $6 of services to make it work." Foundation Capital, Bessemer, and a16z all published the "service as software" thesis in 2024–25. Bessemer pegs the vertical AI opportunity at <strong>10× vertical SaaS</strong> — addressing the 13% of US GDP spent on business labor vs. the 1% on IT. Numeric, Basis, Fieldguide, Ramp's agents all materially shipped in this window.</p>
+  </div>
+</div>
+</section>
+
+<!-- ====== Landscape Map (SVG) ====== -->
+<section id="map">
+<h2>The Landscape Map — 7 Segments</h2>
+<p>The AI accounting universe organizes into seven clusters by what they sell and to whom. The arrows show how money and customers are flowing between them.</p>
+
+<div class="bg-zinc-950/50 border border-zinc-800 rounded-xl p-4 my-6 overflow-x-auto">
+<svg viewBox="0 0 1100 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;min-width:760px;font-family:inherit">
+  <defs>
+    <marker id="arrowEnd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <linearGradient id="gradFirm" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="gradAudit" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="gradTax" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="gradSpend" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="gradClose" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#ef4444" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="gradPrac" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="gradInc" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.06"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Title and legend -->
+  <text x="20" y="28" fill="#cbd5e1" font-size="13" font-weight="600">Segment Map · 70+ companies</text>
+  <text x="20" y="46" fill="#94a3b8" font-size="11">Color = segment · Size = approx. funding scale · Bold border = AI-native challenger</text>
+
+  <!-- AI-Native Accounting Firms (top-left, big) -->
+  <rect x="30" y="70" width="320" height="180" rx="10" fill="url(#gradFirm)" stroke="#3b82f6" stroke-opacity="0.55"/>
+  <text x="50" y="95" fill="#93c5fd" font-size="13" font-weight="700">AI-NATIVE ACCOUNTING FIRMS · SMB CAS</text>
+  <text x="50" y="113" fill="#93c5fd" font-size="11" font-weight="500" opacity="0.85">Service-as-software · book-keep + tax + advisory</text>
+  <g font-size="11.5" fill="#e2e8f0">
+    <text x="50" y="138">Pilot <tspan fill="#fcd34d">($222M · ~$27M rev)</tspan></text>
+    <text x="50" y="156">Zeni · Truewind <tspan fill="#fcd34d">($17M)</tspan> · Digits <tspan fill="#fcd34d">($100M)</tspan></text>
+    <text x="50" y="174">Decimal · Mesh · Balance · Afternoon</text>
+    <text x="50" y="192">Cranston · Minerva · Finta · Puzzle <tspan fill="#fcd34d">($50M)</tspan></text>
+    <text x="50" y="210" fill="#f87171">✕ Bench (shutdown Dec 2024 · 12K customers)</text>
+    <text x="50" y="228" fill="#f87171">✕ Botkeeper (shutdown Feb 2026 · $90M raised)</text>
+  </g>
+
+  <!-- Audit & SOX (top-right) -->
+  <rect x="380" y="70" width="300" height="180" rx="10" fill="url(#gradAudit)" stroke="#a855f7" stroke-opacity="0.55"/>
+  <text x="400" y="95" fill="#d8b4fe" font-size="13" font-weight="700">AUDIT &amp; SOX AUTOMATION</text>
+  <text x="400" y="113" fill="#d8b4fe" font-size="11" font-weight="500" opacity="0.85">Internal audit · evidence · workpapers</text>
+  <g font-size="11.5" fill="#e2e8f0">
+    <text x="400" y="138">Petual <tspan fill="#fcd34d">($20M · a16z)</tspan> · Arden (YC P26)</text>
+    <text x="400" y="156">Andera · Oxus · Midship <tspan fill="#fcd34d">($4.2M)</tspan></text>
+    <text x="400" y="174">FloQast <tspan fill="#fcd34d">($1.6B · $200M ARR)</tspan></text>
+    <text x="400" y="192">DataSnipper <tspan fill="#fcd34d">($1B val)</tspan> · MindBridge</text>
+    <text x="400" y="210">Workiva <tspan fill="#fcd34d">(public · $884M rev)</tspan></text>
+    <text x="400" y="228" fill="#c084fc">AuditBoard → Hg $3B+ take-private</text>
+  </g>
+
+  <!-- Tax (top far right) -->
+  <rect x="710" y="70" width="360" height="180" rx="10" fill="url(#gradTax)" stroke="#10b981" stroke-opacity="0.55"/>
+  <text x="730" y="95" fill="#6ee7b7" font-size="13" font-weight="700">AI TAX PREPARATION</text>
+  <text x="730" y="113" fill="#6ee7b7" font-size="11" font-weight="500" opacity="0.85">Returns prep · embedded · CPA tooling · vertical SMB</text>
+  <g font-size="11.5" fill="#e2e8f0">
+    <text x="730" y="138">Black Ore <tspan fill="#fcd34d">($60M · 40% of top 20 firms)</tspan></text>
+    <text x="730" y="156">April <tspan fill="#fcd34d">($78M)</tspan> · TaxGPT <tspan fill="#fcd34d">($4.6M)</tspan></text>
+    <text x="730" y="174">Filed <tspan fill="#fcd34d">($17M)</tspan> · Juno <tspan fill="#fcd34d">($12M)</tspan></text>
+    <text x="730" y="192">Lettuce <tspan fill="#fcd34d">($52M)</tspan> · Collective · Heard</text>
+    <text x="730" y="210" fill="#c084fc">Materia → Thomson Reuters (Oct '24)</text>
+    <text x="730" y="228" fill="#c084fc">Column Tax → Aiwyn (early 2026)</text>
+  </g>
+
+  <!-- Spend/AP/AR (mid-left, large) -->
+  <rect x="30" y="270" width="320" height="160" rx="10" fill="url(#gradSpend)" stroke="#f59e0b" stroke-opacity="0.55"/>
+  <text x="50" y="295" fill="#fcd34d" font-size="13" font-weight="700">SPEND · AP · AR · EXPENSE</text>
+  <text x="50" y="313" fill="#fcd34d" font-size="11" font-weight="500" opacity="0.85">Cards · payables · agents</text>
+  <g font-size="11.5" fill="#e2e8f0">
+    <text x="50" y="338">Ramp <tspan fill="#fcd34d">($40B val · $1B rev)</tspan></text>
+    <text x="50" y="356">Mercury <tspan fill="#fcd34d">($3.5B · $650M ARR)</tspan></text>
+    <text x="50" y="374">Bill.com <tspan fill="#fcd34d">(public · -30% staff)</tspan></text>
+    <text x="50" y="392">Stampli · Tipalti · AppZen · HighRadius</text>
+    <text x="50" y="410" fill="#c084fc">Brex → Capital One $5.15B · Jan 2026</text>
+  </g>
+
+  <!-- Close & FP&A (mid-center) -->
+  <rect x="380" y="270" width="300" height="160" rx="10" fill="url(#gradClose)" stroke="#ef4444" stroke-opacity="0.55"/>
+  <text x="400" y="295" fill="#fca5a5" font-size="13" font-weight="700">CLOSE &amp; FP&amp;A AUTOMATION</text>
+  <text x="400" y="313" fill="#fca5a5" font-size="11" font-weight="500" opacity="0.85">Reconciliation · planning · agents</text>
+  <g font-size="11.5" fill="#e2e8f0">
+    <text x="400" y="338">Numeric <tspan fill="#fcd34d">($89M · IVP-led)</tspan></text>
+    <text x="400" y="356">FloQast <tspan fill="#fcd34d">($1.6B · $200M ARR)</tspan></text>
+    <text x="400" y="374">BlackLine (NASDAQ:BL · $700M rev)</text>
+    <text x="400" y="392">Aleph · Cube · Datarails · Drivetrain</text>
+    <text x="400" y="410" fill="#c084fc">Mosaic → HiBob (Feb '25, sub-unicorn)</text>
+  </g>
+
+  <!-- Practice Management (mid-right) -->
+  <rect x="710" y="270" width="360" height="160" rx="10" fill="url(#gradPrac)" stroke="#06b6d4" stroke-opacity="0.55"/>
+  <text x="730" y="295" fill="#67e8f9" font-size="13" font-weight="700">PRACTICE MGMT · FIRM TOOLS</text>
+  <text x="730" y="313" fill="#67e8f9" font-size="11" font-weight="500" opacity="0.85">Picks-and-shovels for firms</text>
+  <g font-size="11.5" fill="#e2e8f0">
+    <text x="730" y="338">Aiwyn <tspan fill="#fcd34d">($240M · 840 firms)</tspan></text>
+    <text x="730" y="356">Fieldguide <tspan fill="#fcd34d">($125M · $700M val)</tspan></text>
+    <text x="730" y="374">Karbon <tspan fill="#fcd34d">($100M)</tspan> · Canopy <tspan fill="#fcd34d">($70M C)</tspan></text>
+    <text x="730" y="392">TaxDome · Ignition <tspan fill="#fcd34d">($133M)</tspan></text>
+    <text x="730" y="410">Anchor · Liscio · Suralink · Caseware</text>
+  </g>
+
+  <!-- Incumbents (bottom span) -->
+  <rect x="30" y="450" width="1040" height="140" rx="10" fill="url(#gradInc)" stroke="#94a3b8" stroke-opacity="0.55"/>
+  <text x="50" y="475" fill="#cbd5e1" font-size="13" font-weight="700">INCUMBENTS — SHIPPING AI FAST</text>
+  <text x="50" y="493" fill="#cbd5e1" font-size="11" font-weight="500" opacity="0.85">Closing the gap from above</text>
+  <g font-size="11.5" fill="#e2e8f0">
+    <text x="50" y="518">Intuit Assist <tspan fill="#fcd34d">(default for all US QBO since Sep '25)</tspan></text>
+    <text x="50" y="538">Xero JAX <tspan fill="#fcd34d">(Sep '25 · Syft $70M acq)</tspan></text>
+    <text x="50" y="558">Sage Copilot <tspan fill="#fcd34d">(40K+ adopters)</tspan></text>
+    <text x="50" y="578">CCH Axcess Expert AI <tspan fill="#fcd34d">(Oct '25)</tspan></text>
+
+    <text x="400" y="518">NetSuite Next · Workday Illuminate</text>
+    <text x="400" y="538">MS Copilot for Finance GA (Oct '25)</text>
+    <text x="400" y="558">SAP Joule + 14 agents (Oct '25)</text>
+    <text x="400" y="578">Thomson Reuters CoCounsel (1M+ users)</text>
+
+    <text x="730" y="518">Deloitte Zora AI (Mar '25 · NVIDIA)</text>
+    <text x="730" y="538">PwC agent OS (250+ agents)</text>
+    <text x="730" y="558">EY.ai + EYQ ($1B / 4-yr investment)</text>
+    <text x="730" y="578">KPMG Clara + Workbench (Microsoft)</text>
+  </g>
+
+  <!-- Flow arrows: money flows -->
+  <g stroke="#475569" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#arrowEnd)" opacity="0.6">
+    <!-- Incumbents arrow up to firms (Intuit/Xero closing in on SMB CAS) -->
+    <path d="M 200 450 Q 200 350 200 250"/>
+    <text x="208" y="360" fill="#94a3b8" font-size="10">Closing the gap</text>
+    <!-- Practice mgmt to firms (firms buy tools) -->
+    <path d="M 730 350 Q 540 320 360 280"/>
+    <!-- Practice mgmt to audit (Aiwyn etc.) -->
+    <path d="M 730 280 Q 690 240 660 220"/>
+  </g>
+</svg>
+</div>
+
+<div class="callout">
+<strong>How to read this map:</strong> The seven colored regions are the segments. Yellow text = funding/valuation signals. Purple text = exits/acquisitions. Red ✕ = dead companies. The dashed arrows show competitive/M&amp;A flows — most notably <em>practice-mgmt platforms (Aiwyn) extending into Audit and Tax via acquisition</em>, and <em>incumbents (Intuit, Xero) closing in on AI-native bookkeeping from above</em>.
+</div>
+</section>
+
+<!-- ====== Segment 1: AI Firms ====== -->
+<section id="firms">
+<h2>① AI-Native Accounting Firms (SMB CAS)</h2>
+<div class="seg-card" style="--c: var(--c-bk)">
+<p><strong>The wedge:</strong> Replace a $120K/yr CPA + QBO with an "AI does the work, humans review" service. Charge $300–$2,500/mo. Win on time-to-close and price-vs-quality, not on software alone. Bench's collapse is the cautionary tale; Basis at $1.15B is the platform-not-firm pivot most are scrambling toward.</p>
+</div>
+
+<table class="data">
+<thead><tr><th>Company</th><th>ICP</th><th>Funding</th><th>Traction / ARR</th><th>Status</th><th>Recent Move</th></tr></thead>
+<tbody>
+<tr><td class="co">Pilot.com</td><td>VC-backed startups (seed–Series B+)</td><td><span class="pill-funding">$222M</span> · $1.2B val ('22)</td><td>~$27M rev '24; ~1,000 customers; ~$43M ARR est. (Sacra)</td><td class="status-active">Active · slow grind</td><td>No new round since '22; pushing up-market</td></tr>
+<tr><td class="co">Bench Accounting</td><td>Main-street SMBs, e-comm, freelancers</td><td>$100M+ raised over 12 yrs</td><td>~12,000 customers at shutdown</td><td class="status-dead">Shutdown Dec 27, 2024</td><td>Acquired by <strong>Employer.com</strong> 3 days later</td></tr>
+<tr><td class="co">Zeni.ai</td><td>Pre-rev → growth startups</td><td><span class="pill-funding">$47.5M</span></td><td>Not disclosed; quiet 2025–26</td><td class="status-distress">Active · watchlist</td><td>No new round in 18 months</td></tr>
+<tr><td class="co">Truewind (YC W23)</td><td>Startups + mid-market accounting firms (EisnerAmper, Frank Rimerman)</td><td><span class="pill-funding">$17.5M</span> · Series A $13M Jan '25</td><td>100+ customers; multiple top-50 firms</td><td class="status-hot">Active · momentum</td><td>Series A led by Rho Capital + Thomson Reuters Ventures</td></tr>
+<tr><td class="co">Digits</td><td>Startup founders + firms (Hiline, Armanino partners)</td><td><span class="pill-funding">$100M</span> · $565M val</td><td>Several thousand founder users</td><td class="status-active">Active</td><td>Mar '25: launched "Autonomous General Ledger" (AGL); Xero co-founder Craig Walker joined</td></tr>
+<tr><td class="co">Decimal</td><td>Main-street SMBs</td><td><span class="pill-funding">$17.6M</span></td><td>Tripled ARR '21–'22; ~69 employees</td><td class="status-active">Active</td><td>Reportedly raising Series A late 2024</td></tr>
+<tr><td class="co">Cranston AI (YC F25)</td><td>Startups &amp; SMBs</td><td>YC standard (~$500K)</td><td><span class="pill-arr">$21.5K MRR</span> in first 60 days; ~12 customers</td><td class="status-hot">Active · just launched</td><td>"Full-stack AI accounting firm"</td></tr>
+<tr><td class="co">Minerva (YC X25)</td><td>Firms + SMBs</td><td>YC + angels (DoorDash, Affirm, Bill.com angels; Amino, Goodwater)</td><td>Not disclosed; 5 employees</td><td class="status-active">Just launched</td><td>Agentic: auto-chases receipts, files R&amp;D credit</td></tr>
+<tr><td class="co">Bluebook (YC F24)</td><td>Nordic CAS firms</td><td><span class="pill-funding">$3M pre-seed</span> EQT Ventures (Feb '25)</td><td>30 leading Nordic firms (Baker Tilly, Klara)</td><td class="status-hot">Active · EU lead</td><td>EU-focused; clean whitespace play</td></tr>
+<tr><td class="co">Mesh-2 (YC W25)</td><td>VC-backed startups</td><td>~<span class="pill-funding">$2M seed</span> + YC</td><td>Not disclosed</td><td class="status-active">Active</td><td>Relaunched 2025 around month-end accruals</td></tr>
+<tr><td class="co">Balance (YC W26)</td><td>SMBs across tech, e-comm, services</td><td>YC only disclosed</td><td>Just incorporated Jan 2026</td><td class="status-active">Just launched</td><td>AI agent "Bea" on Slack/WhatsApp/email</td></tr>
+<tr><td class="co">Afternoon.co (YC F24)</td><td>YC startups + e-comm brands</td><td><span class="pill-funding">$2M seed</span> (Jul '25)</td><td>Q1 sales tax in 12 states; 4-person team</td><td class="status-active">Active</td><td>Founders ex-Square/Gusto/Brex/Notion</td></tr>
+<tr><td class="co">Finta (YC W23)</td><td>Early-stage startup founders</td><td><span class="pill-funding">$2M</span> YC + angels (Mercury, Brex, Ramp founders)</td><td>10%+ MoM organic growth; "hundreds of paying customers"</td><td class="status-active">Bootstrappy growth</td><td>Replaces QBO + bookkeeper</td></tr>
+<tr><td class="co">Puzzle.io</td><td>VC-backed startups + firms (Burkland partner)</td><td><span class="pill-funding">$50M</span> · $30M Series A S32 + XYZ</td><td>15% MoM customer growth</td><td class="status-hot">Active</td><td>Software-only; doesn't compete with firms it sells to</td></tr>
+<tr><td class="co">inDinero</td><td>SMBs</td><td><span class="pill-funding">$12.8M</span></td><td>~300 employees; revenue not disclosed</td><td class="status-active">Active · legacy</td><td>Quieter than peers</td></tr>
+<tr><td class="co">Botkeeper</td><td>Accounting firms</td><td>~<span class="pill-funding">$90M</span> (incl. Gradient)</td><td>11 years operating; "perfect storm" of macro shifts + client churn</td><td class="status-dead">Shutdown Feb 7-8, 2026</td><td>Xendoo acquired the Infinite platform (terms undisclosed)</td></tr>
+<tr><td class="co">Basis</td><td>Top-25 US accounting firms</td><td><span class="pill-funding">$100M Series B</span> (Feb '26) Accel + GV · <span class="pill-val">$1.15B val</span></td><td>~30% of Top 25 US firms use it; agents for tax/audit/advisory</td><td class="status-hot">⭐ Hottest in segment</td><td>Most expensive AI-accounting round to date</td></tr>
+<tr><td class="co">Vic.ai</td><td>Mid-market + enterprise finance teams</td><td><span class="pill-funding">$112M</span> · $52M Series C (Dec '22)</td><td>10,000+ customers; 500M+ invoices processed at 99% accuracy</td><td class="status-active">Active · expanding</td><td>Now adding bill pay, corporate cards, PO match</td></tr>
+<tr><td class="co">Tabs.com</td><td>B2B SaaS finance teams (revenue ops, not bookkeeping)</td><td><span class="pill-funding">$91M</span> · $55M Series B (Sep '25) Lightspeed</td><td>200+ customers (Cursor, Statsig); 5× ARR growth; $1B+ invoice vol</td><td class="status-hot">Active · breakout</td><td>Adjacent (rev-rec/billing), not direct bookkeeping competitor</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<strong>Crowding signal:</strong> 12 of the 18 names above target "VC-backed startups." Pilot still dominates by revenue but isn't growing fast. The YC P26/F25 batch alone added 3 more (Balance, Minerva, Cranston). <em>Picking this ICP without a unique angle (vertical, geography, channel) is the most common founder mistake in this segment.</em>
+</div>
+</section>
+
+<!-- ====== Segment 2: Audit & SOX ====== -->
+<section id="audit">
+<h2>② Audit &amp; SOX Compliance Automation</h2>
+<div class="seg-card" style="--c: var(--c-audit)">
+<p><strong>The wedge:</strong> Replace months of spreadsheet evidence-gathering at public companies with AI agents that pull from Workday/Okta/NetSuite, test controls full-population, and emit auditor-ready workpapers. SOX is a ~$2M/yr line item per public company with &gt;70% labor cost. The space went from 0 to 5+ funded startups in 12 months.</p>
+</div>
+
+<table class="data">
+<thead><tr><th>Company</th><th>ICP</th><th>Funding</th><th>Traction</th><th>Status</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td class="co">Petual</td><td>S&amp;P 500 / Nasdaq 100 enterprises</td><td><span class="pill-funding">$20M</span> Apr '26 · a16z + First Round + Cowboy + Elad Gil</td><td>Customers report 68–80% efficiency gains; S&amp;P 500 / Nasdaq 100 logos</td><td class="status-hot">⭐ Best-funded</td><td>Founders: ex-Retool, ex-Lyft. (One source disputes funding — see Sources)</td></tr>
+<tr><td class="co">Arden (YC P26)</td><td>Internal audit / SOX teams (public + pre-IPO)</td><td>YC standard (~$500K)</td><td>2-person team; early-stage</td><td class="status-active">Just launched</td><td>Founders Aryaman Khanna (ex-Databricks AI) + David Lomelin (MIT), both 19</td></tr>
+<tr><td class="co">Andera</td><td>Public-co internal audit + accounting firms</td><td>PearX S24 (amount not disclosed)</td><td>Early</td><td class="status-active">Active</td><td>PearX cohort grad</td></tr>
+<tr><td class="co">Oxus (YC W26)</td><td>Pre-IPO + public companies</td><td>YC standard</td><td>Working with "leading payroll providers" + public biotech</td><td class="status-active">Just launched (Apr '26)</td><td>Founders ex-MIT (Janet Liu, Melinda Liu, Christine Watts)</td></tr>
+<tr><td class="co">Midship</td><td>Internal audit teams</td><td><span class="pill-funding">$4.15M</span> seed ('25)</td><td>Early</td><td class="status-active">Active</td><td>Agentic SOX testing</td></tr>
+<tr><td class="co">FloQast</td><td>Mid-market &amp; enterprise accounting teams</td><td><span class="pill-funding">$303M</span> · $100M Series E Apr '24 · <span class="pill-val">$1.6B val</span></td><td><span class="pill-arr">$200M ARR</span> Jan '26; 3,500+ teams (Zoom, Snowflake, LA Lakers)</td><td class="status-hot">Cat. leader</td><td>Launched AI Agent Builder Sep '25</td></tr>
+<tr><td class="co">Workiva (NYSE: WK)</td><td>Fortune 500 / large enterprise</td><td>Public</td><td><span class="pill-arr">$884.6M FY25 rev</span>; 6,541 customers; 95% F100; 85% F500</td><td class="status-active">Incumbent</td><td>Agentic AI platform launched 2025</td></tr>
+<tr><td class="co">AuditBoard</td><td>F500 connected-risk/GRC/SOX</td><td>—</td><td>~2,000 enterprises; ~50% of F500; ~$200M ARR at exit</td><td class="status-acquired">→ Hg May '24, $3B+</td><td>Largest exit in segment to date</td></tr>
+<tr><td class="co">DataSnipper</td><td>Big 4 + global enterprise (audit doc analysis, Excel-native)</td><td><span class="pill-funding">$100M Series B</span> · <span class="pill-val">$1B val</span> Feb '24 (Index, Insight)</td><td>All Big 4; F500; 175 countries; $1.4B claimed productivity savings 2025</td><td class="status-hot">Unicorn</td><td>Launched DocuMine (TIME Best Invention 2025)</td></tr>
+<tr><td class="co">MindBridge</td><td>Internal audit + public accounting firms</td><td><span class="pill-funding">$93.9M</span> · $60M Series C (Jul '23) PSG · ~$200M CAD val</td><td>"Tens of thousands" of audit/finance users</td><td class="status-active">Active</td><td>Genpact global partnership (Feb '26); Databricks partner</td></tr>
+<tr><td class="co">Trullion</td><td>Mid-market + Big 4 audit (lease accounting ASC 842 / IFRS 16)</td><td><span class="pill-funding">$34M</span> · only Series A (Apr '23)</td><td>Used by audit firms; rev not disclosed</td><td class="status-active">Active</td><td>Launched "Trulli" AI agent</td></tr>
+<tr><td class="co">V7 Go</td><td>Finance/PE/enterprise (general agentic platform)</td><td>~<span class="pill-funding">$33M</span></td><td>SOX agent is one of 300+ vertical agents</td><td class="status-active">Pivoted from CV labeling</td><td>Horizontal play with a SOX vertical</td></tr>
+<tr><td class="co">Fieldguide</td><td>Half of Top 100 US firms (KPMG, BDO, RSM, Grant Thornton, Baker Tilly)</td><td><span class="pill-funding">$125M</span> · $75M Series C Feb '26 (Goldman Growth, Bessemer, 8VC, TR) · <span class="pill-val">$700M val</span></td><td>Half of Top 100 US firms; agentic audit platform</td><td class="status-hot">⭐ Audit-firm-side leader</td><td>Sells AI to firms, not as the firm</td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<strong>Insight:</strong> Two distinct sub-wedges. <strong>Petual/Arden/Andera/Oxus/Midship</strong> are selling SOX automation directly to <em>internal audit teams</em> at public companies. <strong>Fieldguide/Caseware/DataSnipper</strong> are selling to <em>external audit firms</em> (Big 4 + Top 100). FloQast straddles. The internal-audit lane is more crowded and earlier-stage; external-audit-firm lane has clearer winners. Expect consolidation by 2027 — Hg/AuditBoard, Workiva, or Thomson Reuters likely acquires one of the seed/A-stage SOX agents.
+</div>
+</section>
+
+<!-- ====== Segment 3: Tax ====== -->
+<section id="tax">
+<h2>③ AI Tax Preparation</h2>
+<div class="seg-card" style="--c: var(--c-tax)">
+<p><strong>The wedge:</strong> Three sub-games. (a) Replace 1040 prep at the consumer (Intuit's home turf — closing fast). (b) Sell AI tax tooling to CPA firms (winning the capital — Black Ore, Filed, Juno, TaxGPT, Aiwyn). (c) Vertical micro-niches (Heard for therapists, Lettuce for solopreneurs, Collective for freelancers).</p>
+</div>
+
+<table class="data">
+<thead><tr><th>Company</th><th>Sub-wedge</th><th>Funding</th><th>Traction</th><th>Status</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td class="co">Black Ore</td><td>AI tax autopilot for CPA firms</td><td><span class="pill-funding">$60M</span> Nov '23 (a16z, Oak HC/FT, Khosla, Founders Fund, General Catalyst)</td><td><strong>40% of Top 20 CPA firms</strong>; 75 selected firms from 3,700+ waitlist</td><td class="status-hot">⭐ Cat. leader (firm-side)</td><td>Launched broad availability Apr 2026</td></tr>
+<tr><td class="co">Filed</td><td>AI agent for end-to-end tax return lifecycle</td><td><span class="pill-funding">$17.2M Series A</span> May '25 (Northzone-led)</td><td>Tens of thousands of returns through Q1 2025</td><td class="status-hot">Active · scaling</td><td>Founders ex-Juni / ex-McKinsey/PayPal</td></tr>
+<tr><td class="co">Juno</td><td>AI tax data extraction for CPA firms</td><td><span class="pill-funding">$12M seed</span> Apr '26 (Bonfire, Impression, Xfund)</td><td>Mid-7-figure ARR in 8 months; 90% automation on 90+ doc types</td><td class="status-hot">Hot launch</td><td>Founder David Haase ex-Golden State Accounting</td></tr>
+<tr><td class="co">TaxGPT (YC)</td><td>AI tax co-pilot for accountants</td><td><span class="pill-funding">$4.6M seed</span> Feb '25 (Rebel, YC, Calacanis)</td><td>10,000+ CPAs serving 250K end clients</td><td class="status-active">Active</td><td>Research + IRS notices + comms</td></tr>
+<tr><td class="co">April (april.com)</td><td>Embedded AI tax API for fintechs</td><td><span class="pill-funding">$78M</span> · $38M Series B Jul '25</td><td>Embedded in fintechs; volume not disclosed</td><td class="status-active">Active</td><td>API model; competes with Intuit's mass-market wall</td></tr>
+<tr><td class="co">Column Tax</td><td>Embedded tax for mobile banks/fintechs</td><td><span class="pill-funding">$27.2M</span> (Bain Cap, Felicis, Core)</td><td>Partnered Taxfyle (Oct '24)</td><td class="status-acquired">→ Aiwyn early '26</td><td>Folded into Aiwyn Tax pilot (100 firms)</td></tr>
+<tr><td class="co">Materia</td><td>GenAI assistant for accounting/audit/tax</td><td><span class="pill-funding">$6.3M seed</span> Jun '24 (Spark Capital lead)</td><td>—</td><td class="status-acquired">→ Thomson Reuters Oct '24</td><td>Now part of TR CoCounsel — 4 months from raise to sale</td></tr>
+<tr><td class="co">Aiwyn Tax</td><td>AI tax for CPA firms (via Taxa + Column acquisitions)</td><td>Part of Aiwyn's <span class="pill-funding">$240M</span></td><td>100-firm pilot 2026</td><td class="status-hot">Active</td><td>Patrick Wilson's bundle play</td></tr>
+<tr><td class="co">Lettuce</td><td>AI tax + accounting for solopreneurs (S-Corp)</td><td><span class="pill-funding">$52M</span> · $28M Series A Nov '25 (Zeev Ventures)</td><td>Single-person businesses ($80K+ profit)</td><td class="status-hot">Active</td><td>Acquired Besolo (health benefits) Nov '25</td></tr>
+<tr><td class="co">Collective</td><td>LLC/S-Corp + bookkeeping + tax for freelancers</td><td><span class="pill-funding">$149.7M</span> · $50M (Gradient/Innovius '23)</td><td>—</td><td class="status-distress">Quiet since '23</td><td>No major round in 30 months</td></tr>
+<tr><td class="co">Heard</td><td>Bookkeeping + tax for therapists</td><td><span class="pill-funding">$26.7M</span> · $10M Series A ('22)</td><td>Therapist vertical</td><td class="status-active">Active</td><td>No '25 round disclosed</td></tr>
+<tr><td class="co">Keeper (ex Keeper Tax)</td><td>DIY tax for self-employed / 1099 / gig</td><td><span class="pill-funding">$16M</span> · last round Apr '21 (Foundation, Matrix)</td><td>Consumer app</td><td class="status-active">Active</td><td>Rebranded from Keeper Tax</td></tr>
+<tr><td class="co">Intuit (TurboTax + Intuit Assist)</td><td>Consumers + SMBs (mass market)</td><td>Public · <span class="pill-arr">$18.8B FY25 rev</span> +16% YoY</td><td>~60% US tax software share; TurboTax Live +47%; lost ~1M filers to IRS Direct File</td><td class="status-active">Incumbent · closing gap</td><td>Intuit Assist now default everywhere</td></tr>
+<tr><td class="co">Big 4 Tax (EY/PwC/Deloitte/KPMG)</td><td>Big 4 internal + client base</td><td>—</td><td>EY: 150+ tax agents, 80K pros, $1B+/yr AI spend; PwC: agent OS w/ 25K agents; Deloitte: Zora + Claude rollout to 470K</td><td class="status-active">Internal land-grab</td><td>Captive to $1M+ engagements; doesn't trickle to mid-market</td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<strong>Insight:</strong> Capital decisively prefers "AI for tax pros" over "AI replaces the 1040." Black Ore, Filed, Juno, TaxGPT, Aiwyn together raised &gt;$300M selling into firms. April + Column took ~$105M trying to disintermediate Intuit; April still standing, Column got absorbed into Aiwyn. <strong>If you go consumer 1040, you're fighting Intuit's 60% share + Cash App's free option + IRS Direct File creep.</strong> Vertical niches (Heard, Lettuce, Collective) work but have small TAMs.
+</div>
+</section>
+
+<!-- ====== Segment 4: Spend/AP/AR ====== -->
+<section id="spend">
+<h2>④ Spend · AP · AR · Expense Management</h2>
+<div class="seg-card" style="--c: var(--c-spend)">
+<p><strong>The wedge:</strong> Cards, payables, expense receipts — but as of 2025–26, this segment is being remade by AI <em>agents</em> that actually do the bookkeeping (Ramp's Accounting Agent), not just process invoices. Ramp is reaching into accounting from below. Bill.com is in pain. Mercury is the dark horse.</p>
+</div>
+
+<table class="data">
+<thead><tr><th>Company</th><th>ICP</th><th>Funding · Valuation</th><th>Traction</th><th>Status</th><th>Recent Move</th></tr></thead>
+<tbody>
+<tr><td class="co">Ramp</td><td>SMB → mid-market → enterprise</td><td>~<span class="pill-funding">$2.3B raised</span> · <span class="pill-val">$40B+ talks May '26</span> (was $32B Nov '25)</td><td><span class="pill-arr">$1B revenue Nov '25</span>, doubled YoY; FCF positive</td><td class="status-hot">⭐ Segment leader</td><td>Accounting Agent (Feb '26) · AP Agents (Oct '25) · Procurement Agents (May '26)</td></tr>
+<tr><td class="co">Brex</td><td>Startups, scale-ups, mid-market</td><td><span class="pill-funding">$1.2B raised</span> → <span class="pill-val">$5.15B exit Jan '26</span> (vs. $12.3B peak)</td><td>$700M ARR; 35,000+ customers</td><td class="status-acquired">→ Capital One Jan '26</td><td>Down-exit; signaled end of '21-vintage spend SaaS</td></tr>
+<tr><td class="co">Bill.com (BILL)</td><td>SMB + mid-market, accountant channel</td><td>Public NYSE: BILL · ~$5–6B mkt cap</td><td>FY26 guide <span class="pill-arr">$1.64–1.65B</span> +15–16%; 494K businesses; 1.2M invoices auto-processed</td><td class="status-distress">Pivoting hard</td><td>30% workforce cut + $1B buyback May '26; "do-it-for-you" AI pivot</td></tr>
+<tr><td class="co">Mercury</td><td>Startups, SMBs</td><td><span class="pill-funding">$500M+</span> · $300M Series C Mar '25 · <span class="pill-val">$3.5B</span> (raising at $5B+)</td><td><span class="pill-arr">$650M annualized rev</span> Sep '25; 300K+ customers; GAAP-profitable</td><td class="status-hot">⭐ Dark horse</td><td>OCC bank charter <em>conditional approval</em> Apr '26</td></tr>
+<tr><td class="co">Stampli</td><td>Mid-market (NetSuite/SAP shops)</td><td><span class="pill-funding">$148M</span> · $61M Series D Oct '23 (Blackstone)</td><td>$150B annual spend processed</td><td class="status-active">Active</td><td>Expanded to full P2P (procurement + cards added) 2025</td></tr>
+<tr><td class="co">Tipalti</td><td>$50M–$1B rev companies, 5,000+ customers</td><td><span class="pill-funding">$1.16B</span> · <span class="pill-funding">$200M growth debt</span> Sep '25 (Hercules) · <span class="pill-val">$8.3B peak</span></td><td>$200M+ ARR; 5,000+ customers; +30% customer growth</td><td class="status-distress">Valuation overhang</td><td>Debt round vs. equity tells the story</td></tr>
+<tr><td class="co">AppZen</td><td>F500 expense + invoice audit</td><td><span class="pill-funding">$283M</span> · <span class="pill-funding">$180M Series D</span> Sep '25 (Riverwood)</td><td>1,500+ enterprises (Amazon, Salesforce, JPMC, 65 of F500); cash-flow positive</td><td class="status-active">Active</td><td>Agentic AI repositioning; Workday Design-Approved Mar '26</td></tr>
+<tr><td class="co">HighRadius</td><td>$100M+ rev enterprises (O2C/AR/treasury)</td><td><span class="pill-funding">$484M</span> · last priced 2021 · <span class="pill-val">$3.1B (stale)</span></td><td>1,100+ enterprise clients; $5T receivables processed</td><td class="status-distress">No re-priced round since '21</td><td>Persistent IPO speculation, no filing</td></tr>
+<tr><td class="co">Airbase</td><td>Mid-market</td><td>—</td><td>Folded into Paylocity HCM</td><td class="status-acquired">→ Paylocity Oct '24, <span class="pill-val">$325M</span></td><td>Down exit from $600M+ private val</td></tr>
+<tr><td class="co">Navan</td><td>Mid-market to enterprise (T&amp;E)</td><td>Public NASDAQ: NAVN</td><td>TTM rev $613M +32%; H1 '25 $329M +30%; net loss $100M</td><td class="status-distress">IPO Oct '25 at $6.2B → ~$4B</td><td>Down from $9.2B '22 private; -20% day-one</td></tr>
+<tr><td class="co">Rippling Spend</td><td>Mid-market HR-led buyers</td><td>Rippling total &gt;$1.4B · <span class="pill-val">$16.8B val</span></td><td>Bundle module across 600+ full-suite customers</td><td class="status-active">Active</td><td>Rippling AI (natural-language across HR/IT/Finance) Mar '26</td></tr>
+<tr><td class="co">Routable</td><td>Marketplaces, gig platforms, mid-market</td><td><span class="pill-funding">$96.2M</span> · Series B '21 ($30M Altman-led)</td><td>—</td><td class="status-distress">Equity stalled</td><td>Added FedNow Aug '25; fraud agents Feb '25</td></tr>
+<tr><td class="co">Sequence</td><td>B2B SaaS finance teams (rev-ops/billing)</td><td><span class="pill-funding">$40M</span> · $20M Series A Dec '25 (645 Ventures, a16z)</td><td>100+ customers; 10× ARR growth; $1B+ invoice volume</td><td class="status-hot">Active</td><td>AI agent positioning</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<strong>Ramp is the most important non-firm company in this map.</strong> Their Accounting Agent (Feb 2026) claims 100% auto-coding of transactions/bills across GL/department/class/location/custom fields with 98% ready-to-sync accuracy, 3.5× more auto-coded vs. legacy tools, books closed 3× faster. This isn't "AP automation" — it's an SMB bookkeeping replacement product sold for free with a card. <strong>If you're building an AI bookkeeping firm for SMBs/startups, Ramp is your most dangerous competitor, not Pilot.</strong>
+</div>
+</section>
+
+<!-- ====== Segment 5: Close & FP&A ====== -->
+<section id="close">
+<h2>⑤ Close &amp; FP&amp;A Automation</h2>
+<div class="seg-card" style="--c: var(--c-close)">
+<p><strong>The wedge:</strong> Reconciliations, journal entries, variance analysis, planning. Two camps: incumbents (BlackLine, FloQast) holding $200M–$700M ARR with mid-single-digit growth, vs. AI-native challengers (Numeric, Aleph, Datarails) showing breakout traction.</p>
+</div>
+
+<table class="data">
+<thead><tr><th>Company</th><th>Sub-wedge</th><th>Funding · Valuation</th><th>Traction</th><th>Status</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td class="co">Numeric</td><td>AI close + recs + cash mgmt</td><td><span class="pill-funding">$89M</span> · $51M Series B Nov '25 (IVP-led, Menlo, Founders Fund, 8VC, Alkeon)</td><td>$7.8M ARR Sep '25 · 4× YoY; Brex match rate 30→90%</td><td class="status-hot">⭐ Breakout challenger</td><td>OpenAI, Brex, Plaid, Wealthfront, Clipboard Health as customers</td></tr>
+<tr><td class="co">FloQast</td><td>Close mgmt + AI Agent Builder</td><td><span class="pill-funding">$303M</span> · $100M Series E Apr '24 · <span class="pill-val">$1.6B</span></td><td><span class="pill-arr">$200M ARR</span> Jan '26; 3,500+ teams (Zoom, Twilio, Lakers, Snowflake)</td><td class="status-active">Category leader</td><td>AI Agent Builder Sep '25</td></tr>
+<tr><td class="co">BlackLine (BL)</td><td>Enterprise close, intercompany, consolidation</td><td>Public NASDAQ: BL · ~$3–4B mkt cap</td><td><span class="pill-arr">$700M FY25 rev</span> +7.2%; 4,394 customers; 105% NRR; FY26 guide $765–769M</td><td class="status-distress">Slow growth</td><td>Verity AI +285% QoQ adoption; new CEO Owen Ryan; platform-pricing transition</td></tr>
+<tr><td class="co">Aleph</td><td>AI-native FP&amp;A + data layer</td><td><span class="pill-funding">$46M</span> · $29M Series B Sep '25 (Khosla-led)</td><td>Mid-market, PE-backed portfolios</td><td class="status-hot">Active · positioning as cat. leader</td><td>The "AI-native Anaplan"</td></tr>
+<tr><td class="co">Datarails</td><td>Excel-native → FinanceOS</td><td><span class="pill-funding">$175M</span> · $70M Series C Jan '26 (One Peak)</td><td>+70% YoY rev '25; &gt;400 employees; "FinanceOS" launch</td><td class="status-hot">Active</td><td>Declared "traditional FP&amp;A dead"</td></tr>
+<tr><td class="co">Cube</td><td>Spreadsheet-native FP&amp;A SMB</td><td><span class="pill-funding">$65M</span> · Series B '22 ($30M Battery)</td><td>400% ARR growth at Series B</td><td class="status-active">Active</td><td>Repositioned as "agentic finance layer"</td></tr>
+<tr><td class="co">Mosaic</td><td>Strategic finance / FP&amp;A</td><td><span class="pill-funding">$69.5M</span> raised</td><td>2024 rev $19.3M (up from $12.1M); ~103 employees</td><td class="status-acquired">→ HiBob Feb '25</td><td>Sub-unicorn exit · sold cheap</td></tr>
+<tr><td class="co">Drivetrain</td><td>AI-native mid-market planning</td><td><span class="pill-funding">$20M</span> · Series A $15M ('22)</td><td>$7.2M ARR; 65 employees</td><td class="status-active">Active</td><td>"AI-native" repositioning</td></tr>
+<tr><td class="co">Vareto</td><td>Enterprise FP&amp;A</td><td><span class="pill-funding">$24M</span> · Series A Oct '21 (GV)</td><td>Quiet</td><td class="status-distress">No new round since '21</td><td>Pivoted toward nonprofit + vertical wedges</td></tr>
+<tr><td class="co">Pry</td><td>Founder financial planning</td><td>—</td><td>~10-person team folded in</td><td class="status-acquired">→ Brex Apr '22, $90M</td><td>Now Brex Pry</td></tr>
+<tr><td class="co">Jirav</td><td>SMB FP&amp;A via accounting firms</td><td><span class="pill-funding">$33.6M</span> · Series B $20M Jul '23</td><td>Multi-channel via firms</td><td class="status-active">No '25 round; deepening firm channel</td><td>—</td></tr>
+<tr><td class="co">Vena Solutions</td><td>Mid-market &amp; enterprise (Excel-native FP&amp;A)</td><td>$450M+ total · PE debt facility Apr '25 (CIBC)</td><td>$100M+ ARR ("Centaur")</td><td class="status-active">PE-owned (Vista, JMI, Centana)</td><td>Debt facility 2025</td></tr>
+<tr><td class="co">Anaplan</td><td>Enterprise EPM</td><td>Take-private Thoma Bravo <span class="pill-val">$10.4B</span> Jun '22</td><td>Historical ~$650M+ rev at exit</td><td class="status-active">Confidential IPO filing in prep</td><td>Targeting 2026 re-IPO</td></tr>
+<tr><td class="co">Centage</td><td>SMB budgeting/forecasting</td><td>$24.3M · → Scaleworks Apr '23</td><td>500+ finance teams</td><td class="status-acquired">PE rollup</td><td>Maestro AI co-pilot launched</td></tr>
+<tr><td class="co">Fathom</td><td>Reporting/forecasting via QBO/Xero</td><td>—</td><td>60,000+ businesses/advisors</td><td class="status-acquired">→ Access Group Aug '22</td><td>Embedded in Access Group stack</td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<strong>Bifurcation pattern:</strong> AI-native (Numeric, Aleph, Datarails) is hot — fresh rounds at 4× growth multiples. Generic FP&amp;A (Mosaic, Pry, Fathom, Centage) is being rolled up at sub-unicorn prices. The middle (Vena, Cube, Drivetrain, Jirav, Vareto) is stuck — no new rounds in 24+ months. <em>Building generic FP&amp;A in 2026 is a strictly worse bet than verticalizing it (mid-market PE portfolio? construction? healthcare?).</em>
+</div>
+</section>
+
+<!-- ====== Segment 6: Practice Mgmt ====== -->
+<section id="practice">
+<h2>⑥ Practice Management &amp; Firm Tools (Picks-and-Shovels)</h2>
+<div class="seg-card" style="--c: var(--c-prac)">
+<p><strong>The wedge:</strong> Don't be the firm — sell to firms. This is where VC capital is decisively flowing because: (a) the buyer is rich (CPA firms generate billions in fees); (b) SaaS margins; (c) no regulatory exposure on the platform side; (d) CPA shortage is a tailwind not a headwind because firms <em>need</em> productivity tools.</p>
+</div>
+
+<table class="data">
+<thead><tr><th>Company</th><th>Sub-wedge</th><th>Funding · Valuation</th><th>Traction</th><th>Status</th><th>Recent Move</th></tr></thead>
+<tbody>
+<tr><td class="co">Aiwyn</td><td>Billing + practice + AI tax for CPA firms</td><td><span class="pill-funding">$240M</span> · $113M Series B Dec '24 (KKR + Bessemer)</td><td>$28.2M rev Sep '25; 840 firms (~50% of IPA Top 500); $5B payment volume</td><td class="status-hot">⭐ Cat. leader (top 500 firms)</td><td>Acquired Taxa May '25 + Column Tax early '26; integrated w/ Claude</td></tr>
+<tr><td class="co">Fieldguide</td><td>AI audit + advisory practice mgmt</td><td><span class="pill-funding">$125M</span> · $75M Series C Feb '26 · <span class="pill-val">$700M val</span> (Goldman Growth, Bessemer, 8VC, TR, Geodesic)</td><td>Half of Top 100 US firms (KPMG, BDO, RSM, Grant Thornton, Baker Tilly)</td><td class="status-hot">⭐ Cat. leader (Top 100 audit)</td><td>Hottest audit-firm-side platform</td></tr>
+<tr><td class="co">Karbon</td><td>Practice mgmt (workflow, AI email triage)</td><td>~<span class="pill-funding">$100M</span> across 9 rounds (Tidemark, Five Elms, Blackbird)</td><td>Major share in SMB CPA firms</td><td class="status-active">Active</td><td>Acquired <strong>Aider</strong> (NZ AI bookkeeping/advisory) Sep '25 — talent + product grab</td></tr>
+<tr><td class="co">Canopy</td><td>Practice mgmt + "Coworker" AI agent</td><td><span class="pill-funding">$70M Series C Apr '25</span> (after $35M May '24)</td><td>Smart Intake saves 20min/client</td><td class="status-hot">Active</td><td>Repositioned as "unclunk firms with AI"</td></tr>
+<tr><td class="co">TaxDome</td><td>Practice mgmt (10,000+ firms)</td><td>Accel-KKR portfolio (terms not disclosed)</td><td>#1 on G2; '25 CPA Practice Advisor Readers' Choice</td><td class="status-active">Active</td><td>TaxDome AI features rolled in 2025</td></tr>
+<tr><td class="co">Keeper (formerly Double)</td><td>Close-prep AI for bookkeepers</td><td>~<span class="pill-funding">$8.5M</span> · YC S21</td><td>—</td><td class="status-active">Active</td><td>Rebranded as close-prep AI layer</td></tr>
+<tr><td class="co">Ignition</td><td>Engagement letters, proposals, AI pricing</td><td><span class="pill-funding">$133M</span> raised</td><td><span class="pill-arr">$46.7M rev '24</span> (up from $30M '23); 8,500+ customers; $3.1B platform vol '25</td><td class="status-active">Active · profitable</td><td>AI Price Insights + AutoPricing (Oct '25) — 40% avg revenue lift</td></tr>
+<tr><td class="co">Anchor</td><td>Autonomous billing + collections for accountants</td><td><span class="pill-funding">$20M Series A</span> Jan '25 (Mosaic, Zeev, Iguodala)</td><td>500%+ growth '24; agreement time 45d→24h</td><td class="status-hot">Active</td><td>Tien Tzuo invested</td></tr>
+<tr><td class="co">Liscio</td><td>Client portal + AI assistant</td><td>—</td><td>"First AI purpose-built for accounting workflows"</td><td class="status-active">Active</td><td>Repositioned as AI assistant 2025</td></tr>
+<tr><td class="co">Caseware</td><td>Audit incumbent w/ AiDA AI assistant</td><td>Private; Hg-backed</td><td>Top of Accounting Today 2025 list for AI Tools + Audit Tools</td><td class="status-active">Incumbent</td><td>AiDA launched May '24</td></tr>
+<tr><td class="co">CCH Axcess (Wolters Kluwer)</td><td>Tax/audit incumbent</td><td>Public</td><td>Expert AI Oct '25 + Axcess Advisor GA May '26; Client Collaboration; Workflow AI</td><td class="status-active">Incumbent</td><td>Major platform repositioning around embedded agents</td></tr>
+<tr><td class="co">Thomson Reuters CoCounsel Tax</td><td>Tax/audit AI agent</td><td>Public</td><td><strong>1M+ professionals</strong> use CoCounsel; 1,300+ firms</td><td class="status-active">Incumbent · w/ Materia acq.</td><td>Ready-to-Review 1040 + Audit Intelligence Test (Jan '26)</td></tr>
+<tr><td class="co">Suralink</td><td>Audit doc requests / PBC</td><td>—</td><td>Audit PBC standard</td><td class="status-active">Active</td><td>AI roadmap not yet announced</td></tr>
+<tr><td class="co">Jirav</td><td>FP&amp;A advisory for firms</td><td>$33.6M</td><td>—</td><td class="status-active">No '25 round</td><td>Deepening firm channel</td></tr>
+</tbody>
+</table>
+
+<div class="callout good">
+<strong>Winning game by funding:</strong> Aiwyn ($240M), Fieldguide ($125M @ $700M), Basis ($100M @ $1.15B), Canopy ($105M+), Karbon (~$100M), Ignition ($133M). Together this group has raised $800M+ in the last 24 months selling INTO accounting firms. The thesis from a16z/Bessemer/Sequoia checks out at the platform level — capital is real, customer ARPU is high (mid-five-figure ACVs at top firms), churn is low.
+</div>
+</section>
+
+<!-- ====== Segment 7: Incumbents ====== -->
+<section id="incumbents">
+<h2>⑦ Incumbents — Closing the Gap from Above</h2>
+<div class="seg-card" style="--c: var(--c-inc)">
+<p><strong>The wedge:</strong> Intuit, Xero, Sage, NetSuite, Workday, MS, SAP, plus the Big 4. All have shipped agentic AI in 2024–25. The "AI gap" is closing fast — Intuit Assist is now the default experience for every US QBO customer; Sage Copilot has 40,000+ adopters; Xero JAX shipped Sep 2025 after the Syft acquisition.</p>
+</div>
+
+<table class="data">
+<thead><tr><th>Vendor</th><th>AI Product</th><th>Status</th><th>Adoption Signal</th><th>Strategic Posture</th></tr></thead>
+<tbody>
+<tr><td class="co">Intuit (QBO + TurboTax)</td><td>Intuit Assist (agentic relaunch Jul 1, 2025)</td><td>Default for all US QBO customers by Sep '25</td><td>45% of customers save ~12hrs/mo via AI bank feed; 46% of accountants use AI daily</td><td>Offensive land-grab; bundle AI free; <strong>GoCo HR acq. May '25</strong></td></tr>
+<tr><td class="co">Xero</td><td>Just Ask Xero (JAX) — Sep 3, 2025</td><td>Rolling US/AU first</td><td>—</td><td>International lead; <strong>Syft Analytics $70M acq. Sep '24</strong>; OpenAI deep-research partnership</td></tr>
+<tr><td class="co">Sage</td><td>Sage Copilot + Sage X3 Copilot</td><td>GA across Intacct + X3</td><td>40,000+ early-adopter SMBs/accountants (1-yr mark Feb '25)</td><td>Defensive on installed base; no marquee AI M&amp;A</td></tr>
+<tr><td class="co">NetSuite (Oracle)</td><td>Text Enhance, SuiteAgent, NetSuite Next</td><td>Rolled 2024-2025; Next GA late '25</td><td>—</td><td>Embed AI everywhere; let customers build agents</td></tr>
+<tr><td class="co">Workday</td><td>Illuminate + Financial Audit Agent + Payroll Agent + Planning Agent</td><td>Sep 16, 2025 expansion; GA early '26</td><td>Audit Agent saves up to <strong>900 hrs/yr</strong>/customer; Planning Agent ~100 hrs/mo</td><td>Enterprise mid-market; new Flex Credits consumption pricing</td></tr>
+<tr><td class="co">Microsoft Dynamics 365</td><td>Copilot for Finance (now in M365 Copilot, GA Oct 20, 2025)</td><td>GA</td><td>—</td><td>Cross-ERP bridge (works with SAP too)</td></tr>
+<tr><td class="co">SAP</td><td>Joule + 14 Joule Agents (Cash Mgmt, Accruals, Dispute, Trade Classification)</td><td>Most GA Q1 2026; Joule Studio GA Dec '25</td><td>Cash Mgmt Agent: up to 70% time saved on recs</td><td>Defensive; protect ERP base</td></tr>
+<tr><td class="co">Deloitte</td><td>Zora AI (on NVIDIA)</td><td>Launched GTC Mar 2025; HPE first ext. customer</td><td>Target: 25% cost reduction, 40% productivity</td><td>Productize internal IP; sell to clients</td></tr>
+<tr><td class="co">PwC</td><td>agent OS + ChatPwC + Research Composer</td><td>In production Mar 27, 2025</td><td>250+ AI agents deployed; "10× faster" workflow build</td><td>Cross-vendor orchestration; sell as service</td></tr>
+<tr><td class="co">EY</td><td>EY Helix + EYQ Assurance Knowledge + EY.ai Agentic (NVIDIA)</td><td>30+ new capabilities in 2025</td><td>70,000+ Helix instances; 160,000+ audit engagements</td><td><strong>$1B / 4-yr Assurance tech investment</strong> Apr '25</td></tr>
+<tr><td class="co">KPMG</td><td>Clara AI agents + KPMG Workbench (multi-agent, Microsoft)</td><td>Clara Apr '25; Workbench Jun '25</td><td>Clara: 95,000 auditors globally</td><td>First org w/ <strong>ISO 42001 AI Mgmt cert</strong>; "Trusted AI" stamp per agent</td></tr>
+<tr><td class="co">Mid-tier (BDO, RSM, GT)</td><td>GT gtap (Grant Thornton Analytics &amp; Automation Platform)</td><td>2025-26</td><td>—</td><td>Catch-up via Fieldguide + other vendor partnerships</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<strong>The window-closing math:</strong> If Intuit Assist now ships free to every US QBO customer and Xero JAX rolls similarly, the AI bookkeeping experience for SMBs becomes commodity within 12–18 months. <em>"We have AI, they don't" is not a moat. By Q4 2026, every SMB on QBO will have an AI agent. The remaining moats are: (a) data the incumbent doesn't have access to (bank-level integrations, contracts, payroll), (b) services + relationship + trust, (c) verticalized GAAP/tax knowledge for non-mainstream industries.</em>
+</div>
+</section>
+
+<!-- ====== M&A Timeline ====== -->
+<section id="mna">
+<h2>The 24-Month M&amp;A &amp; Distress Timeline</h2>
+<p>The pattern is sharp: AI-native + profitable → up rounds. 2021-vintage spend/FP&amp;A SaaS → down exits, take-privates, debt rounds. Two "AI bookkeeping firm" deaths bracket the period.</p>
+
+<div class="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5 my-6">
+<svg viewBox="0 0 1100 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;min-width:760px;font-family:inherit">
+  <!-- Timeline axis -->
+  <line x1="60" y1="240" x2="1040" y2="240" stroke="#475569" stroke-width="1.5"/>
+  <text x="60" y="265" fill="#94a3b8" font-size="11">May 2024</text>
+  <text x="280" y="265" fill="#94a3b8" font-size="11">Q4 2024</text>
+  <text x="500" y="265" fill="#94a3b8" font-size="11">Q1–Q2 2025</text>
+  <text x="720" y="265" fill="#94a3b8" font-size="11">Q3–Q4 2025</text>
+  <text x="930" y="265" fill="#94a3b8" font-size="11">Q1–Q2 2026</text>
+
+  <!-- Ticks -->
+  <g stroke="#475569" stroke-width="1">
+    <line x1="80" y1="235" x2="80" y2="245"/>
+    <line x1="300" y1="235" x2="300" y2="245"/>
+    <line x1="520" y1="235" x2="520" y2="245"/>
+    <line x1="740" y1="235" x2="740" y2="245"/>
+    <line x1="950" y1="235" x2="950" y2="245"/>
+  </g>
+
+  <!-- UP events (top of timeline) - good -->
+  <g font-size="11" fill="#e2e8f0">
+    <!-- May 2024: AuditBoard → Hg -->
+    <circle cx="80" cy="240" r="6" fill="#a855f7"/>
+    <line x1="80" y1="234" x2="80" y2="200" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="20" y="190" fill="#d8b4fe" font-weight="600">AuditBoard → Hg</text>
+    <text x="20" y="174" fill="#cbd5e1">$3B+ take-private</text>
+
+    <!-- Sep 2024: Xero → Syft -->
+    <circle cx="245" cy="240" r="5" fill="#3b82f6"/>
+    <line x1="245" y1="234" x2="245" y2="110" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="200" y="100" fill="#93c5fd" font-weight="600">Xero → Syft</text>
+    <text x="200" y="86" fill="#cbd5e1">$70M acq.</text>
+
+    <!-- Oct 2024: Materia → TR -->
+    <circle cx="295" cy="240" r="5" fill="#10b981"/>
+    <line x1="295" y1="234" x2="295" y2="60" stroke="#10b981" stroke-width="1.5"/>
+    <text x="260" y="50" fill="#6ee7b7" font-weight="600">Materia → TR</text>
+    <text x="260" y="36" fill="#cbd5e1">4mo post-Series A</text>
+
+    <!-- Dec 2024: Aiwyn $113M B -->
+    <circle cx="360" cy="240" r="6" fill="#06b6d4"/>
+    <line x1="360" y1="234" x2="360" y2="195" stroke="#06b6d4" stroke-width="1.5"/>
+    <text x="320" y="184" fill="#67e8f9" font-weight="600">Aiwyn $113M B</text>
+    <text x="320" y="170" fill="#cbd5e1">KKR + Bessemer</text>
+
+    <!-- Apr 2025: Canopy $70M C -->
+    <circle cx="500" cy="240" r="5" fill="#06b6d4"/>
+    <line x1="500" y1="234" x2="500" y2="160" stroke="#06b6d4" stroke-width="1.5"/>
+    <text x="465" y="150" fill="#67e8f9" font-weight="600">Canopy $70M C</text>
+
+    <!-- Jul 2025: April $38M B -->
+    <circle cx="615" cy="240" r="5" fill="#10b981"/>
+    <line x1="615" y1="234" x2="615" y2="120" stroke="#10b981" stroke-width="1.5"/>
+    <text x="580" y="110" fill="#6ee7b7" font-weight="600">April $38M B</text>
+
+    <!-- Sep 2025: Karbon → Aider -->
+    <circle cx="710" cy="240" r="5" fill="#06b6d4"/>
+    <line x1="710" y1="234" x2="710" y2="85" stroke="#06b6d4" stroke-width="1.5"/>
+    <text x="675" y="76" fill="#67e8f9" font-weight="600">Karbon → Aider</text>
+
+    <!-- Nov 2025: Numeric $51M B -->
+    <circle cx="800" cy="240" r="6" fill="#ef4444"/>
+    <line x1="800" y1="234" x2="800" y2="195" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="755" y="184" fill="#fca5a5" font-weight="600">Numeric $51M B</text>
+    <text x="755" y="170" fill="#cbd5e1">IVP-led</text>
+
+    <!-- Feb 2026: Basis $100M B @ $1.15B -->
+    <circle cx="900" cy="240" r="7" fill="#3b82f6"/>
+    <line x1="900" y1="234" x2="900" y2="145" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="850" y="135" fill="#93c5fd" font-weight="600">Basis $100M B</text>
+    <text x="850" y="121" fill="#cbd5e1">@ $1.15B val</text>
+
+    <!-- Feb 2026: Fieldguide $75M C @ $700M -->
+    <circle cx="935" cy="240" r="6" fill="#06b6d4"/>
+    <line x1="935" y1="234" x2="935" y2="95" stroke="#06b6d4" stroke-width="1.5"/>
+    <text x="900" y="85" fill="#67e8f9" font-weight="600">Fieldguide $75M C</text>
+    <text x="900" y="71" fill="#cbd5e1">@ $700M val</text>
+
+    <!-- Apr 2026: Petual $20M -->
+    <circle cx="980" cy="240" r="5" fill="#a855f7"/>
+    <line x1="980" y1="234" x2="980" y2="60" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="935" y="50" fill="#d8b4fe" font-weight="600">Petual $20M</text>
+    <text x="935" y="36" fill="#cbd5e1">a16z-led (disputed)</text>
+  </g>
+
+  <!-- DOWN events (bottom of timeline) - distress -->
+  <g font-size="11" fill="#e2e8f0">
+    <!-- Sep 2024: Airbase → Paylocity -->
+    <circle cx="260" cy="240" r="6" fill="#f59e0b"/>
+    <line x1="260" y1="246" x2="260" y2="300" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="220" y="313" fill="#fcd34d" font-weight="600">Airbase → Paylocity</text>
+    <text x="220" y="327" fill="#cbd5e1">$325M (down)</text>
+
+    <!-- Dec 2024: Bench shutdown -->
+    <circle cx="395" cy="240" r="8" fill="#ef4444"/>
+    <line x1="395" y1="246" x2="395" y2="370" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="345" y="385" fill="#f87171" font-weight="700">✕ Bench shutdown</text>
+    <text x="345" y="399" fill="#cbd5e1">12K customers stranded</text>
+    <text x="345" y="413" fill="#cbd5e1">→ Employer.com (3d later)</text>
+
+    <!-- Feb 2025: Mosaic → HiBob -->
+    <circle cx="475" cy="240" r="5" fill="#ef4444"/>
+    <line x1="475" y1="246" x2="475" y2="290" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="440" y="303" fill="#fca5a5" font-weight="600">Mosaic → HiBob</text>
+    <text x="440" y="317" fill="#cbd5e1">sub-unicorn</text>
+
+    <!-- Sep 2025: Tipalti $200M DEBT (not equity) -->
+    <circle cx="720" cy="240" r="5" fill="#f59e0b"/>
+    <line x1="720" y1="246" x2="720" y2="290" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="685" y="303" fill="#fcd34d" font-weight="600">Tipalti $200M DEBT</text>
+    <text x="685" y="317" fill="#cbd5e1">vs. equity = signal</text>
+
+    <!-- Oct 2025: Navan IPO down -->
+    <circle cx="755" cy="240" r="5" fill="#f59e0b"/>
+    <line x1="755" y1="246" x2="755" y2="345" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="715" y="358" fill="#fcd34d" font-weight="600">Navan IPO ↓</text>
+    <text x="715" y="372" fill="#cbd5e1">$6.2B → $4B</text>
+
+    <!-- Jan 2026: Brex → Capital One -->
+    <circle cx="870" cy="240" r="7" fill="#ef4444"/>
+    <line x1="870" y1="246" x2="870" y2="380" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="820" y="395" fill="#f87171" font-weight="700">Brex → Capital One</text>
+    <text x="820" y="409" fill="#cbd5e1">$5.15B (peak was $12.3B)</text>
+
+    <!-- Feb 2026: Botkeeper shutdown -->
+    <circle cx="905" cy="240" r="7" fill="#ef4444"/>
+    <line x1="905" y1="246" x2="905" y2="430" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="855" y="445" fill="#f87171" font-weight="700">✕ Botkeeper</text>
+    <text x="855" y="459" fill="#cbd5e1">11 yrs, $90M raised</text>
+
+    <!-- May 2026: BILL -30% staff -->
+    <circle cx="1010" cy="240" r="6" fill="#f59e0b"/>
+    <line x1="1010" y1="246" x2="1010" y2="300" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="950" y="313" fill="#fcd34d" font-weight="600">BILL -30% staff</text>
+    <text x="950" y="327" fill="#cbd5e1">+ $1B buyback</text>
+  </g>
+
+  <!-- Legend -->
+  <g font-size="10.5">
+    <rect x="60" y="455" width="200" height="20" fill="#08090b" opacity="0"/>
+    <circle cx="68" cy="465" r="4" fill="#3b82f6"/><text x="78" y="469" fill="#cbd5e1">Up round / strong</text>
+    <circle cx="200" cy="465" r="4" fill="#a855f7"/><text x="210" y="469" fill="#cbd5e1">Strategic acq</text>
+    <circle cx="340" cy="465" r="4" fill="#f59e0b"/><text x="350" y="469" fill="#cbd5e1">Down / debt</text>
+    <circle cx="480" cy="465" r="4" fill="#ef4444"/><text x="490" y="469" fill="#cbd5e1">Shutdown / distress</text>
+  </g>
+</svg>
+</div>
+
+<div class="callout crit">
+<strong>Two graveyards, one cluster:</strong> Bench (Dec '24, $100M+ raised, 12K customers) and Botkeeper (Feb '26, $90M raised, 11 years operating) <em>both shut down after explicitly being "the AI bookkeeping firm at scale."</em> They didn't fail because AI didn't work — they failed because SMB unit economics don't tolerate 35–55% gross margins at $300–$700/mo ACV against churn. <strong>If you're building #15 in this graveyard, plan for unit economics from day one, not customer acquisition.</strong>
+</div>
+</section>
+
+<!-- ====== Positioning Grid (2x2 SVG) ====== -->
+<section id="positioning">
+<h2>Positioning Grid — ICP × Go-to-Market</h2>
+<p>Where each company sits on two axes: who pays (SMB/Mid-market/Enterprise) and how the product is delivered (Service, Software, or Tools-to-Firms).</p>
+
+<div class="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5 my-6">
+<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;min-width:700px;font-family:inherit">
+  <!-- Axes -->
+  <line x1="120" y1="540" x2="950" y2="540" stroke="#475569" stroke-width="1.5"/>
+  <line x1="120" y1="60" x2="120" y2="540" stroke="#475569" stroke-width="1.5"/>
+
+  <!-- Y axis labels (ICP size) -->
+  <text x="60" y="100" fill="#cbd5e1" font-size="12" font-weight="600">Enterprise</text>
+  <text x="60" y="300" fill="#cbd5e1" font-size="12" font-weight="600">Mid-market</text>
+  <text x="60" y="500" fill="#cbd5e1" font-size="12" font-weight="600">SMB / Startup</text>
+  <text x="40" y="40" fill="#94a3b8" font-size="11">↑ ICP</text>
+
+  <!-- X axis labels (Approach) -->
+  <text x="220" y="565" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle">Service (Be the firm)</text>
+  <text x="500" y="565" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle">Software (Direct to customer)</text>
+  <text x="800" y="565" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle">Tools-to-Firms (Picks &amp; shovels)</text>
+  <text x="940" y="558" fill="#94a3b8" font-size="11" text-anchor="end">GTM →</text>
+
+  <!-- Quadrant dividers -->
+  <line x1="370" y1="60" x2="370" y2="540" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="650" y1="60" x2="650" y2="540" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="120" y1="200" x2="950" y2="200" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="120" y1="400" x2="950" y2="400" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Companies as dots with names -->
+  <!-- ENTERPRISE / Service: Big 4 -->
+  <g font-size="10.5" fill="#e2e8f0">
+    <circle cx="220" cy="105" r="6" fill="#94a3b8"/><text x="232" y="108">Big 4 (Deloitte, EY, PwC, KPMG)</text>
+    <circle cx="220" cy="135" r="4" fill="#94a3b8"/><text x="232" y="138">Ascend / PE rollups</text>
+  </g>
+
+  <!-- ENTERPRISE / Software: Workiva, BlackLine, NetSuite -->
+  <g font-size="10.5" fill="#e2e8f0">
+    <circle cx="500" cy="100" r="6" fill="#ef4444"/><text x="512" y="103">BlackLine</text>
+    <circle cx="500" cy="130" r="6" fill="#a855f7"/><text x="512" y="133">Workiva</text>
+    <circle cx="500" cy="160" r="5" fill="#94a3b8"/><text x="512" y="163">NetSuite · SAP · Workday</text>
+  </g>
+
+  <!-- ENTERPRISE / Tools-to-firms: AuditBoard, Fieldguide, DataSnipper, Aiwyn -->
+  <g font-size="10.5" fill="#e2e8f0">
+    <circle cx="800" cy="95" r="6" fill="#a855f7"/><text x="812" y="98">AuditBoard (Hg)</text>
+    <circle cx="800" cy="125" r="7" fill="#06b6d4"/><text x="812" y="128">Fieldguide ($700M)</text>
+    <circle cx="800" cy="155" r="6" fill="#a855f7"/><text x="812" y="158">DataSnipper ($1B)</text>
+    <circle cx="800" cy="185" r="6" fill="#06b6d4"/><text x="812" y="188">Aiwyn ($240M)</text>
+  </g>
+
+  <!-- MID-MARKET / Service: Pilot up-market, Big 4 entry -->
+  <g font-size="10.5" fill="#e2e8f0">
+    <circle cx="220" cy="245" r="6" fill="#3b82f6"/><text x="232" y="248">Pilot (CFO services)</text>
+    <circle cx="220" cy="275" r="5" fill="#3b82f6"/><text x="232" y="278">Heard / Lettuce / Collective (vertical)</text>
+    <circle cx="220" cy="305" r="5" fill="#10b981"/><text x="232" y="308">Filed (tax service)</text>
+  </g>
+
+  <!-- MID-MARKET / Software: Numeric, FloQast, Stampli, AppZen, Aleph, Cube -->
+  <g font-size="10.5" fill="#e2e8f0">
+    <circle cx="500" cy="225" r="7" fill="#ef4444"/><text x="512" y="228">Numeric ($89M)</text>
+    <circle cx="500" cy="250" r="7" fill="#ef4444"/><text x="512" y="253">FloQast ($1.6B)</text>
+    <circle cx="500" cy="275" r="6" fill="#f59e0b"/><text x="512" y="278">Stampli · AppZen · Tipalti</text>
+    <circle cx="500" cy="300" r="5" fill="#ef4444"/><text x="512" y="303">Aleph · Cube · Datarails</text>
+    <circle cx="500" cy="325" r="6" fill="#a855f7"/><text x="512" y="328">FloQast (audit)</text>
+    <circle cx="500" cy="350" r="5" fill="#f59e0b"/><text x="512" y="353">Vic.ai · Tabs</text>
+  </g>
+
+  <!-- MID-MARKET / Tools-to-firms: Basis, Karbon, Canopy, TaxDome, Truewind -->
+  <g font-size="10.5" fill="#e2e8f0">
+    <circle cx="800" cy="225" r="8" fill="#3b82f6"/><text x="816" y="228">Basis ($1.15B) ★</text>
+    <circle cx="800" cy="255" r="6" fill="#06b6d4"/><text x="812" y="258">Karbon · Canopy · TaxDome</text>
+    <circle cx="800" cy="285" r="6" fill="#10b981"/><text x="812" y="288">Black Ore (tax-to-firms)</text>
+    <circle cx="800" cy="315" r="5" fill="#3b82f6"/><text x="812" y="318">Truewind · Bluebook</text>
+    <circle cx="800" cy="345" r="5" fill="#06b6d4"/><text x="812" y="348">Ignition · Anchor</text>
+  </g>
+
+  <!-- SMB / Service: Bench (✕), Botkeeper (✕), Pilot, Zeni, Decimal, Truewind, Cranston, Minerva, Balance, Afternoon, inDinero -->
+  <g font-size="10.5" fill="#e2e8f0">
+    <circle cx="220" cy="430" r="6" fill="#3b82f6"/><text x="232" y="433">Pilot (core) · Zeni · Decimal</text>
+    <circle cx="220" cy="455" r="5" fill="#3b82f6"/><text x="232" y="458">Cranston · Minerva · Balance</text>
+    <circle cx="220" cy="480" r="5" fill="#3b82f6"/><text x="232" y="483">Afternoon · inDinero · Heard</text>
+    <circle cx="220" cy="505" r="6" fill="#ef4444"/><text x="232" y="508" fill="#fca5a5">✕ Bench · ✕ Botkeeper</text>
+  </g>
+
+  <!-- SMB / Software: Ramp, Brex, Bill.com, Mercury, Intuit, Xero, QBO, Digits, Puzzle, Finta, Mesh, Vic.ai consumer side -->
+  <g font-size="10.5" fill="#e2e8f0">
+    <circle cx="500" cy="425" r="8" fill="#f59e0b"/><text x="512" y="428">Ramp ($40B) ★</text>
+    <circle cx="500" cy="450" r="6" fill="#f59e0b"/><text x="512" y="453">Mercury · Bill.com · Brex</text>
+    <circle cx="500" cy="475" r="6" fill="#94a3b8"/><text x="512" y="478">Intuit (QBO + Assist) · Xero · Sage</text>
+    <circle cx="500" cy="500" r="5" fill="#3b82f6"/><text x="512" y="503">Digits · Puzzle · Finta · Mesh</text>
+    <circle cx="500" cy="525" r="5" fill="#10b981"/><text x="512" y="528">TurboTax · April · Cash App Taxes</text>
+  </g>
+
+  <!-- SMB / Tools-to-firms: Keeper.app, Jirav -->
+  <g font-size="10.5" fill="#e2e8f0">
+    <circle cx="800" cy="445" r="5" fill="#06b6d4"/><text x="812" y="448">Keeper.app (close prep)</text>
+    <circle cx="800" cy="475" r="4" fill="#06b6d4"/><text x="812" y="478">Liscio · Jirav (SMB FP&amp;A)</text>
+  </g>
+
+  <!-- Highlight "Hot zone" with translucent overlay on Mid-market Tools-to-Firms -->
+  <rect x="652" y="202" width="296" height="196" fill="#06b6d4" fill-opacity="0.05" stroke="#06b6d4" stroke-opacity="0.4" stroke-dasharray="4,4"/>
+  <text x="660" y="395" fill="#67e8f9" font-size="10.5" font-weight="600" font-style="italic">★ Most-funded zone — capital concentrating here</text>
+</svg>
+</div>
+
+<div class="callout good">
+<strong>The "hot zone":</strong> Mid-market × Tools-to-Firms is where the most capital is concentrating. Basis at $1.15B, Aiwyn $240M, Fieldguide $700M valuation, Karbon ~$100M, Canopy $70M Series C. The thesis: top-500 firms have real budgets, low churn, high ACVs, and need AI productivity tools to survive the CPA shortage. <em>Bottom-left (SMB × Service) is where companies die. Bottom-middle (SMB × Software) is where incumbents will win.</em>
+</div>
+</section>
+
+<!-- ====== Whitespace ====== -->
+<section id="whitespace">
+<h2>Whitespace &amp; Saturation Map</h2>
+
+<div class="grid-2">
+<div>
+<h3 class="text-red-400">Crowded / Saturated</h3>
+<ul class="ms-list">
+<li><strong>AI bookkeeping for VC-backed US startups.</strong> Pilot, Zeni, Truewind, Mesh, Afternoon, Finta, Puzzle, Balance, Minerva, Cranston. 10+ companies, &lt;$50M combined ARR. <em>Knife fight.</em></li>
+<li><strong>SOX/internal-audit AI agents.</strong> Petual, Arden, Andera, Oxus, Midship — 5 in 12 months. Will consolidate by '27.</li>
+<li><strong>Generic FP&amp;A SaaS.</strong> Mosaic exited cheap, Pry absorbed by Brex, Centage to Scaleworks, Fathom to Access, Vena PE-debt-funded.</li>
+<li><strong>AP for mid-market.</strong> Stampli + Tipalti + AppZen + Bill.com + HighRadius all defending stale valuations against Ramp.</li>
+<li><strong>US consumer 1040.</strong> Intuit ~60% + Cash App free + IRS Direct File. April and Column tried; Column got absorbed.</li>
+<li><strong>Top-500 firm practice management.</strong> Aiwyn + Karbon + Canopy + TaxDome + Ignition all funded; ~$700M cumulative raised.</li>
+</ul>
+</div>
+
+<div>
+<h3 class="text-emerald-400">Whitespace / Underserved</h3>
+<ul class="ms-list">
+<li><strong>Main-street SMBs (non-VC).</strong> Bench's 12K customers are still in flux under Employer.com. Nobody owns the e-commerce / contractor / dental / restaurant CAS segments cleanly.</li>
+<li><strong>Vertical CAS for non-tech industries.</strong> Construction (a16z's "Adaptive" is the only well-funded play), healthcare, multi-location retail, real estate.</li>
+<li><strong>International / non-US.</strong> Bluebook owns Nordics. Rest of EU, Latin America, India/Southeast Asia mostly open. ~$100B+ TAM outside US.</li>
+<li><strong>Bottom 4500 of IPA Top 5000 firms.</strong> Aiwyn serves Top 500; Karbon/Canopy go mid-tier; the long tail of single-CPA + small-firm practices has no clear AI vendor.</li>
+<li><strong>Specialty &amp; complex tax.</strong> R&amp;D credit, transfer pricing, multi-entity foreign reporting, expat tax — high-ACV, AI-augmentable, low competition.</li>
+<li><strong>AI for offshore augmentation.</strong> 56.5% of accounting service delivery flows through India/PH. Tooling for Entigrity-style offshore teams is conspicuously underserved.</li>
+<li><strong>Audit-firm-side tooling for non-Big-100 firms.</strong> Fieldguide takes Top 100; below that, AICPA-adjacent firms have no real platform.</li>
+<li><strong>"Picks-and-shovels for the AI firms."</strong> If 50 AI accounting firms launch, who sells them the infra? Tax data extraction, GL agents, bank feed normalization. Juno is one play here.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- ====== Strategy ====== -->
+<section id="strategy">
+<h2>Strategic Implications — Six Decisions to Make Up Front</h2>
+
+<div class="callout">
+<h4>1. Pick your game: Firm vs. Platform-to-Firms vs. Software.</h4>
+<p>The three games have different rules, capital efficiency, and exits.</p>
+<ul>
+<li><strong>Be the firm (service):</strong> 35–55% gross margins, regulatory exposure, slow ramp, PE exit. Pilot at $27M revenue on $222M raised is the cautionary tale. Bench/Botkeeper are the graveyard.</li>
+<li><strong>Sell platform to firms (picks-and-shovels):</strong> 70–85% gross margins, $50K–$500K+ ACVs at top firms, strategic VC capital. Basis $1.15B, Fieldguide $700M, Aiwyn $240M, Karbon ~$100M, Canopy $70M Series C. <em>This is where the money is in 2026.</em></li>
+<li><strong>Software direct (SMB):</strong> Compete with Intuit Assist, Xero JAX, Sage Copilot, Ramp's Accounting Agent — all of which ship for free or near-free. Path is brutal without a moat.</li>
+</ul>
+</div>
+
+<div class="callout">
+<h4>2. If you go "be the firm," pick a vertical or your unit economics die.</h4>
+<p>The horizontal play is dead. Two playbooks survive: (a) vertical depth (Heard for therapists, Lettuce for solopreneurs, Adaptive for construction) where you can charge a premium AND your AI can learn industry-specific GAAP; (b) geographic depth (Bluebook in Nordics) where competition is thin and CAC is lower. <strong>Vertical TAMs are smaller but margins are 2–3× higher and churn is half.</strong></p>
+</div>
+
+<div class="callout">
+<h4>3. Take the demography tailwind seriously — but don't bet the company on it.</h4>
+<p>300K accountants gone since 2020 is real. 1.4% of college students choosing accounting is real. 11 states bending the 150-hour rule is real. But India + Philippines fills 56.5% of global accounting delivery <em>today</em>. The supply gap doesn't translate to your pricing power if Entigrity offers a 200K-person bench at one-third the cost. Plan AI as a margin-additive layer on top of offshore labor, not as a replacement. Most successful "AI firms" today are AI-enabled offshore teams — don't pretend otherwise on your pitch deck.</p>
+</div>
+
+<div class="callout warn">
+<h4>4. The Ramp threat is bigger than the Pilot threat.</h4>
+<p>Pilot is your direct competitor on the surface, but Ramp is your existential threat. Ramp's Accounting Agent (Feb 2026) ships free with the card, auto-codes 100% of transactions, claims 98% accuracy. SMBs that adopt Ramp Cards + Accounting Agent get bookkeeping bundled. <em>Your differentiation can't be "we do bookkeeping with AI" — Ramp does that already, for free. Your differentiation has to be the things Ramp deliberately doesn't do: complex multi-entity, tax filing, audit prep, advisory, vertical-specific GAAP.</em></p>
+</div>
+
+<div class="callout">
+<h4>5. Build for the PE exit, not the VC exit.</h4>
+<p>170 PE accounting-firm deals in 2025. Six dominant rollup platforms (Ascend, Ryan, Crete, Aprio, Sorren, Doeren Mayhew). If you build a firm with $5–20M ARR, your buyer is more likely an Ascend than a strategic. Optimize for: clean books (irony), high-margin services mix, recurring revenue contracts, regional density (rollups buy adjacencies). Avoid: VC-style cash burn, complex tech debt only your team understands, founder dependency.</p>
+</div>
+
+<div class="callout good">
+<h4>6. Lean into the picks-and-shovels playbook — but find a wedge not already won.</h4>
+<p>Basis ($1.15B) and Fieldguide ($700M) didn't show up first; they showed up best. The capital is real but the field is filling. Where there's still wedge space: (a) AI agents for the long-tail of 4,500+ firms that Aiwyn/Karbon/Canopy don't serve well; (b) cross-border tax/audit tooling (most platforms are US-only); (c) specialty practice areas (R&amp;D credit, transfer pricing, sales-and-use); (d) "AI for the AI firms" — infrastructure that other AI bookkeeping firms run on. Juno is doing this for tax data extraction; the model can be extended to bank feed normalization, journal entry AI, payroll-to-GL mapping.</p>
+</div>
+
+<div class="callout crit">
+<h4>Trap to avoid: "AI for accounting" without a verb.</h4>
+<p>If your pitch is "we use AI to do accounting," you have nothing. The winning pitches have a verb that names the work: <em>Black Ore prepares tax returns. Petual tests SOX controls. Numeric closes the books. Filed processes returns. Fieldguide manages audit engagements.</em> Pick the verb, ship the agent, win the wedge. Then expand.</p>
+</div>
+</section>
+
+<!-- ====== Sources ====== -->
+<section id="sources">
+<h2>Sources &amp; Notes</h2>
+
+<details open>
+<summary>Primary data sources</summary>
+<ul>
+<li><a href="https://www.ibisworld.com/united-states/industry/payroll-bookkeeping-services/1397/" target="_blank">IBISWorld — US Payroll &amp; Bookkeeping Services (2026)</a></li>
+<li><a href="https://www.cpa.com/news/aicpa-and-cpacom-benchmark-survey-client-advisory-services-cas-practices-report-17-growth" target="_blank">AICPA &amp; CPA.com — CAS Benchmark Survey 2024</a></li>
+<li><a href="https://karbonhq.com/resources/ebooks/state-of-ai-accounting-report-2025/" target="_blank">Karbon — State of AI in Accounting 2025</a></li>
+<li><a href="https://www.thomsonreuters.com/en/reports/2025-generative-ai-in-professional-services-report" target="_blank">Thomson Reuters — 2025 GenAI in Professional Services</a></li>
+<li><a href="https://cpatrendlines.com/2025/11/18/cornerstone-dealflow-timeline-private-equity-investments-in-cpa-and-accounting-firms-2020-2025/" target="_blank">CPA Trendlines / Cornerstone — PE Dealflow 2020–2025</a></li>
+<li><a href="https://www.cfobrew.com/stories/2024/11/20/private-equity-now-has-a-stake-in-10-of-the-top-30-cpa-firms" target="_blank">CFO Brew — PE in 10 of Top 30 CPA Firms</a></li>
+<li><a href="https://ipassthecpaexam.com/number-of-cpa/" target="_blank">NASBA — Number of US CPAs (2025)</a></li>
+<li><a href="https://nasba.org/blog/2025/12/23/new-cpa-licensure-pathways-and-cpa-mobility/" target="_blank">NASBA — New CPA Licensure Pathways</a></li>
+<li><a href="https://news.crunchbase.com/fintech/funding-jumped-big-checks-ai-ye-2025/" target="_blank">Crunchbase — 2025 Fintech Funding +27%</a></li>
+</ul>
+</details>
+
+<details>
+<summary>VC thesis posts &amp; analyst commentary</summary>
+<ul>
+<li><a href="https://a16z.com/newsletter/the-rise-of-vertical-ai-in-accounting/" target="_blank">a16z — Rise of Vertical AI in Accounting (Jan 2025)</a></li>
+<li><a href="https://sequoiacap.com/article/services-the-new-software/" target="_blank">Sequoia — Services: The New Software</a></li>
+<li><a href="https://foundationcapital.com/ai-service-as-software/" target="_blank">Foundation Capital — AI Service as Software</a></li>
+<li><a href="https://www.bvp.com/atlas/the-state-of-ai-2025" target="_blank">Bessemer — State of AI 2025</a></li>
+<li><a href="https://fortune.com/2026/04/21/services-are-the-new-software-sequoia-venture-capital-julien-bek-ai-native-eye-on-ai/" target="_blank">Fortune interview — Julien Bek (Sequoia)</a></li>
+</ul>
+</details>
+
+<details>
+<summary>M&amp;A, funding, and shutdowns</summary>
+<ul>
+<li><a href="https://techcrunch.com/2024/12/30/bench-to-be-acquired-after-abruptly-shutting-down/" target="_blank">TechCrunch — Bench shutdown &amp; Employer.com acquisition</a></li>
+<li><a href="https://www.cfobrew.com/stories/2026/02/17/botkeeper-what-went-wrong" target="_blank">CFO Brew — Botkeeper: What Went Wrong</a></li>
+<li><a href="https://www.cpapracticeadvisor.com/2026/02/27/xendoo-buys-botkeeper-infinite-ai-platform-will-remain-active-and-supported/179027/" target="_blank">CPA Practice Advisor — Xendoo acquires Botkeeper Infinite</a></li>
+<li><a href="https://hgcapital.com/insights/auditboard-agrees-to-be-acquired-by-hg" target="_blank">Hg — AuditBoard $3B take-private</a></li>
+<li><a href="https://techcrunch.com/2024/09/04/paylocity-acquiring-corporate-spend-startup-airbase-for-325m/" target="_blank">TechCrunch — Paylocity acquires Airbase $325M</a></li>
+<li><a href="https://techcrunch.com/2026/01/22/capital-one-acquires-brex-for-steep-discount-to-its-peak-valuation-but-early-believers-are-laughing-all-the-way-to-the-bank/" target="_blank">TechCrunch — Capital One acquires Brex $5.15B</a></li>
+<li><a href="https://www.cnbc.com/2025/10/30/travel-tech-navan-ipo-nasdaq-stock-price.html" target="_blank">CNBC — Navan IPO at $6.2B (down round)</a></li>
+<li><a href="https://www.bloomberg.com/news/articles/2026-02-24/ai-for-accounting-startup-basis-hits-1-15-billion-valuation" target="_blank">Bloomberg — Basis hits $1.15B</a></li>
+<li><a href="https://www.fieldguide.io/blog/series-c-announcement" target="_blank">Fieldguide — $75M Series C @ $700M</a></li>
+<li><a href="https://explore.aiwyn.ai/resources/newsroom/aiwyn-secures-113m-from-kkr-and-bessemer-to-transform-cpa-tech" target="_blank">Aiwyn — $113M Series B (KKR + Bessemer)</a></li>
+<li><a href="https://www.thomsonreuters.com/en/press-releases/2024/october/thomson-reuters-acquires-materia-a-specialist-in-agentic-ai-for-the-tax-audit-and-accounting-profession" target="_blank">Thomson Reuters — Materia acquisition</a></li>
+<li><a href="https://www.prnewswire.com/news-releases/numeric-raises-51m-series-b-expanding-from-close-management-to-comprehensive-finance-platform-302619774.html" target="_blank">PRNewswire — Numeric $51M Series B</a></li>
+<li><a href="https://www.floqast.com/press-releases/floqast-hits-200-million-arr" target="_blank">FloQast — $200M ARR milestone</a></li>
+<li><a href="https://www.crunchbase.com/acquisition/xero-acquires-syft-analytics--15d87402" target="_blank">Crunchbase — Xero acquires Syft</a></li>
+</ul>
+</details>
+
+<details>
+<summary>Incumbent AI launches</summary>
+<ul>
+<li><a href="https://investors.intuit.com/news-events/press-releases/detail/1222/intuit-launches-ai-powered-intuit-assist-for-quickbooks-giving-millions-of-businesses-a-competitive-edge" target="_blank">Intuit Assist launch</a></li>
+<li><a href="https://www.xero.com/us/media-releases/xeros-ai-financial-superagent-jax-launches-powerful-new-features/" target="_blank">Xero JAX (Sep 2025)</a></li>
+<li><a href="https://www.sage.com/en-us/news/press-releases/2025/02/celebrating-one-year-of-sage-copilot/" target="_blank">Sage Copilot 1-year milestone (40K adopters)</a></li>
+<li><a href="https://newsroom.workday.com/2025-09-16-Workday-Illuminate-TM-Expands-with-New-AI-Agents-for-HR,-Finance,-and-Industry" target="_blank">Workday Illuminate expansion</a></li>
+<li><a href="https://www.deloitte.com/us/en/about/press-room/deloitte-unveils-zora-ai-agentic-ai-for-tomorrows-workforce.html" target="_blank">Deloitte Zora AI</a></li>
+<li><a href="https://www.pwc.com/us/en/about-us/newsroom/press-releases/pwc-launches-ai-agent-operating-system-enterprises.html" target="_blank">PwC agent OS</a></li>
+<li><a href="https://kpmg.com/xx/en/media/press-releases/2025/04/kpmg-advances-ai-integration-in-kpmg-clara-smart-audit-platform.html" target="_blank">KPMG Clara AI agents</a></li>
+<li><a href="https://www.ey.com/en_gl/newsroom/2025/04/ey-announces-large-scale-integration-of-leading-edge-ai-technology-into-global-assurance-technology-platform" target="_blank">EY $1B Assurance / EYQ</a></li>
+<li><a href="https://www.cpapracticeadvisor.com/2026/02/19/ramp-unveils-accounting-agent-to-streamline-bookkeeping/177952/" target="_blank">Ramp Accounting Agent (Feb 2026)</a></li>
+</ul>
+</details>
+
+<details>
+<summary>Notes on data quality &amp; disagreements</summary>
+<ul>
+<li><strong>Petual funding</strong>: Sub-agent A reported $20M led by a16z (Apr 2026) with a specific citation to <a href="https://a16z.com/announcement/investing-in-petual/" target="_blank">a16z's announcement</a>. Sub-agent B was unable to verify in Crunchbase/PitchBook. Treating the announcement as primary; flagging the inconsistency for the reader.</li>
+<li><strong>Pilot ARR</strong>: GetLatka cites $27M revenue in 2024; Sacra estimates $43M ARR growing 30% YoY at ~60% gross margins. Both are inferred from headcount + reported metrics, not Pilot-disclosed. Range: $27–43M.</li>
+<li><strong>Zeni funding total</strong>: Tracxn shows $3.1B (clearly a database error). Sacra and CB Insights converge at $47.5M raised, $99.9M–$186M last valuation estimate. Using the Sacra figure.</li>
+<li><strong>Bench customer count</strong>: ~12,000 at shutdown — TechCrunch + GeekWire reporting converge.</li>
+<li><strong>Big 4 internal AI adoption</strong>: Vendor-disclosed numbers (EY's "150+ tax agents, 80K pros") are marketing claims, not independently audited.</li>
+<li><strong>Gross margin claims</strong>: Pilot, Zeni, and AI bookkeeping firms broadly do NOT publish gross margins. The 35–55% range cited is industry inference based on labor mix + AI infra cost, not company-disclosed.</li>
+<li><strong>No public Gartner Magic Quadrant</strong> for AI accounting/close exists as of May 2026 — flagged as a research gap.</li>
+</ul>
+</details>
+
+</section>
+
+<footer class="container-x py-10 mt-12 border-t border-zinc-800 text-slate-500 text-sm">
+<p>Compiled May 14, 2026 from 5 parallel research streams covering 70+ companies across 7 market segments. Built specifically for a founder in market-research phase for an AI-native accounting firm/product. Data ages quickly in this space — refresh before any major commitment.</p>
+<p class="mt-2">All numbers cited are either (a) company-disclosed, (b) primary-source-reported (TechCrunch, Bloomberg, etc.), or (c) clearly flagged as analyst estimates. Where sub-agents disagreed, the source-of-truth is annotated in the Sources section.</p>
+</footer>
+
+</main>
+</body>
+</html>

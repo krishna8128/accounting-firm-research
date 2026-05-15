@@ -1,0 +1,25 @@
+# Obsidian per-user editor state
+.obsidian/workspace.json
+.obsidian/workspaces.json
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Temp / lock files
+*.tmp
+*.lock
+*.bak
+
+# Local env / secrets (none currently, but safety net)
+.env
+.env.*
+*.key
+*.pem
+credentials.json
+secrets.json

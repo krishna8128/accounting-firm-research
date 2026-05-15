@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Legal AI Landscape & India Strategic Brief — May 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { color-scheme: dark; }
+  html { scroll-behavior: smooth; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .grid-bg { background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0); background-size: 24px 24px; }
+  .pill { display:inline-flex; align-items:center; gap:.35rem; padding:.15rem .55rem; border-radius:9999px; font-size:.7rem; font-weight:600; letter-spacing:.02em; }
+  .flag { font-size:.95rem; }
+  .num { font-variant-numeric: tabular-nums; }
+  h2 { scroll-margin-top: 4.5rem; }
+  table.tight th, table.tight td { padding:.45rem .65rem; vertical-align: top; }
+  table.tight thead th { font-size:.7rem; text-transform: uppercase; letter-spacing:.06em; color:#cbd5e1; font-weight:700; border-bottom:1px solid #334155; }
+  table.tight tbody tr { border-bottom:1px solid #1e293b; }
+  table.tight tbody tr:hover { background: rgba(56,189,248,0.04); }
+  .callout { border-left: 3px solid; padding: .8rem 1rem; border-radius: 0 .5rem .5rem 0; }
+  .callout-red { border-color:#ef4444; background: rgba(239,68,68,.08); }
+  .callout-amber { border-color:#f59e0b; background: rgba(245,158,11,.08); }
+  .callout-emerald { border-color:#10b981; background: rgba(16,185,129,.08); }
+  .callout-blue { border-color:#38bdf8; background: rgba(56,189,248,.08); }
+  .chip-red { background: rgba(239,68,68,.15); color:#fca5a5; border:1px solid rgba(239,68,68,.3); }
+  .chip-amber { background: rgba(245,158,11,.15); color:#fcd34d; border:1px solid rgba(245,158,11,.3); }
+  .chip-emerald { background: rgba(16,185,129,.15); color:#6ee7b7; border:1px solid rgba(16,185,129,.3); }
+  .chip-blue { background: rgba(56,189,248,.15); color:#7dd3fc; border:1px solid rgba(56,189,248,.3); }
+  .chip-violet { background: rgba(167,139,250,.15); color:#c4b5fd; border:1px solid rgba(167,139,250,.3); }
+  .chip-slate { background: rgba(148,163,184,.12); color:#cbd5e1; border:1px solid rgba(148,163,184,.25); }
+  .anchor-link { color:#94a3b8; text-decoration: none; font-size:.85em; margin-left:.4rem; opacity:0; }
+  h2:hover .anchor-link, h3:hover .anchor-link { opacity:1; }
+  .tag-row { display:flex; flex-wrap:wrap; gap:.4rem; }
+  details > summary { cursor:pointer; }
+  details[open] > summary { margin-bottom:.6rem; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-200">
+
+<!-- HEADER -->
+<header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-md bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center font-bold text-white">L</div>
+      <div>
+        <div class="text-sm font-semibold text-slate-100">Legal AI Landscape & India Strategic Brief</div>
+        <div class="text-xs text-slate-400">Deep research — May 15, 2026</div>
+      </div>
+    </div>
+    <nav class="hidden md:flex items-center gap-1 text-xs text-slate-300">
+      <a href="#tldr" class="px-2 py-1 rounded hover:bg-slate-800">TL;DR</a>
+      <a href="#global" class="px-2 py-1 rounded hover:bg-slate-800">Global map</a>
+      <a href="#india-co" class="px-2 py-1 rounded hover:bg-slate-800">India startups</a>
+      <a href="#paradox" class="px-2 py-1 rounded hover:bg-slate-800">Billable paradox</a>
+      <a href="#viability" class="px-2 py-1 rounded hover:bg-slate-800">India viability</a>
+      <a href="#traps" class="px-2 py-1 rounded hover:bg-slate-800">Traps</a>
+      <a href="#bottom" class="px-2 py-1 rounded hover:bg-slate-800">Bottom line</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-5 py-10 grid-bg">
+
+<!-- TITLE BLOCK -->
+<section class="mb-12">
+  <div class="text-xs text-sky-400 font-semibold tracking-wider uppercase mb-2">Founder briefing</div>
+  <h1 class="text-3xl md:text-5xl font-bold text-white leading-tight">
+    Should you build an<br/>
+    <span class="bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">AI legal tech company</span><br/>
+    out of India?
+  </h1>
+  <p class="mt-5 text-slate-300 max-w-3xl">
+    A crisp synthesis of the global legal AI market, Indian ecosystem, the real economics behind Harvey & Legora,
+    and the answer to your "token cost is global, but Indian billing isn't" question.
+  </p>
+</section>
+
+<!-- TL;DR -->
+<section id="tldr" class="mb-16">
+  <h2 class="text-2xl font-bold text-white mb-4">TL;DR <a href="#tldr" class="anchor-link">#</a></h2>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="callout callout-red">
+      <div class="font-semibold text-red-200 mb-1">Don't build "Harvey for India"</div>
+      <p class="text-sm text-slate-300">
+        Indian Tier-1 partner billables are ~10× lower than US Big Law. Token costs are global.
+        Your maximum revenue pool from Indian law firms at Harvey pricing is ~<span class="num">$30–50M ARR</span>
+        — already being skimmed top-down by Harvey (AZB) and Legora (CAM).
+      </p>
+    </div>
+    <div class="callout callout-emerald">
+      <div class="font-semibold text-emerald-200 mb-1">There IS a real India play — but it's a different product</div>
+      <p class="text-sm text-slate-300">
+        Indian litigation OS (52.5M pending cases, eCourts/NJDG open APIs, vernacular drafting, on-device for DPDP)
+        OR sell <em>out of India</em> to global SMB/in-house teams (the SpotDraft model — $113M raised, India's only legal-tech ~unicorn).
+      </p>
+    </div>
+    <div class="callout callout-amber">
+      <div class="font-semibold text-amber-200 mb-1">Why Harvey/Legora actually sell (the paradox you flagged)</div>
+      <p class="text-sm text-slate-300">
+        Not "save hours." They sell <strong>leverage</strong> — same headcount → more matter capacity → straight to profit-per-partner.
+        ~70% of AmLaw revenue is now fixed-fee, where efficiency = pure margin. 34% of firms charge an "AI premium" to clients.
+        Only 6% pass savings on. The buyer is the managing partner, not the timekeeper.
+      </p>
+    </div>
+    <div class="callout callout-blue">
+      <div class="font-semibold text-sky-200 mb-1">The verdict for you</div>
+      <p class="text-sm text-slate-300">
+        Skip Indian law firms as primary ICP. The credible India-domiciled paths are
+        <strong>(a)</strong> CLM/in-house tooling sold globally,
+        <strong>(b)</strong> litigation-OS for the 52M-case backlog with enterprise wrap,
+        <strong>(c)</strong> a vernacular/court-process play in emerging markets where Harvey explicitly doesn't go.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: GLOBAL LANDSCAPE -->
+<section id="global" class="mb-16">
+  <h2 class="text-2xl font-bold text-white mb-2">1. The global legal AI map (beyond Harvey & Legora) <a href="#global" class="anchor-link">#</a></h2>
+  <p class="text-slate-400 mb-6 text-sm">
+    Sector raised <span class="num">~$6B in 2025</span> (+54% YoY per Artificial Lawyer). Capital is bifurcating — mega-rounds for category leaders, a sub-$10M graveyard for the middle (Robin AI is the canary).
+  </p>
+
+  <!-- The two tentpoles -->
+  <div class="grid md:grid-cols-2 gap-4 mb-8">
+    <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <div class="text-white font-bold text-lg">Harvey <span class="flag">🇺🇸</span></div>
+        <span class="pill chip-violet">$11B · Mar 2026</span>
+      </div>
+      <p class="text-sm text-slate-300">Generalist legal copilot for Big Law / F500 in-house. <span class="text-slate-400">100K+ lawyers across 1,300 orgs · 25K+ custom agents · ~$190M ARR. Bengaluru office opened. AZB rollout Sept 2025.</span></p>
+    </div>
+    <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <div class="text-white font-bold text-lg">Legora <span class="flag">🇸🇪</span></div>
+        <span class="pill chip-violet">$5.6B · Apr 2026</span>
+      </div>
+      <p class="text-sm text-slate-300">European-born agentic legal workspace (formerly Leya). <span class="text-slate-400">$550M Series D + €42M extension (Accel, Atlassian, NVIDIA NVentures). Deployed at Cyril Amarchand Mangaldas.</span></p>
+    </div>
+  </div>
+
+  <h3 class="text-lg font-semibold text-white mb-2">The other major players, by segment</h3>
+
+  <!-- Generalist copilots -->
+  <div class="rounded-xl border border-slate-800 bg-slate-900/30 overflow-hidden mb-4">
+    <div class="px-4 py-2 bg-slate-900/60 border-b border-slate-800 flex items-center justify-between">
+      <span class="text-xs font-bold tracking-wider uppercase text-sky-400">Generalist drafting / copilots</span>
+      <span class="text-xs text-slate-500">Harvey & Legora's direct competition</span>
+    </div>
+    <table class="tight w-full text-sm">
+      <thead><tr><th class="text-left">Company</th><th>HQ</th><th>Stage</th><th>ICP</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="font-semibold text-white">Spellbook</td><td>🇨🇦 Canada</td><td>$50M Series B · $350M post · Oct 2025</td><td>SMB law firms, solos</td><td>4,000+ customers, 80+ countries; tracking $100M ARR; bought RBCx debt for M&amp;A</td></tr>
+        <tr><td class="font-semibold text-white">Robin AI</td><td>🇬🇧 UK</td><td><span class="chip-red pill">Distressed sale · Dec 2025</span></td><td>Big Law, in-house</td><td>Raised $71.7M total; failed $50M Series C at ~$10M ARR; sold to Scissero. <strong>Cautionary tale</strong>.</td></tr>
+        <tr><td class="font-semibold text-white">Genie AI</td><td>🇬🇧 UK</td><td>€16M Series A · 2024 · GV/Khosla</td><td>SMB / startups</td><td>Template-driven contract automation</td></tr>
+        <tr><td class="font-semibold text-white">Eve</td><td>🇺🇸 US</td><td>$103M Series B · $1B+ valuation</td><td>Plaintiff / personal injury firms</td><td>a16z-backed; intake → settlement workflow</td></tr>
+        <tr><td class="font-semibold text-white">CoCounsel</td><td>🇺🇸 US</td><td>Acquired by Thomson Reuters · $650M (Aug 2023)</td><td>Big Law, mid-market</td><td>Bundled with Westlaw; ~$100–200/user/mo add-on</td></tr>
+        <tr><td class="font-semibold text-white">Paxton AI</td><td>🇺🇸 US</td><td>$22M Series A · 2025 · Unusual</td><td>Mid-market, solos</td><td>14× MRR growth in year 1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CLM -->
+  <div class="rounded-xl border border-slate-800 bg-slate-900/30 overflow-hidden mb-4">
+    <div class="px-4 py-2 bg-slate-900/60 border-b border-slate-800 flex items-center justify-between">
+      <span class="text-xs font-bold tracking-wider uppercase text-emerald-400">Contract Lifecycle Management + AI</span>
+      <span class="text-xs text-slate-500">Where in-house counsel money goes</span>
+    </div>
+    <table class="tight w-full text-sm">
+      <thead><tr><th class="text-left">Company</th><th>HQ</th><th>Stage</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="font-semibold text-white">Ironclad</td><td>🇺🇸 US</td><td>~$333M raised · $200M ARR (Jan '26)</td><td>Mature category leader; +34% YoY growth</td></tr>
+        <tr><td class="font-semibold text-white">Evisort</td><td>🇺🇸 US</td><td><span class="pill chip-violet">Acq. by Workday · $310M · Oct '24</span></td><td>Now "Workday Contract Intelligence" — CLM gets pulled into HR/finance suites</td></tr>
+        <tr><td class="font-semibold text-white">Luminance</td><td>🇬🇧 UK</td><td>$75M Series C · Feb 2025 · Point72</td><td>700+ clients across 70 countries; AMD, Hitachi, Rolls-Royce</td></tr>
+        <tr><td class="font-semibold text-white">LinkSquares</td><td>🇺🇸 US</td><td>~$160M raised</td><td>Forrester Strong Performer (CLM Wave 2025)</td></tr>
+        <tr><td class="font-semibold text-white">ContractPodAi (Leah)</td><td>🇬🇧 UK</td><td>Series C+</td><td>Agentic AI for in-house; Gartner Visionary</td></tr>
+        <tr><td class="font-semibold text-white">Sirion</td><td>🇮🇳/🇺🇸 India/US</td><td>Mature; Fortune-1000 ICP</td><td>Pune HQ; rare Indian-built enterprise CLM with global presence</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Legal research -->
+  <div class="rounded-xl border border-slate-800 bg-slate-900/30 overflow-hidden mb-4">
+    <div class="px-4 py-2 bg-slate-900/60 border-b border-slate-800 flex items-center justify-between">
+      <span class="text-xs font-bold tracking-wider uppercase text-amber-400">Legal research / case law AI</span>
+      <span class="text-xs text-slate-500">Old incumbents getting bolted-on AI</span>
+    </div>
+    <table class="tight w-full text-sm">
+      <thead><tr><th class="text-left">Product</th><th>Owner</th><th>HQ</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="font-semibold text-white">Westlaw + CoCounsel</td><td>Thomson Reuters</td><td>🇺🇸 US / 🇨🇦 CA</td><td>$150–400/user/mo + $100–200 AI add-on. A 20-attorney firm pays $60K–$144K/yr.</td></tr>
+        <tr><td class="font-semibold text-white">Lexis+ AI / Protégé</td><td>RELX/LexisNexis</td><td>🇺🇸 US / 🇬🇧 UK</td><td>Rebranded Feb 2026. 65% on Stanford Legal AI Benchmark.</td></tr>
+        <tr><td class="font-semibold text-white">vLex Vincent AI</td><td>Clio (acq. Nov '25)</td><td>🇪🇸 Spain / 🇬🇧 UK</td><td>Clio bought vLex + Fastcase for $1B; 110+ jurisdictions. $399/mo entry.</td></tr>
+        <tr><td class="font-semibold text-white">Lex Machina</td><td>LexisNexis</td><td>🇺🇸 US</td><td>IP/litigation analytics; 70–80% on outcome prediction</td></tr>
+        <tr><td class="font-semibold text-white">Theo AI</td><td>Independent</td><td>🇺🇸 US</td><td>$4.2M seed May 2025 · litigation outcome prediction</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- eDiscovery / Specialty -->
+  <div class="grid md:grid-cols-2 gap-4 mb-4">
+    <div class="rounded-xl border border-slate-800 bg-slate-900/30 overflow-hidden">
+      <div class="px-4 py-2 bg-slate-900/60 border-b border-slate-800">
+        <span class="text-xs font-bold tracking-wider uppercase text-rose-400">eDiscovery + litigation tech</span>
+      </div>
+      <table class="tight w-full text-sm">
+        <tbody>
+          <tr><td class="font-semibold text-white">Relativity</td><td>🇺🇸 US</td><td><span class="pill chip-blue">S-1 filed Mar '26</span> · ~$4B</td></tr>
+          <tr><td class="font-semibold text-white">Everlaw</td><td>🇺🇸 US</td><td>$2B (2023 · TPG)</td></tr>
+          <tr><td class="font-semibold text-white">DISCO</td><td>🇺🇸 US</td><td>Public since '21</td></tr>
+          <tr><td class="font-semibold text-white">Reveal / Logikcull</td><td>🇺🇸 US</td><td>Consolidated</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rounded-xl border border-slate-800 bg-slate-900/30 overflow-hidden">
+      <div class="px-4 py-2 bg-slate-900/60 border-b border-slate-800">
+        <span class="text-xs font-bold tracking-wider uppercase text-indigo-400">Specialty / vertical plays</span>
+      </div>
+      <table class="tight w-full text-sm">
+        <tbody>
+          <tr><td class="font-semibold text-white">EvenUp</td><td>🇺🇸 US</td><td>$150M Series E · $2B (Oct '25) · PI demand letters</td></tr>
+          <tr><td class="font-semibold text-white">Darrow</td><td>🇮🇱 Israel</td><td>$120M projected '26 revenue · mass tort lead gen</td></tr>
+          <tr><td class="font-semibold text-white">DiligenceVault</td><td>🇺🇸 US</td><td>DD for asset/fund managers</td></tr>
+          <tr><td class="font-semibold text-white">Kira → Litera</td><td>🇨🇦 Canada</td><td>M&amp;A diligence; embedded in Litera</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Geographic summary -->
+  <div class="rounded-xl border border-slate-800 bg-gradient-to-br from-slate-900/60 to-slate-900/20 p-5">
+    <h3 class="text-lg font-semibold text-white mb-3">Where the centres of gravity are</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+      <div><div class="text-2xl">🇺🇸</div><div class="font-semibold text-white">United States</div><div class="text-slate-400 text-xs">Generalist + CLM + research + eDiscovery. The dominant pool. Harvey, Ironclad, Eve, CoCounsel, Relativity, EvenUp, Paxton, Everlaw.</div></div>
+      <div><div class="text-2xl">🇬🇧</div><div class="font-semibold text-white">United Kingdom</div><div class="text-slate-400 text-xs">CLM-heavy + research. Luminance, Genie, ContractPodAi, Robin AI (now distressed).</div></div>
+      <div><div class="text-2xl">🇸🇪 🇪🇸 🇮🇱</div><div class="font-semibold text-white">Europe + Israel</div><div class="text-slate-400 text-xs">Legora (Sweden) → European Big Law. vLex (Spain). Darrow (Israel) for mass torts.</div></div>
+      <div><div class="text-2xl">🇨🇦 🇮🇳</div><div class="font-semibold text-white">Canada + India</div><div class="text-slate-400 text-xs">Spellbook (Canada) owns SMB drafting globally. India: SpotDraft, Sirion, Lucio export to global buyers.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: INDIAN ECOSYSTEM -->
+<section id="india-co" class="mb-16">
+  <h2 class="text-2xl font-bold text-white mb-2">2. The Indian legal AI ecosystem <a href="#india-co" class="anchor-link">#</a></h2>
+  <p class="text-slate-400 mb-6 text-sm">
+    Tracxn counts <span class="text-slate-200 font-semibold num">805 active legal tech companies in India</span>, collectively raised <span class="text-slate-200 font-semibold num">$692M</span>. 1 near-unicorn (SpotDraft). 17 Series-A+. The rest fragmented.
+  </p>
+
+  <!-- Indian market shape -->
+  <div class="grid md:grid-cols-4 gap-3 mb-6">
+    <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+      <div class="text-xs text-slate-400 uppercase tracking-wider">Registered advocates</div>
+      <div class="text-2xl font-bold text-white num">~1.4M</div>
+      <div class="text-xs text-slate-500">~600–800K active; bulk solo/district</div>
+    </div>
+    <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+      <div class="text-xs text-slate-400 uppercase tracking-wider">Pending court cases</div>
+      <div class="text-2xl font-bold text-white num">~52.5M</div>
+      <div class="text-xs text-slate-500">NJDG 2025; 9-yr avg disposal</div>
+    </div>
+    <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+      <div class="text-xs text-slate-400 uppercase tracking-wider">India legal services market</div>
+      <div class="text-2xl font-bold text-white num">~$2.6B</div>
+      <div class="text-xs text-slate-500">Top-40 firms = ~$1.3B of that</div>
+    </div>
+    <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+      <div class="text-xs text-slate-400 uppercase tracking-wider">India legal AI market (2030E)</div>
+      <div class="text-2xl font-bold text-white num">~$106M</div>
+      <div class="text-xs text-slate-500">Grand View · 23% CAGR · sobering</div>
+    </div>
+  </div>
+
+  <h3 class="text-lg font-semibold text-white mb-3">Indian legal tech / legal AI startups — funded tier</h3>
+  <div class="rounded-xl border border-slate-800 bg-slate-900/30 overflow-hidden mb-4 overflow-x-auto">
+    <table class="tight w-full text-sm min-w-[800px]">
+      <thead>
+        <tr>
+          <th class="text-left">Company</th><th>HQ</th><th>Founded</th><th>Total raised</th><th>Wedge</th><th>Traction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="font-semibold text-white">SpotDraft</td><td>Bengaluru/NYC</td><td>2017</td>
+          <td><span class="num">~$113M</span> · Series B + ext.</td>
+          <td>CLM for global in-house teams</td>
+          <td>India's only near-unicorn. 1M+ contracts/yr · Notion, PhonePe, Nomura. <strong>Sells outside India.</strong></td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">Lucio</td><td>Bengaluru</td><td>2022</td>
+          <td>$7.69M · Series A · Oct '25</td>
+          <td>AI-native lawyer workspace</td>
+          <td>200+ orgs, 3,000+ lawyers, 9 jurisdictions; Trilegal among customers</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">Lexlegis.AI</td><td>Mumbai</td><td>2024</td>
+          <td>$7.16M · Series A</td>
+          <td>Indian-law legal research + drafting; <strong>on-device "On-Desk" with NVIDIA DGX Spark</strong></td>
+          <td>Air-gapped pitch for DPDP-paranoid firms</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">SimpliContract</td><td>Bengaluru</td><td>2020</td>
+          <td>$6.2M · Pre-Series A</td>
+          <td>Enterprise CLM</td>
+          <td>20K+ enterprise users; Flipkart, Byju's, NHS</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">Legistify</td><td>Gurugram</td><td>2015</td>
+          <td>$5M+ · Series A</td>
+          <td>End-to-end legal ops (CLM + litigation + IP + compliance)</td>
+          <td>300+ enterprises · Decathlon, Dabur, Coca-Cola</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">jhana.ai</td><td>Bengaluru</td><td>2022</td>
+          <td>$1.6M + ₹15Cr pre-seed (Together Fund)</td>
+          <td>AI paralegal: citations, memos</td>
+          <td>16M+ judgments indexed; 150+ judges/registrars across 5+ courts</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">Nyayanidhi</td><td>Bengaluru</td><td>2024</td>
+          <td>$2M seed · Nov '25 · 3one4 Capital lead</td>
+          <td>"Litigation OS" — drafting + filings + multilingual</td>
+          <td>Pilots inside HCs; advocate humans-in-loop</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">Provakil</td><td>Pune/Delhi</td><td>2017</td>
+          <td>Grant-only (no big VC)</td>
+          <td>Litigation mgmt + court tracking</td>
+          <td><strong>₹21.8 Cr FY25 rev · 8,000+ courts integrated · 250+ enterprises · 10K advocates.</strong> Clearest litigation-side PMF.</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">CaseMine</td><td>Noida</td><td>2013</td>
+          <td>Bootstrapped</td>
+          <td>AI legal research (CaseIQ)</td>
+          <td>Crossed 10B OpenAI tokens milestone</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">Presolv360</td><td>Mumbai</td><td>2017</td>
+          <td>~$5.8M · Elevation lead Sep '25</td>
+          <td>Online Dispute Resolution</td>
+          <td>35+ enterprise clients; empaneled by HC + Min. of Law</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">MikeLegal</td><td>Gurugram</td><td>2017</td>
+          <td>$292K seed</td>
+          <td>Trademark search/watch/portfolio</td>
+          <td>₹6.47 Cr FY25 rev · Reliance, Glenmark, Airtel, Pidilite</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">DecoverAI</td><td>—</td><td>2024</td>
+          <td>$2M seed · Jul '24 · Leo Capital</td>
+          <td>eDiscovery + "Legal Brain"</td>
+          <td>Early</td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-white">Vakilsearch (Zolvit)</td><td>Chennai</td><td>2010</td>
+          <td>$12M+</td>
+          <td>B2C/SMB compliance, incorporation</td>
+          <td>Largest startup-facing compliance player</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <details class="rounded-xl border border-slate-800 bg-slate-900/30 p-4 mb-6">
+    <summary class="text-sm font-semibold text-slate-200">Bootstrapped / niche / dormant — click to expand</summary>
+    <div class="mt-3 text-sm text-slate-300 space-y-1">
+      <div><strong>PracticeLeague</strong> (Pune) — bootstrapped practice mgmt + CLM; reportedly ~40% of Indian corporate law firms use them. Closest thing to a legacy SaaS for Indian firms.</div>
+      <div><strong>NearLaw</strong> (Mumbai) — bootstrapped AI research + lawyer directory.</div>
+      <div><strong>LegalMind</strong> (Delhi) — bootstrapped litigation analytics, 5M+ docs; CAM Prarambh alumni.</div>
+      <div><strong>Pensieve AI</strong> (Mumbai/Hyderabad) — pre-seed ~$120K; clients incl. ICICI Lombard, Deloitte, K Law, Argus.</div>
+      <div><strong>LawRato</strong>, <strong>NyayGuru</strong>, <strong>Lawyered</strong> — B2C lawyer-discovery/chatbot plays; structurally capped by BCI advertising rules.</div>
+      <div><strong>Riverus</strong> — $348K seed (2019); revenue ₹4.2L FY22 — <span class="text-rose-300">effectively dormant.</span></div>
+    </div>
+  </details>
+
+  <div class="callout callout-blue">
+    <div class="font-semibold text-sky-200 mb-1">The incumbents you have to beat (or co-exist with)</div>
+    <p class="text-sm text-slate-300">
+      <strong>Manupatra</strong> (~25-yr incumbent, ₹29.1 Cr FY25 rev, now shipping "Manupatra.ai") and
+      <strong>SCC Online / EBC</strong> own legal research distribution in Tier 1/2 firms. Pricing is opaque — "multiple lakhs/year" for firm access. Their moat is data + distribution + 20 years of partner-level relationships. <strong>The wedge against them isn't search — it's agentic workflow + drafting.</strong>
+    </p>
+  </div>
+
+  <div class="mt-4 rounded-xl border border-amber-900/40 bg-amber-950/20 p-4">
+    <div class="text-amber-200 font-semibold mb-1">⚠ Foreign incumbents are landing top-down</div>
+    <p class="text-sm text-slate-300">
+      <strong>Harvey</strong> rolled out at <strong>AZB &amp; Partners</strong> globally in Sep 2025 and opened a Bengaluru engineering office.
+      <strong>Legora</strong> is deployed at <strong>Cyril Amarchand Mangaldas</strong>. <strong>Spellbook</strong> is present via self-serve.
+      The Indian Tier-1 ceiling is already being skimmed before you start.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 3: THE BILLABLE HOURS PARADOX -->
+<section id="paradox" class="mb-16">
+  <h2 class="text-2xl font-bold text-white mb-2">3. The billable-hours paradox — why are firms actually buying Harvey? <a href="#paradox" class="anchor-link">#</a></h2>
+  <p class="text-slate-400 mb-6 text-sm">Your sharp question. Here's the sharper answer.</p>
+
+  <div class="callout callout-emerald mb-6">
+    <div class="text-emerald-200 font-semibold mb-1">The one-sentence answer</div>
+    <p class="text-sm text-slate-300">
+      Harvey isn't sold on "save hours" — it's sold on <strong>leverage</strong>: do <em>more matters</em> with the <em>same headcount</em>, capture the productivity delta as profit-per-partner, and pass nothing on to the client. The buyer is the firm's P&amp;L owner (managing partner), not the timekeeping partner.
+    </p>
+  </div>
+
+  <!-- 4 mechanisms -->
+  <h3 class="text-lg font-semibold text-white mb-3">Four mechanisms that resolve the paradox</h3>
+  <div class="grid md:grid-cols-2 gap-4 mb-6">
+    <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+      <div class="text-xs font-bold text-sky-400 uppercase tracking-wider mb-2">1 · Leverage arbitrage</div>
+      <p class="text-sm text-slate-300">A partner runs 4 associates at $600/hr × 2,000 hrs = <span class="num">$4.8M</span> topline. Associates cost ~$300K loaded. Partner pockets ~$3.6M margin. <strong>AI doesn't replace associates — it lets one partner supervise 6–8 associates' worth of output. The delta goes straight to PEP.</strong></p>
+    </div>
+    <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+      <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">2 · Fixed-fee margin capture</div>
+      <p class="text-sm text-slate-300">~70% of AmLaw revenue now comes from AFAs / fixed fees (up from ~20% historically; 96% of 150+ lawyer firms offer them). Under fixed-fee, <strong>efficiency = pure margin.</strong> Quote $500K for diligence, AI cuts work in half → partner pockets the delta.</p>
+    </div>
+    <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+      <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">3 · Realization rate uplift</div>
+      <p class="text-sm text-slate-300">Average realization is ~88% (12% of recorded time never bills due to write-downs). AI helps generate cleaner time entries and tighter matter scoping. Even a <strong>1–2pp uplift on $2M/lawyer = $20–40K/lawyer</strong> — pays back Harvey's seat cost on this line alone.</p>
+    </div>
+    <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+      <div class="text-xs font-bold text-rose-400 uppercase tracking-wider mb-2">4 · The pass-through asymmetry</div>
+      <p class="text-sm text-slate-300">79% of law firms use AI. Only <strong>6% pass savings to clients</strong>. <strong>34% actively charge a premium</strong> for "AI-enhanced work" (Axiom/TR 2026). ABA Opinion 512 forbids surcharges-as-overhead but permits per-document pass-through. <em>Firms pocket the delta, clients pay the same.</em></p>
+    </div>
+  </div>
+
+  <!-- Math table -->
+  <h3 class="text-lg font-semibold text-white mb-3">The math that makes a $24K seat trivial</h3>
+  <div class="rounded-xl border border-slate-800 bg-slate-900/30 overflow-hidden mb-6">
+    <table class="tight w-full text-sm">
+      <thead><tr><th class="text-left">Firm (2025)</th><th>Revenue/lawyer</th><th>Profit/equity partner</th><th>Harvey seat as % of RPL</th></tr></thead>
+      <tbody>
+        <tr><td class="font-semibold text-white">Wachtell</td><td class="num">$5.08M</td><td class="num">$12.15M</td><td class="num">0.47%</td></tr>
+        <tr><td class="font-semibold text-white">Kirkland &amp; Ellis</td><td class="num">$2.55M</td><td class="num">$11.12M</td><td class="num">0.94%</td></tr>
+        <tr><td class="font-semibold text-white">AmLaw 100 avg.</td><td class="text-slate-400">+8.7% YoY</td><td class="text-slate-400">+14% YoY</td><td class="text-slate-400">~1%</td></tr>
+        <tr><td class="font-semibold text-white">Cravath A0 base salary</td><td colspan="3" class="num">$225,000 — a Harvey seat is ~11% of one associate's salary</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pricing -->
+  <h3 class="text-lg font-semibold text-white mb-3">What buyers actually pay</h3>
+  <div class="grid md:grid-cols-3 gap-3 mb-6">
+    <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+      <div class="font-bold text-white">Harvey</div>
+      <div class="text-xs text-slate-400 mt-1">$1,200–$2,000/seat/month list</div>
+      <div class="text-xs text-slate-400">Typical firm ACV: $50K–$200K+; AmLaw deals run to 7 figures</div>
+      <div class="mt-2 num text-lg text-sky-400">~$145K blended ACV</div>
+    </div>
+    <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+      <div class="font-bold text-white">Legora</div>
+      <div class="text-xs text-slate-400 mt-1">~$3K/user/yr list · 10-seat minimum</div>
+      <div class="text-xs text-slate-400">Enterprise: $5K–$8K/user/yr · $250K–$400K for 50-lawyer team</div>
+      <div class="mt-2 num text-lg text-sky-400">~30–50% below Harvey</div>
+    </div>
+    <div class="rounded-lg border border-slate-800 bg-slate-900/40 p-4">
+      <div class="font-bold text-white">Spellbook / CoCounsel SMB</div>
+      <div class="text-xs text-slate-400 mt-1">$99–$300/seat/month</div>
+      <div class="text-xs text-slate-400">Self-serve / sales-light · SMB law firms</div>
+      <div class="mt-2 num text-lg text-sky-400">~10× cheaper than Harvey</div>
+    </div>
+  </div>
+
+  <details class="rounded-xl border border-slate-800 bg-slate-900/30 p-4">
+    <summary class="text-sm font-semibold text-slate-200">Compensation models &amp; AI adoption — why lockstep firms move first</summary>
+    <div class="mt-3 text-sm text-slate-300 space-y-2">
+      <div><strong>Lockstep firms</strong> (Cravath, Wachtell, Davis Polk, Cleary): AI productivity flows uniformly to all partners → low internal friction → fastest firm-wide adoption.</div>
+      <div><strong>Eat-what-you-kill</strong> (Kirkland, Latham, Gibson Dunn): AI creates rainmaker winners and process-partner losers → political friction, strong individual incentives. Fastest at the rainmaker level, slower firm-wide.</div>
+      <div>Both models favor adoption. The structural unsolved problem is the <strong>associate training pipeline</strong> — if AI does first-year work, who becomes a partner in 8 years? Axios (May '26) confirms AmLaw firms slowing intake of summer associates / first-years while increasing senior lateral hires. No firm has publicly cut absolute headcount yet.</div>
+    </div>
+  </details>
+</section>
+
+<!-- SECTION 4: INDIA VIABILITY -->
+<section id="viability" class="mb-16">
+  <h2 class="text-2xl font-bold text-white mb-2">4. The India viability question — your token-cost-vs-billing-rate concern <a href="#viability" class="anchor-link">#</a></h2>
+  <p class="text-slate-400 mb-6 text-sm">You said: "Indian legal firms charge less, token costs are global — selling Harvey at Harvey prices into India seems stupid." You're right. Here's the math.</p>
+
+  <!-- The gap visualized -->
+  <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-5 mb-6">
+    <h3 class="text-lg font-semibold text-white mb-4">The structural unit-economics gap</h3>
+    <div class="overflow-x-auto">
+      <table class="tight w-full text-sm min-w-[700px]">
+        <thead><tr><th class="text-left">Metric</th><th class="text-right">India</th><th class="text-right">US (AmLaw)</th><th class="text-right">Ratio</th></tr></thead>
+        <tbody>
+          <tr><td>Junior associate hourly rate</td><td class="text-right num">$142</td><td class="text-right num">$400–700</td><td class="text-right text-rose-300 num">~4×</td></tr>
+          <tr><td>Senior partner hourly rate</td><td class="text-right num">$348</td><td class="text-right num">$1,500–3,000</td><td class="text-right text-rose-300 num">~6×</td></tr>
+          <tr><td>Managing partner hourly rate</td><td class="text-right num">$458</td><td class="text-right num">$2,000–4,000</td><td class="text-right text-rose-300 num">~5×</td></tr>
+          <tr><td>First-year associate salary</td><td class="text-right num">$22–27K</td><td class="text-right num">$225K</td><td class="text-right text-rose-300 num">~10×</td></tr>
+          <tr><td>Top-firm annual revenue</td><td class="text-right num">~$100–250M (AZB)</td><td class="text-right num">$10.56B (Kirkland)</td><td class="text-right text-rose-300 num">~40–100×</td></tr>
+          <tr><td>OpenAI / Anthropic token cost</td><td class="text-right text-emerald-300">same</td><td class="text-right text-emerald-300">same</td><td class="text-right text-emerald-300 num">1×</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm text-slate-400 mt-3">Indian Tier-1 firms have ~10× thinner absolute margins. A Harvey-priced ($24K/seat) play against an Indian A0 billing at $142/hr is roughly the same <em>percentage</em> of RPL but a much harder <em>absolute</em> spend to justify.</p>
+  </div>
+
+  <h3 class="text-lg font-semibold text-white mb-3">The four India angles, scored</h3>
+
+  <div class="grid md:grid-cols-2 gap-4 mb-6">
+
+    <div class="rounded-xl border border-rose-900/40 bg-rose-950/10 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <div class="font-bold text-white">A · "Harvey for Indian Big Law"</div>
+        <span class="pill chip-red">Don't</span>
+      </div>
+      <p class="text-sm text-slate-300 mb-3">Sell AI copilot to AZB/CAM/Khaitan/Trilegal/SAM at $X/seat/month.</p>
+      <ul class="text-sm text-slate-400 list-disc pl-5 space-y-1">
+        <li>~10 firms × 500–1,000 seats = <span class="num">~7,500 seats</span> total TAM.</li>
+        <li>Realistic seat ceiling: <span class="num">$100–300/seat/month</span> for Indian Tier-1 — ~10× below Harvey's US list.</li>
+        <li>Max revenue pool: <span class="num">~$30–50M ARR</span> — and it's already being captured by Harvey (AZB) and Legora (CAM).</li>
+        <li>Token cost vs. revenue ratio is brutal at this seat price.</li>
+      </ul>
+    </div>
+
+    <div class="rounded-xl border border-amber-900/40 bg-amber-950/10 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <div class="font-bold text-white">B · Volume play to the 2M-advocate long tail</div>
+        <span class="pill chip-amber">Lifestyle, not venture</span>
+      </div>
+      <p class="text-sm text-slate-300 mb-3">"Many more Indian advocates than US lawyers" — sell ₹500–1,500/month to solos.</p>
+      <ul class="text-sm text-slate-400 list-disc pl-5 space-y-1">
+        <li>SMB legal ARPU in India caps at ~<span class="num">₹500–1,500/month</span>.</li>
+        <li>100K paying users × ₹1K/month = <span class="num">₹12 Cr/yr (~$1.5M ARR)</span>.</li>
+        <li>District court advocates earn ₹3–15L/yr → cannot pay SaaS prices reliably; churn brutal.</li>
+        <li>BCI Rule 36 (no advertising) limits B2C marketing motion.</li>
+      </ul>
+    </div>
+
+    <div class="rounded-xl border border-emerald-900/40 bg-emerald-950/10 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <div class="font-bold text-white">C · In-house counsel at Indian conglomerates</div>
+        <span class="pill chip-emerald">Real, but crowded</span>
+      </div>
+      <p class="text-sm text-slate-300 mb-3">CLM / legal ops for Reliance, Tata, Infosys, HDFC, Adani GCs.</p>
+      <ul class="text-sm text-slate-400 list-disc pl-5 space-y-1">
+        <li>200–500 such accounts in India; ₹1–10 Cr/yr legal-tech budgets at the top.</li>
+        <li>TAM cap: <span class="num">$200–500M</span>.</li>
+        <li>Already contested: SpotDraft, SimpliContract, Legistify, MikeLegal — plus Harvey/Legora landing top-down via global parents.</li>
+        <li>SpotDraft has shown the math works; SpotDraft also pivoted to selling <em>outside</em> India for that reason.</li>
+      </ul>
+    </div>
+
+    <div class="rounded-xl border border-sky-900/40 bg-sky-950/10 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <div class="font-bold text-white">D · Litigation OS for the 52M-case backlog</div>
+        <span class="pill chip-blue">Most India-native</span>
+      </div>
+      <p class="text-sm text-slate-300 mb-3">Hearing tracking, vernacular drafting, eCourts integration, NCLT/IBC workflow, e-filing.</p>
+      <ul class="text-sm text-slate-400 list-disc pl-5 space-y-1">
+        <li>Different from Harvey: short docs, structured workflows, lots of caching → <strong>token cost per matter is dramatically lower.</strong></li>
+        <li>Government tailwinds: NJDG open APIs, eCourts mobile app, SC Nov '25 AI white paper.</li>
+        <li>Players in early: Provakil (₹21.8 Cr rev), Nyayanidhi, jhana.ai, LegalMind, Presolv360.</li>
+        <li>Path to scale: enterprise wrap (bank/NBFC litigation portfolios; 1,000s of cases) — not direct-to-advocate SaaS.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="callout callout-emerald mb-6">
+    <div class="font-semibold text-emerald-200 mb-1">The sharpest unlock: bilingual / court-process AI for emerging-market litigation</div>
+    <p class="text-sm text-slate-300">
+      India + Brazil + Indonesia + Philippines + LatAm = a market Harvey explicitly does <em>not</em> serve (it's built for English-language common-law transactional Big Law).
+      Three reasons this works where "Harvey for India" doesn't: <strong>(a)</strong> you can charge multinational corporates in USD,
+      <strong>(b)</strong> volume of matters/lawyer is 10–50× higher in litigation than M&amp;A, so token cost amortizes,
+      <strong>(c)</strong> open-source vernacular models give you a cost advantage Western incumbents won't replicate.
+      No Indian player has gone here yet — the closest is Provakil within India.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 5: TRAPS -->
+<section id="traps" class="mb-16">
+  <h2 class="text-2xl font-bold text-white mb-2">5. Other traps to consider (beyond the cost-gap one) <a href="#traps" class="anchor-link">#</a></h2>
+
+  <div class="space-y-3 mb-6">
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4">
+      <div class="flex items-start gap-3">
+        <span class="pill chip-red mt-1">Trap 1</span>
+        <div>
+          <div class="font-semibold text-white">The Manupatra / SCC Online distribution moat</div>
+          <p class="text-sm text-slate-300 mt-1">25 years of partner-level relationships at every Tier-1/2 Indian firm. Search isn't the wedge — they own it. The only way in is <strong>agentic workflow + drafting</strong>, not "better search." Manupatra has already shipped Manupatra.ai — assume they'll defend.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4">
+      <div class="flex items-start gap-3">
+        <span class="pill chip-red mt-1">Trap 2</span>
+        <div>
+          <div class="font-semibold text-white">Bar Council of India regulatory minefield</div>
+          <p class="text-sm text-slate-300 mt-1">Rule 36 forbids lawyer advertising. BCI cracked down on "legal influencers" in March 2025. <strong>Non-lawyer ownership of law firms is banned</strong> — limits any "AI that practises law" play. Selling B2B SaaS to firms is fine; offering legal services through AI is not.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4">
+      <div class="flex items-start gap-3">
+        <span class="pill chip-red mt-1">Trap 3</span>
+        <div>
+          <div class="font-semibold text-white">Hallucination liability + insurance overhang</div>
+          <p class="text-sm text-slate-300 mt-1">Stanford 2024 study: 33% hallucination on Westlaw AI, 17% on Lexis+. <span class="num">1,436+</span> documented court cases of AI hallucination in legal filings (Damien Charlotin DB). Until regulators settle disclosure norms (BCI is silent, SC issued an Nov 2025 white paper), liability sits with the lawyer — which slows adoption and forces "human-in-loop" UX that caps automation upside.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4">
+      <div class="flex items-start gap-3">
+        <span class="pill chip-red mt-1">Trap 4</span>
+        <div>
+          <div class="font-semibold text-white">DPDP Act compliance for cross-border legal data</div>
+          <p class="text-sm text-slate-300 mt-1">DPDP Rules notified Nov 2025; substantive provisions live May 2027. Significant Data Fiduciaries face localisation + algorithmic accountability + breach notification (₹250 Cr cap). Client-confidential matter data may be deemed sensitive. <strong>Foreign legal-AI products will face friction; on-device/air-gapped offerings (Lexlegis "On-Desk" with NVIDIA DGX Spark) get a tailwind.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4">
+      <div class="flex items-start gap-3">
+        <span class="pill chip-red mt-1">Trap 5</span>
+        <div>
+          <div class="font-semibold text-white">The "Robin AI middle" — getting squeezed top &amp; bottom</div>
+          <p class="text-sm text-slate-300 mt-1">Robin AI raised $71.7M, hit ~$10M ARR, couldn't close a $50M Series C, sold distressed to Scissero in Dec 2025. Contract-review-only point solutions get crushed between Harvey/Legora above and Spellbook ($99/seat) below. <strong>The middle of the legal AI market is a graveyard.</strong> Either go super-cheap self-serve OR super-enterprise — don't sit in the middle.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4">
+      <div class="flex items-start gap-3">
+        <span class="pill chip-red mt-1">Trap 6</span>
+        <div>
+          <div class="font-semibold text-white">Indian firms' slow procurement &amp; trust-led sales</div>
+          <p class="text-sm text-slate-300 mt-1">Indian Tier-1 firms have high willingness-to-pay but glacial procurement (6–12 month cycles, partner consensus required). The 2M long tail has poor willingness-to-pay and demands trust-led sales (Manupatra has reps in 18 cities for a reason). Bottom-up product-led growth, the playbook that worked for Spellbook in the US/Canada, is much harder in India.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4">
+      <div class="flex items-start gap-3">
+        <span class="pill chip-red mt-1">Trap 7</span>
+        <div>
+          <div class="font-semibold text-white">Cheap-labour substitution kills your ROI math</div>
+          <p class="text-sm text-slate-300 mt-1">A $22K/yr Indian A0 doing legal research undercuts most AI tools' ROI vs. the US where the same hour costs $300+. <strong>The labour-cost-replacement pitch that drives Harvey's US sale doesn't translate to India.</strong> You need a different value prop entirely — speed, error rate, vernacular reach — not "save partner time."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4">
+      <div class="flex items-start gap-3">
+        <span class="pill chip-red mt-1">Trap 8</span>
+        <div>
+          <div class="font-semibold text-white">The training-pipeline paradox (long-term)</div>
+          <p class="text-sm text-slate-300 mt-1">Globally, if AI does first-year associate work, who becomes a Big Law partner in 2034? AmLaw firms are quietly slowing summer associate intake. This is an unsolved structural problem. <strong>If your product accelerates this collapse, expect bar associations to push back</strong> — and your TAM forecast assumes the firm structure stays roughly intact, which is increasingly uncertain.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: BOTTOM LINE -->
+<section id="bottom" class="mb-16">
+  <h2 class="text-2xl font-bold text-white mb-2">6. Bottom line — what should you actually do? <a href="#bottom" class="anchor-link">#</a></h2>
+
+  <div class="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950 p-6 mb-6">
+    <h3 class="text-xl font-bold text-white mb-3">The unsentimental verdict</h3>
+    <p class="text-slate-300 mb-4">
+      Your instinct is right: <strong>"Harvey for Indian Big Law" is a doomed wedge</strong> at any pricing that justifies your token costs. The market is too small ($30–50M ARR ceiling), being skimmed top-down by Harvey/Legora, and culturally slow to procure.
+    </p>
+    <p class="text-slate-300 mb-4">
+      But the wider question — "is there an AI legal play out of India?" — has a more nuanced answer. Three paths actually work:
+    </p>
+    <div class="grid md:grid-cols-3 gap-3 mt-4">
+      <div class="rounded-lg bg-slate-800/60 border border-slate-700 p-4">
+        <div class="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-1">Path 1</div>
+        <div class="font-semibold text-white mb-1">India-built, globally sold</div>
+        <p class="text-xs text-slate-400">CLM / contract AI for global in-house teams. The SpotDraft and Sirion model. India is your engineering arbitrage, not your market. Lowest-risk, but most-crowded.</p>
+      </div>
+      <div class="rounded-lg bg-slate-800/60 border border-slate-700 p-4">
+        <div class="text-xs text-sky-300 font-bold uppercase tracking-wider mb-1">Path 2</div>
+        <div class="font-semibold text-white mb-1">Indian litigation-OS, enterprise-wrapped</div>
+        <p class="text-xs text-slate-400">52M pending cases, eCourts/NJDG open data, vernacular drafting, on-device for DPDP. Sell to banks/NBFCs/conglomerates with 1000s of pending matters, not to advocates. Provakil is proving it works.</p>
+      </div>
+      <div class="rounded-lg bg-slate-800/60 border border-slate-700 p-4">
+        <div class="text-xs text-violet-300 font-bold uppercase tracking-wider mb-1">Path 3</div>
+        <div class="font-semibold text-white mb-1">Emerging-market litigation AI</div>
+        <p class="text-xs text-slate-400">India + Brazil + Indonesia + Philippines + LatAm. Vernacular + open-source LLMs + court-process workflow. Charge multinationals in USD. The gap Harvey won't fill. Nobody has shipped this yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second-order questions -->
+  <h3 class="text-lg font-semibold text-white mb-3">Second / third-order questions worth answering before committing</h3>
+  <div class="grid md:grid-cols-2 gap-3">
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4 text-sm">
+      <div class="text-sky-300 font-semibold mb-1">On the customer</div>
+      <ol class="list-decimal pl-5 text-slate-300 space-y-1">
+        <li>Which specific Indian buyer has a budget-line item that already exists (Manupatra renewal, eDiscovery vendor, outside-counsel spend)? You replace a line item, you don't create one.</li>
+        <li>Have you talked to 5 in-house GCs at large Indian corporates AND 5 partners at Tier-1 firms? Their pain rankings differ wildly.</li>
+        <li>What's the procurement cycle and signer at each — and can you sell to them in a way that closes in <90 days?</li>
+      </ol>
+    </div>
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4 text-sm">
+      <div class="text-emerald-300 font-semibold mb-1">On unit economics</div>
+      <ol class="list-decimal pl-5 text-slate-300 space-y-1">
+        <li>What does your gross margin look like with GPT-4-class models at your average matter token cost vs. Llama-class self-hosted? Build the unit economics on both stacks.</li>
+        <li>Per matter, not per seat: what does "one drafted petition" / "one closed contract" cost you in tokens? That's the right denominator.</li>
+        <li>Can you negotiate Anthropic / OpenAI volume discounts at your projected scale? Most Indian players cannot — that's a real moat for incumbents.</li>
+      </ol>
+    </div>
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4 text-sm">
+      <div class="text-amber-300 font-semibold mb-1">On positioning</div>
+      <ol class="list-decimal pl-5 text-slate-300 space-y-1">
+        <li>Are you a tool a firm <em>resells</em> at a markup to clients (best), pays for as cost-of-doing-business (OK), or asks you to justify ROI for (worst)?</li>
+        <li>What's the verb? "AI for legal" loses; "drafts NCLT petitions" / "tracks 200 hearings" / "files trademarks" wins.</li>
+        <li>Does your product survive open-source LLM commoditisation? If your moat is the model, you have no moat.</li>
+      </ol>
+    </div>
+    <div class="rounded-lg border border-slate-800 bg-slate-900/30 p-4 text-sm">
+      <div class="text-rose-300 font-semibold mb-1">On the market</div>
+      <ol class="list-decimal pl-5 text-slate-300 space-y-1">
+        <li>If Manupatra cuts its price 30% and ships AI features in 2027, can your business still exist?</li>
+        <li>If Harvey launches a $300/seat India SKU in 2027 with Indian-law fine-tunes, what's your defense?</li>
+        <li>What's the regulatory event (BCI guidelines, DPDP enforcement) that could either kill you or 10× you? Are you positioned for the right one?</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="mt-8 callout callout-blue">
+    <div class="font-semibold text-sky-200 mb-1">Connection to your prior accounting research</div>
+    <p class="text-sm text-slate-300">
+      The frame from your <span class="mono">AI-Accounting-Landscape-2026</span> report applies cleanly here: <strong>name the verb, build for the picks-and-shovels ACV not the consumer SMB ARPU, and don't sit in the middle of any market.</strong> Legal in India has the same shape as accounting in India — small absolute pool, foreign incumbents skimming the top, fragmented long tail with poor ARPU, opportunity in vertical depth + international sale. The most defensible legal play out of India looks structurally similar to the most defensible accounting play: <em>sell out, not in</em>, or own a vertical the incumbents won't bother with.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-800 mt-12 pt-6 text-xs text-slate-500">
+  <p>Compiled May 15, 2026 from web research across Harvey, Legora, SpotDraft, Tracxn, Inc42, Artificial Lawyer, Above the Law, Thomson Reuters, Grand View Research, NJDG, BCI, DPDP Act notifications, Axiom, BigHand, Sacra, Stanford HAI, and primary source company pages. All funding figures rounded; valuations as of latest disclosed round.</p>
+  <p class="mt-2">Companion to <span class="mono">AI-Accounting-Landscape-2026.html</span> (same working directory).</p>
+</footer>
+
+</main>
+
+</body>
+</html>

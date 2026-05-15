@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Basis (getbasis.ai) — Competitive Intelligence Deep Dive · May 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html, body { background: #08090b; color: #e5e7eb; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; }
+  h2 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.015em; margin: 3.5rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid #27272a; }
+  h3 { font-size: 1.25rem; font-weight: 600; margin: 2rem 0 0.75rem; letter-spacing: -0.01em; }
+  h4 { font-size: 1rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #cbd5e1; }
+  p { line-height: 1.65; margin: 0.6rem 0; color: #d1d5db; }
+  a { color: #93c5fd; text-decoration: none; border-bottom: 1px dotted #334155; }
+  a:hover { color: #bfdbfe; border-bottom-color: #93c5fd; }
+  .container-x { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .stat-num { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .stat-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.4rem; }
+  .stat-card { background: #0f1116; border: 1px solid #1f2937; border-radius: 0.65rem; padding: 1.1rem 1.2rem; }
+  .stat-card .hint { color: #64748b; font-size: 11px; margin-top: 0.3rem; }
+  .chip { display: inline-block; padding: 2px 9px; border-radius: 9999px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.02em; }
+  .chip-conf-h { background: rgba(34,197,94,0.15); color: #86efac; }
+  .chip-conf-m { background: rgba(245,158,11,0.15); color: #fcd34d; }
+  .chip-conf-l { background: rgba(239,68,68,0.15); color: #fca5a5; }
+  .chip-blue { background: rgba(59,130,246,0.18); color: #93c5fd; }
+  .chip-purple { background: rgba(168,85,247,0.18); color: #d8b4fe; }
+  .chip-cyan { background: rgba(6,182,212,0.18); color: #67e8f9; }
+  table.data { width: 100%; border-collapse: collapse; font-size: 13px; margin: 1rem 0; }
+  table.data th { background: #111418; color: #cbd5e1; padding: 9px 11px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #1f2937; }
+  table.data td { padding: 10px 11px; border-bottom: 1px solid #18181b; vertical-align: top; line-height: 1.5; }
+  table.data tr:hover td { background: rgba(255,255,255,0.02); }
+  table.data td.co { font-weight: 600; color: #f1f5f9; white-space: nowrap; }
+  .callout { padding: 1rem 1.2rem; border-radius: 0.55rem; background: #0f1116; border-left: 3px solid #60a5fa; margin: 1.25rem 0; font-size: 14px; }
+  .callout.warn { border-color: #f59e0b; background: rgba(245,158,11,0.05); }
+  .callout.crit { border-color: #ef4444; background: rgba(239,68,68,0.05); }
+  .callout.good { border-color: #10b981; background: rgba(16,185,129,0.05); }
+  .callout.user { border-color: #a855f7; background: rgba(168,85,247,0.07); }
+  .callout strong { color: #f1f5f9; }
+  .nav-strip { position: sticky; top: 0; z-index: 30; background: rgba(8,9,11,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid #1f2937; padding: 0.65rem 0; }
+  .nav-strip a { display: inline-block; padding: 0.3rem 0.7rem; margin-right: 0.25rem; font-size: 12.5px; color: #cbd5e1; border: 1px solid #1f2937; border-radius: 0.4rem; background: #0f1116; }
+  .nav-strip a:hover { background: #1f2937; color: #fff; border-color: #334155; }
+  .pill-funding { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; background: #161a20; padding: 1px 6px; border-radius: 4px; font-size: 11.5px; color: #fcd34d; }
+  .pill-val { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; background: #1c1530; padding: 1px 6px; border-radius: 4px; font-size: 11.5px; color: #d8b4fe; }
+  .pill-arr { font-family: ui-monospace, monospace; background: #112a17; padding: 1px 6px; border-radius: 4px; font-size: 11.5px; color: #6ee7b7; }
+  details { background: #0f1116; border: 1px solid #1f2937; border-radius: 0.5rem; padding: 0.75rem 1rem; margin: 0.75rem 0; }
+  details summary { cursor: pointer; font-weight: 600; color: #e5e7eb; font-size: 13.5px; }
+  details[open] summary { margin-bottom: 0.6rem; padding-bottom: 0.5rem; border-bottom: 1px solid #1f2937; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; }
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    h1 { font-size: 1.85rem; }
+    h2 { font-size: 1.4rem; }
+    table.data { font-size: 12px; }
+    table.data th, table.data td { padding: 7px 7px; }
+  }
+  .founder-card { background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(99,102,241,0.04)); border: 1px solid #1e293b; border-radius: 0.7rem; padding: 1.2rem; }
+  .founder-name { font-size: 1.15rem; font-weight: 700; color: #f1f5f9; }
+  .founder-role { font-size: 12px; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.7rem; }
+  .timeline-item { font-size: 13px; color: #cbd5e1; padding: 0.3rem 0; border-left: 2px solid #1f2937; padding-left: 0.7rem; margin-left: 0.2rem; }
+  .timeline-item strong { color: #f1f5f9; }
+  .timeline-item .yr { color: #64748b; font-family: monospace; font-size: 11px; display: inline-block; min-width: 50px; }
+  .logo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.6rem; }
+  .logo-cell { background: #0f1116; border: 1px solid #1f2937; padding: 0.7rem 0.9rem; border-radius: 0.45rem; }
+  .logo-cell .firm-name { font-weight: 600; color: #f1f5f9; font-size: 13px; }
+  .logo-cell .firm-meta { color: #64748b; font-size: 11px; margin-top: 0.2rem; }
+  .quote { background: #0f1116; border-left: 2px solid #3b82f6; padding: 0.7rem 1rem; margin: 0.75rem 0; font-size: 13.5px; color: #cbd5e1; font-style: italic; }
+  .quote .attribution { display: block; margin-top: 0.4rem; font-style: normal; color: #64748b; font-size: 11.5px; }
+  .hero-grad { background: radial-gradient(ellipse at top left, rgba(59,130,246,0.14), transparent 50%), radial-gradient(ellipse at bottom right, rgba(168,85,247,0.10), transparent 50%); }
+  ul { padding-left: 1.25rem; line-height: 1.65; color: #d1d5db; }
+  li { margin: 0.35rem 0; }
+  .agent-card { background: #0f1116; border: 1px solid #1f2937; border-radius: 0.55rem; padding: 0.85rem 1rem; margin: 0.5rem 0; }
+  .agent-name { font-weight: 600; color: #f1f5f9; font-size: 13.5px; }
+  .agent-verb { color: #67e8f9; font-size: 12px; margin-top: 0.2rem; }
+  .agent-desc { color: #94a3b8; font-size: 12.5px; margin-top: 0.4rem; line-height: 1.5; }
+  .vs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #1f2937; border-radius: 0.55rem; overflow: hidden; margin: 0.6rem 0; }
+  .vs-row > div { padding: 0.8rem 1rem; font-size: 13px; }
+  .vs-row > div:first-child { background: rgba(59,130,246,0.06); color: #93c5fd; border-right: 1px solid #1f2937; }
+  .vs-row > div:last-child { color: #cbd5e1; }
+</style>
+</head>
+<body class="hero-grad">
+
+<header class="container-x pt-12 pb-6">
+  <div class="text-xs text-slate-400 tracking-widest uppercase mb-3">Competitive Intelligence · Single-Company Deep Dive · May 14, 2026</div>
+  <h1>Basis <span class="text-blue-400 font-normal">(getbasis.ai)</span></h1>
+  <p class="mt-3 text-lg text-slate-400 max-w-3xl">The $1.15B AI-agent platform for US Top 25 accounting firms. Founded NYC 2023 by two non-accountants from Goldman/Puzzle and Harvard/BCG. Why they're winning, what they're really selling, and what it means for an Indian bootstrap founder.</p>
+</header>
+
+<nav class="nav-strip">
+  <div class="container-x">
+    <a href="#tldr">TL;DR</a>
+    <a href="#stats">Stats</a>
+    <a href="#funding">Funding</a>
+    <a href="#founders">Founders</a>
+    <a href="#product">Product</a>
+    <a href="#customers">Customers</a>
+    <a href="#sales">Sales &amp; Pricing</a>
+    <a href="#tech">Tech Stack</a>
+    <a href="#narrative">Narrative</a>
+    <a href="#thesis">Investor Thesis</a>
+    <a href="#competition">Competition</a>
+    <a href="#vulnerabilities">Vulnerabilities</a>
+    <a href="#takeaway">What This Means for You</a>
+    <a href="#sources">Sources</a>
+  </div>
+</nav>
+
+<main class="container-x py-8">
+
+<!-- ====== TL;DR ====== -->
+<section id="tldr">
+<h2>TL;DR — Six Things to Know About Basis</h2>
+
+<div class="callout">
+<strong>1. Capital scale: $138M raised in 28 months, $1.15B valuation.</strong> Seed $3.6M Oct '23 (Better Tomorrow) → Series A $34M Dec '24 (Khosla/Rabois) → Series B $100M Feb '26 (Accel + GV). Angels include Lloyd Blankfein (former Goldman CEO), Jeff Dean (Google DeepMind), Noam Brown (OpenAI o1 lead), Adam D'Angelo, Aaron Levie, Clem Delangue, Amjad Masad. This is the most heavily-funded AI accounting company in the world.
+</div>
+
+<div class="callout">
+<strong>2. Founders are NOT accountants.</strong> Matt Harpe (CEO): Harvard → BCG → SoftBank Vision Fund. Mitch Troyanovsky (co-founder): Babson Finance → Goldman PM → Puzzle PM. Classic "smart finance/consulting operator who saw the pain" archetype — closer to Ramp/Brex template than to Karbon/FloQast template. Mitch's stint at Puzzle (an AI bookkeeping startup) is the unique edge: he saw the accounting workflow up close before founding.
+</div>
+
+<div class="callout good">
+<strong>3. The wedge: long-horizon AI agents for US Top 25 accounting firms, across CAS + Tax + Audit + Advisory.</strong> Hero demo: an autonomous agent that completes a 1065 partnership tax return end-to-end. ~30% of US Top 25 firms and ~20% of Top 150 are customers. Named: Baker Tilly (Top 10), Wiss, UHY, BPB, Boulay, Clark Nuber, MarksNelson, Pinion, WilkinGuttenplan, Abacus CPAs.
+</div>
+
+<div class="callout warn">
+<strong>4. Sales motion: forward-deployed engineers (Palantir-style), 6+ month enterprise pilots.</strong> Basis hires a "Deployed Intelligence" team that "parachutes into customer organizations" to redesign workflows around their agents. Enterprise contract pricing — never disclosed publicly. Sales role compensation ranges suggest very high ACVs (likely $200K–$1M+ per Top-25 firm). <em>This is the OPPOSITE of self-serve.</em>
+</div>
+
+<div class="callout warn">
+<strong>5. OpenAI-exclusive stack — single-vendor dependency.</strong> Built on OpenAI o3, o3-Pro, GPT-4.1, GPT-5. No public mention of Anthropic/Claude or any other model provider. They run their own evals (claim 100% on internal tool-calling benchmark with GPT-5). Whether this is a strategic advantage (deep integration) or a strategic risk (single-vendor) depends on your view of OpenAI's trajectory.
+</div>
+
+<div class="callout user">
+<strong>6. What this means for you (Indian bootstrap founder):</strong> Basis is the photo-negative of what you should build. They sell to NYC enterprise buyers with 6-month pilots, $138M war chest, US-only tax forms (1040/1065/1120), and forward-deployed engineering services. You have weeks-to-revenue, India network, no accounting credential, no enterprise capital. Their playbook does not transfer. <strong>But their existence creates a different opportunity for you — see <a href="#takeaway">the takeaway section</a>.</strong>
+</div>
+</section>
+
+<!-- ====== Quick Stats ====== -->
+<section id="stats">
+<h2>Quick Stats</h2>
+<div class="grid-4">
+  <div class="stat-card"><div class="stat-num">$1.15B</div><div class="stat-label">Series B valuation (Feb 2026)</div><div class="hint">Accel + GV led</div></div>
+  <div class="stat-card"><div class="stat-num">$138M</div><div class="stat-label">Total raised over 3 rounds</div><div class="hint">In 28 months</div></div>
+  <div class="stat-card"><div class="stat-num">~141</div><div class="stat-label">Employees (LinkedIn, May 2026)</div><div class="hint">NYC Flatiron HQ; 5-day in-office</div></div>
+  <div class="stat-card"><div class="stat-num">~30%</div><div class="stat-label">of US Top 25 accounting firms are customers</div><div class="hint">Plus ~20% of Top 150</div></div>
+  <div class="stat-card"><div class="stat-num">2023</div><div class="stat-label">Founded</div><div class="hint">By 2 long-time friends</div></div>
+  <div class="stat-card"><div class="stat-num">15→5</div><div class="stat-label">Days for month-end close at Wiss after Basis</div><div class="hint">~3× speedup, founder-cited</div></div>
+  <div class="stat-card"><div class="stat-num">20–50%</div><div class="stat-label">Efficiency gain claim across practices</div><div class="hint">~30% time savings is the most-repeated figure</div></div>
+  <div class="stat-card"><div class="stat-num">~25%</div><div class="stat-label">of staff have accounting backgrounds</div><div class="hint">Big 4, controllers — paired with engineers</div></div>
+</div>
+</section>
+
+<!-- ====== Funding Timeline ====== -->
+<section id="funding">
+<h2>Funding Trajectory — 28 Months, $138M, 3 Rounds</h2>
+
+<div class="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5 my-6 overflow-x-auto">
+<svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;min-width:760px;font-family:inherit">
+  <defs>
+    <linearGradient id="growGrad" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Axis -->
+  <line x1="100" y1="280" x2="940" y2="280" stroke="#475569" stroke-width="1.5"/>
+  <text x="100" y="305" fill="#94a3b8" font-size="11">Oct 2023</text>
+  <text x="500" y="305" fill="#94a3b8" font-size="11">Dec 2024</text>
+  <text x="880" y="305" fill="#94a3b8" font-size="11">Feb 2026</text>
+  <text x="100" y="325" fill="#64748b" font-size="10">Seed</text>
+  <text x="500" y="325" fill="#64748b" font-size="10">Series A</text>
+  <text x="880" y="325" fill="#64748b" font-size="10">Series B</text>
+
+  <!-- Round 1: Seed -->
+  <circle cx="120" cy="280" r="8" fill="#3b82f6"/>
+  <line x1="120" y1="272" x2="120" y2="240" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="120" y="225" fill="#93c5fd" font-size="13" font-weight="700" text-anchor="middle">$3.6M</text>
+  <text x="120" y="206" fill="#cbd5e1" font-size="11" text-anchor="middle">Better Tomorrow Ventures</text>
+  <text x="120" y="190" fill="#94a3b8" font-size="10" text-anchor="middle">BoxGroup, Avid + "top accounting firms"</text>
+
+  <!-- Round 2: Series A -->
+  <circle cx="520" cy="280" r="11" fill="#6366f1"/>
+  <line x1="520" y1="269" x2="520" y2="160" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="520" y="145" fill="#a5b4fc" font-size="15" font-weight="700" text-anchor="middle">$34M</text>
+  <text x="520" y="125" fill="#cbd5e1" font-size="11" text-anchor="middle">Khosla Ventures (Keith Rabois lead)</text>
+  <text x="520" y="108" fill="#94a3b8" font-size="10" text-anchor="middle">Nat Friedman, Daniel Gross, Larry Summers,</text>
+  <text x="520" y="94" fill="#94a3b8" font-size="10" text-anchor="middle">Jeff Dean (DeepMind), Noam Brown (OpenAI o1)</text>
+
+  <!-- Round 3: Series B -->
+  <circle cx="880" cy="280" r="15" fill="#a855f7"/>
+  <line x1="880" y1="265" x2="880" y2="70" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="880" y="55" fill="#d8b4fe" font-size="18" font-weight="800" text-anchor="middle">$100M</text>
+  <text x="880" y="36" fill="#f5d0fe" font-size="13" font-weight="700" text-anchor="middle">@ $1.15B valuation</text>
+  <text x="800" y="100" fill="#cbd5e1" font-size="11">Accel (Miles Clements) led; GV co-led</text>
+  <text x="800" y="116" fill="#94a3b8" font-size="10">Lloyd Blankfein, Khosla doubling, NFDG,</text>
+  <text x="800" y="130" fill="#94a3b8" font-size="10">Adam D'Angelo, Aaron Levie, Clem Delangue,</text>
+  <text x="800" y="144" fill="#94a3b8" font-size="10">Amjad Masad, Jeff Dean repeat</text>
+
+  <!-- Growth curve -->
+  <path d="M 120 280 Q 320 270 520 250 Q 700 200 880 90" fill="none" stroke="url(#growGrad)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- Total Annotation -->
+  <text x="500" y="360" fill="#cbd5e1" font-size="14" font-weight="600" text-anchor="middle">Total: $138M · 28 months · Most-funded AI accounting company</text>
+</svg>
+</div>
+
+<table class="data">
+<thead><tr><th>Round</th><th>Date</th><th>Amount</th><th>Valuation</th><th>Lead</th><th>Notable Participants</th></tr></thead>
+<tbody>
+<tr>
+  <td class="co">Seed</td>
+  <td>Oct 23, 2023</td>
+  <td><span class="pill-funding">$3.6M</span></td>
+  <td>Undisclosed</td>
+  <td>Better Tomorrow Ventures (Sheel Mohnot)</td>
+  <td>BoxGroup, Avid Ventures, <em>"several top accounting firms" as strategic LPs</em></td>
+</tr>
+<tr>
+  <td class="co">Series A</td>
+  <td>Dec 18, 2024</td>
+  <td><span class="pill-funding">$34M</span></td>
+  <td>Undisclosed</td>
+  <td>Khosla Ventures (Keith Rabois)</td>
+  <td>Nat Friedman, Daniel Gross, Larry Summers, <strong>Jeff Dean (DeepMind chief scientist)</strong>, <strong>Noam Brown (OpenAI o1 lead)</strong>, Jack Altman, Vinod Khosla</td>
+</tr>
+<tr>
+  <td class="co">Series B</td>
+  <td>Feb 24, 2026</td>
+  <td><span class="pill-funding">$100M</span></td>
+  <td><span class="pill-val">$1.15B</span></td>
+  <td>Accel (Miles Clements)</td>
+  <td>GV co-led; <strong>Lloyd Blankfein</strong> (ex-Goldman CEO), Khosla doubling down, NFDG, BTV, BoxGroup, Avid; angels: Adam D'Angelo (Quora), Amjad Masad (Replit), Clem Delangue (Hugging Face), Aaron Levie (Box), Jeff Dean repeat</td>
+</tr>
+</tbody>
+</table>
+
+<div class="callout">
+<strong>Pattern worth noting:</strong> Series A was loaded with <em>AI-lab insiders</em> (Jeff Dean, Noam Brown, Daniel Gross, Nat Friedman). These are people who get unique insight into where the models are going. They bet on Basis 14 months before the unicorn round. <em>If your wedge requires bleeding-edge LLM capability, having investors with private model access is a non-trivial unfair advantage.</em>
+</div>
+</section>
+
+<!-- ====== Founders ====== -->
+<section id="founders">
+<h2>Founders</h2>
+
+<div class="grid-2">
+
+<div class="founder-card">
+<div class="founder-role">Co-founder &amp; CEO</div>
+<div class="founder-name">Matt Harpe</div>
+<p class="text-sm text-slate-400 mt-1">linkedin.com/in/matt-harpe</p>
+
+<div class="mt-4">
+<div class="timeline-item"><span class="yr">2015–19</span> <strong>Harvard University</strong> — undergrad. Member, Harvard College Consulting Group.</div>
+<div class="timeline-item"><span class="yr">2019–22</span> <strong>Boston Consulting Group</strong> — healthcare + data science projects.</div>
+<div class="timeline-item"><span class="yr">2022–23</span> <strong>SoftBank Investment Advisers</strong> — Vision Fund world.</div>
+<div class="timeline-item"><span class="yr">2023–</span> <strong>Basis</strong> — co-founder &amp; CEO.</div>
+</div>
+
+<p class="mt-4 text-sm text-slate-400"><strong>Stated origin moment:</strong> At BCG he noticed "how rare it was for organizations to leverage granular accounting data in their decision-making."</p>
+</div>
+
+<div class="founder-card">
+<div class="founder-role">Co-founder · ML &amp; Product Lead</div>
+<div class="founder-name">Mitchell ("Mitch") Troyanovsky</div>
+<p class="text-sm text-slate-400 mt-1">linkedin.com/in/mitchelltroyanovsky</p>
+
+<div class="mt-4">
+<div class="timeline-item"><span class="yr">2015–19</span> <strong>Babson College</strong> — B.S. Finance.</div>
+<div class="timeline-item"><span class="yr">2019–21</span> <strong>Goldman Sachs</strong> — Product Manager, Marquee Portfolio Analytics.</div>
+<div class="timeline-item"><span class="yr">2021–22</span> <strong>Puzzle</strong> — Product Manager at the AI-native bookkeeping startup. <span class="text-amber-300">⚡ unique edge</span></div>
+<div class="timeline-item"><span class="yr">2023–</span> <strong>Basis</strong> — co-founder.</div>
+</div>
+
+<p class="mt-4 text-sm text-slate-400"><strong>Public persona:</strong> Gives technical talks on "Ontologies, Evals &amp; Deployed Intelligence." Frames Basis as an ML/agent-infra company, not a SaaS app.</p>
+</div>
+
+</div>
+
+<div class="callout">
+<strong>Founder profile read:</strong> NOT ex-accountants. NOT ex-Big-4. NOT ex-Big-Tech-engineers either. This is the "smart finance/consulting operator who saw the pain" archetype — Goldman + BCG + SoftBank gives them (a) capital network, (b) executive credibility to walk into Top-25 firm partner offices, (c) BCG-trained narrative discipline. Mitch's Puzzle stint matters enormously — he had a one-year tour of duty inside an AI bookkeeping startup before founding his own. <em>If you were a Top-25 firm partner deciding whom to trust with your firm's tech stack, this background reads as low-risk-elite.</em>
+</div>
+
+<h4>Other named team</h4>
+<ul>
+<li><strong>Kenji Kuramoto</strong> — Managing Partner In-Residence. Former founder of Acuity (accounting firm). Brings firm-side domain credibility for selling into firm leadership.</li>
+<li>No publicly disclosed CTO, VP Sales, VP Product, or CFO. The "Agent Manager" role they're inventing suggests they may be deliberately NOT hiring traditional VP-of-X roles.</li>
+<li>~25% of staff have accounting backgrounds (Big 4, controllers, etc.); the rest are engineers + ML researchers.</li>
+<li>No public evidence of marquee hires from Intuit, Big 4 leadership, Karbon, FloQast, or direct competitors.</li>
+</ul>
+</section>
+
+<!-- ====== Product ====== -->
+<section id="product">
+<h2>Product — What Basis Actually Ships</h2>
+
+<p>Basis evolved from two named products (<em>Basis Intern</em> + <em>Basis Accountant</em>) at seed stage into a unified multi-agent platform. The architecture is supervisor-and-sub-agents on OpenAI's reasoning models.</p>
+
+<h3>Architecture</h3>
+<div class="bg-zinc-950/50 border border-zinc-800 rounded-xl p-5 my-6 overflow-x-auto">
+<svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;min-width:760px;font-family:inherit">
+  <!-- Supervisor at top -->
+  <rect x="380" y="30" width="240" height="70" rx="10" fill="#1e3a8a" stroke="#3b82f6" stroke-opacity="0.7"/>
+  <text x="500" y="60" fill="#bfdbfe" font-size="14" font-weight="700" text-anchor="middle">Supervising Agent</text>
+  <text x="500" y="80" fill="#93c5fd" font-size="11" text-anchor="middle">GPT-5 reasoning · routes &amp; orchestrates</text>
+
+  <!-- Lines from supervisor to sub-agents -->
+  <line x1="500" y1="100" x2="160" y2="170" stroke="#475569" stroke-width="1.5"/>
+  <line x1="500" y1="100" x2="340" y2="170" stroke="#475569" stroke-width="1.5"/>
+  <line x1="500" y1="100" x2="500" y2="170" stroke="#475569" stroke-width="1.5"/>
+  <line x1="500" y1="100" x2="660" y2="170" stroke="#475569" stroke-width="1.5"/>
+  <line x1="500" y1="100" x2="840" y2="170" stroke="#475569" stroke-width="1.5"/>
+
+  <!-- Sub-agents row -->
+  <g>
+    <rect x="60" y="170" width="200" height="64" rx="8" fill="#0f1116" stroke="#3b82f6" stroke-opacity="0.4"/>
+    <text x="160" y="195" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle">1065 Partnership Tax</text>
+    <text x="160" y="212" fill="#94a3b8" font-size="10.5" text-anchor="middle">Hero demo — autonomous</text>
+    <text x="160" y="226" fill="#94a3b8" font-size="10.5" text-anchor="middle">10–15 hr workbook → autonomous</text>
+  </g>
+  <g>
+    <rect x="265" y="170" width="155" height="64" rx="8" fill="#0f1116" stroke="#3b82f6" stroke-opacity="0.4"/>
+    <text x="342" y="195" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle">Reconciliation</text>
+    <text x="342" y="212" fill="#94a3b8" font-size="10.5" text-anchor="middle">+ journal entries</text>
+    <text x="342" y="226" fill="#94a3b8" font-size="10.5" text-anchor="middle">"debugs difficult recs"</text>
+  </g>
+  <g>
+    <rect x="425" y="170" width="150" height="64" rx="8" fill="#0f1116" stroke="#3b82f6" stroke-opacity="0.4"/>
+    <text x="500" y="195" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle">Month-End Close</text>
+    <text x="500" y="212" fill="#94a3b8" font-size="10.5" text-anchor="middle">15 days → 5 days</text>
+    <text x="500" y="226" fill="#94a3b8" font-size="10.5" text-anchor="middle">(Wiss case)</text>
+  </g>
+  <g>
+    <rect x="580" y="170" width="170" height="64" rx="8" fill="#0f1116" stroke="#3b82f6" stroke-opacity="0.4"/>
+    <text x="665" y="195" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle">Audit Testing</text>
+    <text x="665" y="212" fill="#94a3b8" font-size="10.5" text-anchor="middle">workpapers + evidence</text>
+    <text x="665" y="226" fill="#94a3b8" font-size="10.5" text-anchor="middle">cross-referencing</text>
+  </g>
+  <g>
+    <rect x="755" y="170" width="185" height="64" rx="8" fill="#0f1116" stroke="#3b82f6" stroke-opacity="0.4"/>
+    <text x="847" y="195" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle">Tech Accounting Memos</text>
+    <text x="847" y="212" fill="#94a3b8" font-size="10.5" text-anchor="middle">+ doc classification</text>
+    <text x="847" y="226" fill="#94a3b8" font-size="10.5" text-anchor="middle">+ data extraction</text>
+  </g>
+
+  <!-- Context layer -->
+  <rect x="60" y="260" width="880" height="60" rx="8" fill="rgba(168,85,247,0.06)" stroke="#a855f7" stroke-opacity="0.4"/>
+  <text x="500" y="284" fill="#d8b4fe" font-size="13" font-weight="700" text-anchor="middle">Central Context Layer</text>
+  <text x="500" y="304" fill="#cbd5e1" font-size="11" text-anchor="middle">Surfaces assumptions, data sources, decision logic, confidence levels → "reviewable reasoning"</text>
+
+  <!-- Models row -->
+  <rect x="60" y="340" width="880" height="60" rx="8" fill="rgba(34,197,94,0.05)" stroke="#10b981" stroke-opacity="0.4"/>
+  <text x="500" y="364" fill="#6ee7b7" font-size="13" font-weight="700" text-anchor="middle">Model Stack — OpenAI exclusive</text>
+  <text x="500" y="384" fill="#cbd5e1" font-size="11" text-anchor="middle">o3 · o3-Pro · GPT-4.1 · GPT-5  ·  100% claim on internal tool-calling benchmark</text>
+</svg>
+</div>
+
+<h3>Agent Catalog</h3>
+
+<div class="agent-card">
+<div class="agent-name">Supervising Agent <span class="chip chip-conf-h">HIGH</span></div>
+<div class="agent-verb">orchestrate — reviews supporting materials, retrieves data, routes to sub-agents</div>
+<div class="agent-desc">Originally on OpenAI o3, migrated to GPT-5. Coordinates the entire engagement. Per Mitch: <em>"It's closer to delegating an entire engagement to a team member than asking a chatbot a question."</em></div>
+</div>
+
+<div class="agent-card">
+<div class="agent-name">1065 Partnership Tax Agent <span class="chip chip-conf-h">HIGH</span></div>
+<div class="agent-verb">prepare — completes end-to-end partnership tax return autonomously</div>
+<div class="agent-desc">The hero demo. First publicly demonstrated AI agent to complete an entire 1065 return autonomously, including state-specific filings. Cuts a 10–15 hour partnership-return workbook to autonomous run. Per Mitch: <em>"A partnership return is a long, interconnected workflow where every number has to be consistent across the entire workbook."</em></div>
+</div>
+
+<div class="agent-card">
+<div class="agent-name">Month-End Close Agent <span class="chip chip-conf-h">HIGH</span></div>
+<div class="agent-verb">close — automate the month-end book-closing workflow</div>
+<div class="agent-desc">Live at Wiss. Reduced close time from 15 days to 5 days per founder-cited case study.</div>
+</div>
+
+<div class="agent-card">
+<div class="agent-name">Reconciliation &amp; Journal Entry Agent <span class="chip chip-conf-h">HIGH</span></div>
+<div class="agent-verb">reconcile — builds complex journal entries, debugs reconciliations</div>
+<div class="agent-desc">Live; mentioned prominently in Series B announcement blog.</div>
+</div>
+
+<div class="agent-card">
+<div class="agent-name">Audit Testing &amp; Workpaper Agent <span class="chip chip-conf-m">MEDIUM</span></div>
+<div class="agent-verb">test — audit procedures, workpaper generation, evidence cross-referencing</div>
+<div class="agent-desc">Live in audit-practice deployments. Structured outputs aligned with firm documentation standards.</div>
+</div>
+
+<div class="agent-card">
+<div class="agent-name">Technical Accounting Memo Agent <span class="chip chip-conf-h">HIGH</span></div>
+<div class="agent-verb">draft — prepares technical accounting memos</div>
+<div class="agent-desc">Live; called out specifically in Series B blog.</div>
+</div>
+
+<div class="agent-card">
+<div class="agent-name">Atlas — Internal-Only "Agents-Building-Agents" Team <span class="chip chip-conf-h">HIGH</span></div>
+<div class="agent-verb">make every employee 100× more productive (internal)</div>
+<div class="agent-desc">Not customer-facing. A separate Basis team builds agents that automate internal eng/sales/talent work. Their flagship internal agent <strong>Clueso</strong> autonomously resolves 78% of internal bugs on first pass. Atlas is also a recruiting hook — "come work where you can build agents that replace human ops."</div>
+</div>
+
+<div class="callout">
+<strong>Architecture insight:</strong> The Central Context Layer is the most differentiated piece. Every agent output surfaces assumptions, data sources, decision logic, and confidence levels. They call this "reviewable reasoning" — the audit trail an accountant needs to sign off. This is where the "doers into reviewers" tagline becomes concrete. Without it, no firm partner would trust an autonomous agent on a billable engagement.
+</div>
+</section>
+
+<!-- ====== Customers ====== -->
+<section id="customers">
+<h2>Customers — Named Firms</h2>
+
+<div class="logo-grid mb-4">
+  <div class="logo-cell">
+    <div class="firm-name">Baker Tilly</div>
+    <div class="firm-meta">Top 10 US firm · Strategic partner Apr '26</div>
+  </div>
+  <div class="logo-cell">
+    <div class="firm-name">Wiss</div>
+    <div class="firm-meta">Regional · CEO Paul Peterson on homepage · 15→5 day close</div>
+  </div>
+  <div class="logo-cell">
+    <div class="firm-name">UHY</div>
+    <div class="firm-meta">Top 25 · Principal Pamela Kleinschmidt testimonial</div>
+  </div>
+  <div class="logo-cell">
+    <div class="firm-name">Berkowitz Pollack Brant (BPB)</div>
+    <div class="firm-meta">Mid-tier · Principal Andrew J. Leonard quote</div>
+  </div>
+  <div class="logo-cell">
+    <div class="firm-name">Boulay PLLP</div>
+    <div class="firm-meta">Mid-tier · CIO Peter Anderson quote</div>
+  </div>
+  <div class="logo-cell">
+    <div class="firm-name">Clark Nuber PS</div>
+    <div class="firm-meta">Regional · Partner Matt Sutorius quote</div>
+  </div>
+  <div class="logo-cell">
+    <div class="firm-name">MarksNelson</div>
+    <div class="firm-meta">Regional · Homepage logo</div>
+  </div>
+  <div class="logo-cell">
+    <div class="firm-name">Pinion LLC</div>
+    <div class="firm-meta">Top 200 · Homepage logo</div>
+  </div>
+  <div class="logo-cell">
+    <div class="firm-name">WilkinGuttenplan</div>
+    <div class="firm-meta">Regional · Homepage logo</div>
+  </div>
+  <div class="logo-cell">
+    <div class="firm-name">Abacus CPAs</div>
+    <div class="firm-meta">Smaller firm · LinkedIn-confirmed onboarding</div>
+  </div>
+</div>
+
+<h4>Aggregate disclosure</h4>
+<ul>
+<li><span class="chip chip-conf-h">HIGH</span> ~<strong>30% of US Top 25</strong> accounting firms</li>
+<li><span class="chip chip-conf-h">HIGH</span> ~<strong>20% of US Top 150</strong> accounting firms</li>
+<li><span class="chip chip-conf-h">HIGH</span> No publicly named Big 4 customer yet (this is meaningful — Big 4 are building internally with their own AI initiatives)</li>
+<li><span class="chip chip-conf-m">MEDIUM</span> Customer tier skews Top-25-to-Top-150 mid-market and large regional firms</li>
+</ul>
+
+<h4>The Wiss case (most-cited example)</h4>
+<div class="quote">
+Wiss started a beta in CAS practice in Nov 2023, expanded to full CAS rollout in 2024, and has been progressively expanding to other departments. They cut month-end close from 15 days to 5 days. CEO Paul Peterson features on Basis's homepage describing it as "the most powerful accounting AI."
+<span class="attribution">Source: Wiss + Basis joint press release Sep 2024</span>
+</div>
+
+<h4>The Baker Tilly partnership (most strategic)</h4>
+<p>Announced April 29, 2026 — just <strong>two months after the Series B</strong>. Baker Tilly is a US Top 10 firm; the partnership covers rolling Basis across Baker Tilly's accounting &amp; finance managed services practice. <em>This is the largest single firm-tier they've landed and a clear signal of upmarket momentum post-Series B.</em></p>
+
+<div class="callout">
+<strong>Customer concentration risk read:</strong> ~30% of Top 25 = ~8 firms. ~20% of Top 150 = ~30 firms. So ~30 customers carrying $1.15B valuation. ACV must be substantial — almost certainly $200K–$1M+ per firm at Top 25 tier, given the forward-deployed engineering model. Loss of 2–3 Top 25 logos would be very visible.
+</div>
+</section>
+
+<!-- ====== Sales & Pricing ====== -->
+<section id="sales">
+<h2>Sales Motion &amp; Pricing</h2>
+
+<div class="grid-2">
+
+<div>
+<h4>Sales motion</h4>
+<ul>
+<li><strong>Direct enterprise.</strong> Job board shows: Enterprise AE, Sales Leader, Sales Manager, GTM Associate, Revenue Ops Leader, Intelligence Architect, Senior Engineering Recruiter.</li>
+<li><strong>"Deployed Intelligence" forward-deployed engineering team.</strong> Basis calls them people who "parachute into customer organizations, learn their unique context, and give them the tools to redesign their accounting workflows around intelligent agents." <em>This is the Palantir/Scale AI services model.</em></li>
+<li><strong>Pilot path (Wiss model):</strong> Beta in one practice area (CAS) → 6+ months → full practice rollout → expand to other practice areas. Multi-quarter sales cycle.</li>
+<li><strong>Domain credibility via Kenji Kuramoto</strong> (Managing Partner In-Residence, ex-Acuity founder) — opens conversations with firm partners.</li>
+<li><strong>Strategic accounting-firm LPs in seed round</strong> — likely provided early design partners and warm intros.</li>
+</ul>
+</div>
+
+<div>
+<h4>Pricing (inferred — none publicly disclosed)</h4>
+<ul>
+<li><span class="chip chip-conf-l">LOW</span> No published pricing anywhere — website, G2, Capterra, reviews all blank.</li>
+<li>Almost certainly <strong>enterprise contract pricing</strong>, given (a) sales-led role mix, (b) "parachute into customer organizations" deployment, (c) Top-25-firm customer base.</li>
+<li>Sales-role compensation listings reference <strong>$100K–$400K total comp</strong> for AE roles — implies large ACVs and meaningful commissions.</li>
+<li>Likely ACV range: <strong>$200K–$1M+ per firm</strong> for Top-25 tier; possibly lower for regional firms.</li>
+<li>Math check: $1.15B valuation ÷ assume 15× ARR multiple = ~$77M ARR target. ÷ ~30 customers = ~$2.5M average ACV. <em>That's a stretch — they're either still ramping ARR or the multiple is much higher (40–60×). More likely the latter given valuation = bet on category dominance.</em></li>
+</ul>
+</div>
+
+</div>
+
+<div class="callout warn">
+<strong>Forward-deployed engineering is a strategic choice with serious implications.</strong> It produces high contract values, deep moats, and customer love — but it also makes the business <em>look more like a services firm than a software firm</em> at gross-margin level. Palantir wore this as a feature; many SaaS investors hate it. The bet: deep customer integration → unmovable from the stack → expansion revenue → eventually self-serve from the data flywheel. Worked for Palantir at scale; many imitators stalled at $20–50M ARR.
+</div>
+</section>
+
+<!-- ====== Tech Stack ====== -->
+<section id="tech">
+<h2>Tech Stack &amp; Integrations</h2>
+
+<h4>Model dependency: OpenAI-only (as far as public evidence shows)</h4>
+<ul>
+<li><span class="chip chip-conf-h">HIGH</span> Built on OpenAI <strong>o3, o3-Pro, GPT-4.1, GPT-5</strong>. Supervisor migrated o3 → GPT-5.</li>
+<li><span class="chip chip-conf-h">HIGH</span> Per founder: <em>"everything we do relies on reasoning"</em> — heavily dependent on reasoning models.</li>
+<li><span class="chip chip-conf-h">HIGH</span> They run internal tool-calling evals; claim 100% success rate on their internal benchmark with GPT-5 (parallel tool use, code interpreter + web search enabled).</li>
+<li><span class="chip chip-conf-h">HIGH</span> <strong>No Anthropic / Claude mention anywhere</strong> in public materials. No Gemini, no Llama, no internal models.</li>
+<li><span class="chip chip-conf-h">HIGH</span> Basis is the subject of an OpenAI customer spotlight (openai.com/index/basis) — explicit relationship.</li>
+</ul>
+
+<h4>Internal stack &amp; ops approach</h4>
+<ul>
+<li>Atlas team maintains internal Model Context Protocols (MCPs), version-controlled documentation as a corpus for agents, drift-detection agents, trajectory monitoring, evaluation suites.</li>
+<li>Likely heavy use of OpenAI Assistants API + their own orchestration layer + bespoke evals.</li>
+<li>Ashby HQ for ATS. NYC office at 20 W 22nd St. 5 days in-person.</li>
+</ul>
+
+<h4>External integrations (notably opaque)</h4>
+<ul>
+<li><span class="chip chip-conf-m">MEDIUM</span> Press paraphrase mentions ingesting "client documents, accounting systems, and ERP platforms" — generic.</li>
+<li><span class="chip chip-conf-l">LOW</span> Third-party listing sites (AIX, ChoppingBlock) name QuickBooks + Xero — not company-confirmed.</li>
+<li><span class="chip chip-conf-l">LOW</span> Wiss case mentions Microsoft / private ChatGPT alongside Basis (coexistence, not Basis-disclosed M365 integration).</li>
+<li><strong>No public confirmation of CCH Axcess, Thomson Reuters GoSystem, UltraTax, Karbon, Workday, NetSuite, or Sage Intacct integrations</strong>, despite the fact that 1065 tax and CAS workflows functionally require touching at least one tax engine and one GL.</li>
+</ul>
+
+<div class="callout warn">
+<strong>Integration opacity is informative.</strong> The most likely explanation: Basis's Deployed Intelligence team builds firm-specific custom connectors per engagement, OR uses browser/RPA-style automation on top of these systems. Both approaches scale poorly. If true, this is a real constraint on how fast Basis can land new logos — and a real opportunity for a competitor with a clean integration layer.
+</div>
+</section>
+
+<!-- ====== Strategic Narrative ====== -->
+<section id="narrative">
+<h2>Strategic Narrative — Three Load-Bearing Ideas</h2>
+
+<h3>1. Long-horizon agents, not copilots</h3>
+<div class="quote">
+"It's closer to delegating an entire engagement to a team member than asking a chatbot a question."
+<span class="attribution">Mitch Troyanovsky — Bloomberg / SiliconANGLE, Feb 2026</span>
+</div>
+<p>This is the central product differentiator. Basis explicitly contrasts itself with "AI copilots" (suggested by every incumbent). They claim agents that run autonomously for hours, with future potential for days or weeks. The 1065 tax return demo is the proof point.</p>
+
+<h3>2. Doers into reviewers</h3>
+<div class="quote">
+"Top accounting firms use Basis across CAS, Tax, and Audit to turn their doers into reviewers and expand revenue capacity."
+<span class="attribution">Basis marketing copy</span>
+</div>
+<p>This is the <strong>firm-economics</strong> pitch — and it's brilliant. Not "we replace your accountants" (which terrifies firm partners). Instead: "same headcount, more billable engagements, better margins." It directly addresses the CPA shortage. Claimed efficiency: 20–50% across practices; ~30% time savings most-cited.</p>
+
+<h3>3. Agent-native organization</h3>
+<div class="quote">
+"The companies that thrive in the AGI era won't be the ones that use AI the most. They'll be the ones that reshape themselves to work with agents most effectively."
+<span class="attribution">Basis blog — "Building a Company for the AGI Era"</span>
+</div>
+<p>Basis positions itself not just as a product but as the <em>organizational prototype</em> for an agent-first company. Atlas (internal "agents-building-agents" team) is the concrete proof. Keith Rabois publicly calls them "the agent-native organization of 2030." This is recruiting + investor narrative as much as product.</p>
+
+<div class="callout good">
+<strong>Narrative discipline is itself a moat.</strong> All three messages reinforce each other and have been consistent from seed announcement (Oct 2023) through Series B (Feb 2026). They tell partners "we make you more profitable," tell investors "we're the platform play," and tell engineers "you'll build something existential." That's BCG-trained storytelling working as designed.
+</div>
+</section>
+
+<!-- ====== Investor Thesis ====== -->
+<section id="thesis">
+<h2>Investor Thesis — Why Top VCs Bet $138M</h2>
+
+<h3>Accel · Miles Clements — "Beyond the Ledger: Investing in Basis"</h3>
+<div class="quote">
+"Accounting is a massive, underserved market employing more licensed professionals than any other sector… despite decades of software investment, core accounting work remains almost entirely manual."
+<span class="attribution">Accel blog, Feb 2026</span>
+</div>
+<div class="quote">
+"2025 demonstrated AI's capability in professional work through the Cursor moment in software development. Similar transformation is coming to accounting and other professional categories."
+<span class="attribution">Accel blog — the "Cursor moment for accounting" framing</span>
+</div>
+<div class="quote">
+"What stands out about Basis is how deeply they think about architecting and deploying real agents that do real work in the real economy."
+<span class="attribution">Miles Clements, Accel</span>
+</div>
+<div class="quote">
+"Teams that get the fundamentals right tend to pull away quickly. Basis is years ahead in accounting AI."
+<span class="attribution">Accel press release, Feb 2026</span>
+</div>
+
+<h3>Khosla Ventures · Vinod Khosla</h3>
+<div class="quote">
+"In 2026, we expect Basis to drive the same step-change in accounting that software engineering saw in 2025."
+<span class="attribution">Khosla Ventures press release, Feb 2026</span>
+</div>
+
+<h3>Khosla Ventures · Keith Rabois</h3>
+<div class="quote">
+Basis is "the agent-native organization of 2030" executing "with rare clarity and speed."
+<span class="attribution">Keith Rabois — Series B press</span>
+</div>
+
+<h3>GV (Google Ventures)</h3>
+<p class="text-slate-400 text-sm"><span class="chip chip-conf-m">MEDIUM</span> No public partner blog post located. GV's participation is confirmed by every primary source but no specific GV partner is named in coverage so far.</p>
+
+<div class="callout">
+<strong>The shared VC framing:</strong> Accel + Khosla both invoke a "Cursor moment" parallel — i.e., the way Cursor consolidated developer-AI tooling in 2024–25 is what Basis will do for accounting in 2026–27. <em>This framing is itself a hypothesis worth questioning</em>: software engineering had standard interfaces (codebases, git, terminals) that AI could plug into uniformly. Accounting has 50+ ERPs, 10+ tax engines, fragmented practice mgmt tools, and regulatory variance by state and country. The "Cursor moment" comparison may flatter the difficulty.
+</div>
+</section>
+
+<!-- ====== Competition ====== -->
+<section id="competition">
+<h2>Competitive Positioning</h2>
+
+<p>Basis never names competitors in their own materials. But their positioning is precise — they want the <strong>platform</strong> label (broad horizontal across CAS + Tax + Audit + Advisory) with depth as the moat. Third-party comparisons clarify the field:</p>
+
+<div class="vs-row">
+<div><strong>Basis</strong><br>General AI co-worker across CAS + Tax + Audit + Advisory. Long-horizon agents. ~30% efficiency claim.</div>
+<div><strong>vs. Black Ore</strong> — laser-focused on individual 1040 returns only. Claims 98% time savings + 99% accuracy. 40% of Top 20 firms. <em>Depth-in-vertical vs. Basis's breadth.</em></div>
+</div>
+
+<div class="vs-row">
+<div><strong>Basis</strong><br>Long-horizon agents that execute work.</div>
+<div><strong>vs. Filed</strong> — tax-prep automation only. $17.2M Series A May '25. Same depth-vs-breadth split as Black Ore.</div>
+</div>
+
+<div class="vs-row">
+<div><strong>Basis</strong><br>Core engagement work (the billable work).</div>
+<div><strong>vs. Aiwyn</strong> — practice management / billing / collections / cash flow / proposals. <em>Different layer of the firm.</em> Aiwyn has more firms (~840) at lower ACVs.</div>
+</div>
+
+<div class="vs-row">
+<div><strong>Basis</strong><br>Multi-practice (CAS, Tax, Audit).</div>
+<div><strong>vs. Fieldguide</strong> ($700M val) — AI-native audit &amp; advisory only. Direct overlap in audit; Basis covers more practice areas. <em>Fieldguide owns Top 100 audit; Basis is broader but newer in audit.</em></div>
+</div>
+
+<div class="vs-row">
+<div><strong>Basis</strong><br>Agents that do the work.</div>
+<div><strong>vs. Materia → Thomson Reuters CoCounsel</strong> — research/knowledge assistant. <em>Assistant layer, not agentic execution.</em> Now embedded in TR's incumbent stack.</div>
+</div>
+
+<div class="vs-row">
+<div><strong>Basis</strong><br>Agents on top of workflow.</div>
+<div><strong>vs. Karbon</strong> — practice management + workflow + AI copilots inside it. <em>Workflow software vs. agents that do the work itself.</em> Karbon acquired Aider 2025 for AI muscle.</div>
+</div>
+
+<div class="callout">
+<strong>Basis's framing per the Filed AI comparison post:</strong> <em>"Filed is all about tax-prep automation; Black Ore is laser-focused on individual 1040 returns; and Basis aims to be your general AI co-worker for everything in the accounting office."</em>
+</div>
+
+<h4>The competitors Basis founders actually worry about (inferred)</h4>
+<ul>
+<li><strong>Firms' own in-house AI builds.</strong> Big 4 + large mid-tier firms have CIOs hiring ML teams. Wiss uses both Basis AND private ChatGPT.</li>
+<li><strong>Big 4 internal platforms.</strong> Deloitte Zora, PwC agent OS, EY.ai, KPMG Clara are all enterprise AI builds that could leak into Top 50 firm market.</li>
+<li><strong>Thomson Reuters + Wolters Kluwer.</strong> They own the tax/audit content moat (CCH, GoSystem, CoCounsel) and are aggressively adding agents. Materia acquisition shows TR will buy what they can't build.</li>
+<li><strong>Intuit/Xero.</strong> Less direct — they serve SMBs, not Top 25 firms — but their data integration with QBO clients of these firms creates a different angle of attack.</li>
+</ul>
+</section>
+
+<!-- ====== Vulnerabilities ====== -->
+<section id="vulnerabilities">
+<h2>Vulnerabilities &amp; Open Questions</h2>
+
+<ul>
+<li><strong>Single-model dependency.</strong> OpenAI-exclusive stack. If OpenAI raises prices, has an outage, or loses to Anthropic/Google on the next reasoning generation, Basis has no fallback architecture publicly disclosed.</li>
+<li><strong>Integration opacity.</strong> No public CCH/TR/Karbon/Workday/NetSuite/Intacct integrations confirmed. Likely heavy per-customer custom work via Deployed Intelligence team. Scales linearly with engineering capacity, not exponentially.</li>
+<li><strong>Forward-deployed model = high services intensity.</strong> Gross margins likely below pure-SaaS comps. Investors who reward 75%+ GM will be unhappy if Basis stays in 50–65% range.</li>
+<li><strong>"30% time savings" is modest compared to vertical specialists.</strong> Black Ore claims 98% time savings on 1040s. If a firm chooses one tool per practice area, vertical specialists may win individual practice budgets.</li>
+<li><strong>No Big 4 customer disclosed.</strong> Big 4 are explicitly building internally (Deloitte Zora, PwC agent OS, EY.ai, KPMG Clara). The Top 100 firms below them are the addressable wedge — but TAM caps faster than Accel's $1.15B valuation suggests.</li>
+<li><strong>Customer concentration.</strong> ~30 customers carry $1.15B valuation. Loss of 2–3 Top 25 logos to a competitor (or to a firm's internal build) would dent ARR materially.</li>
+<li><strong>1.4× valuation jump per year.</strong> $34M @ undisclosed val Dec '24 → $100M @ $1.15B Feb '26. If Series A was at ~$350–500M (reasonable Khosla guess), the Series B multiple is ~3× — aggressive. Forward multiples on ARR are likely 30–60×. The company has to deliver step-function ARR growth in 2026–27 to grow into the valuation.</li>
+<li><strong>No international play disclosed.</strong> Product is shaped around US tax forms (1040/1065/1120). Expansion into Canada/UK/AU/India is unaddressed — both an opportunity and a competitor gap that someone else can exploit.</li>
+</ul>
+</section>
+
+<!-- ====== What this means for the user ====== -->
+<section id="takeaway">
+<h2>What This Means for You — The Strategic Takeaway</h2>
+
+<div class="callout user">
+<strong>Basis is the photo-negative of what you should build.</strong> Mapping their playbook against yours line by line shows why — and where the opportunity lies.
+</div>
+
+<table class="data">
+<thead><tr><th>Dimension</th><th>Basis</th><th>You</th><th>Implication</th></tr></thead>
+<tbody>
+<tr>
+  <td class="co">Founders</td>
+  <td>Harvard + Goldman + BCG + SoftBank</td>
+  <td>Indian SaaS engineer, no accounting domain</td>
+  <td>You'll never out-credential them with US enterprise buyers. Don't try.</td>
+</tr>
+<tr>
+  <td class="co">Capital</td>
+  <td>$138M raised, $1.15B val</td>
+  <td>Bootstrapping, 6-month revenue target</td>
+  <td>You cannot fund a 6-month enterprise sales cycle. Pick a wedge with weeks-to-revenue.</td>
+</tr>
+<tr>
+  <td class="co">ICP</td>
+  <td>US Top 25 firms ($1B+ revenue firms)</td>
+  <td>Indian CA firms / Indian SMBs / India BPOs (TBD)</td>
+  <td>Different buyer, different language, different sales motion. No collision.</td>
+</tr>
+<tr>
+  <td class="co">Sales motion</td>
+  <td>Direct enterprise + forward-deployed engineering (Palantir-style)</td>
+  <td>Must be lighter-touch — inside sales / self-serve / channel</td>
+  <td>Different muscle. You can ship a product they can't compete on for low-ACV deals.</td>
+</tr>
+<tr>
+  <td class="co">Geography</td>
+  <td>US-only (1040/1065/1120 tax forms)</td>
+  <td>India network, India domain</td>
+  <td>India is whitespace for them and home turf for you.</td>
+</tr>
+<tr>
+  <td class="co">Practice depth</td>
+  <td>CAS + Tax + Audit + Advisory (horizontal)</td>
+  <td>You can pick ONE narrow vertical/job</td>
+  <td>Vertical depth claims (98% time savings, à la Black Ore) beat horizontal claims in head-to-head deals.</td>
+</tr>
+<tr>
+  <td class="co">Model stack</td>
+  <td>OpenAI-exclusive (heavy reasoning)</td>
+  <td>You can use Claude / Gemini / open-source / India-priced inference</td>
+  <td>Inference cost arbitrage matters at low ACVs. India-priced compute + open-source models can hit price points Basis cannot.</td>
+</tr>
+<tr>
+  <td class="co">Integration depth</td>
+  <td>Custom per-customer connectors via FDE team</td>
+  <td>One clean integration to a dominant tool (Tally? QuickBooks? Karbon?)</td>
+  <td>Specificity beats breadth in early days. Win one integration deeply.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Three lessons to extract from Basis</h3>
+
+<div class="callout good">
+<strong>Lesson 1 — Frame "AI replaces the work, not the workers."</strong> Basis's "doers into reviewers" framing is genius for a reason: firm partners don't want to fire their staff; they want bigger margins. Steal this framing for your wedge. If you're selling to Indian CA firms or India BPOs, the message is "your articleship/junior staff become reviewers; the AI does the prep work."
+</div>
+
+<div class="callout good">
+<strong>Lesson 2 — Pick a hero demo that's IMPOSSIBLE to fake.</strong> Their 1065 partnership tax return demo is genius because (a) it's specific, (b) it's hard, (c) every Top-25-firm partner has done one and knows what good looks like. Your wedge needs an equivalent hero demo. "AI does GST reconciliation for 50 GSTINs across a single client in 30 min" or "AI matches 100 vendor invoices to PO + GRN in 5 min" are candidates. Specific. Hard. Recognizable.
+</div>
+
+<div class="callout good">
+<strong>Lesson 3 — Investor signaling is also customer signaling.</strong> Basis's strategic LPs in seed were "several top accounting firms." That gave them early design partners + credibility from day one. For your version: get 2–3 mid-tier Indian CA firms or BPOs as advisors/angels first, before building. Their endorsement is worth more than capital.
+</div>
+
+<h3>The specific window Basis leaves open for you</h3>
+
+<p>Basis explicitly does NOT play in any of the following spaces — every one of them is a wedge you could win:</p>
+
+<ol>
+<li><strong>Indian SMBs (60M+ businesses).</strong> GST/TDS/ITR + Tally-anchored workflow. Basis can't read Tally; doesn't understand GST.</li>
+<li><strong>Indian CA firms serving Indian clients.</strong> ~1.4 lakh CA firms; mostly small (1–10 partners); zero AI tooling that fits their workflow.</li>
+<li><strong>India BPOs serving US firms.</strong> Entigrity (200K offshore accountants) and peers are doing the junior execution work that Basis automates ABOVE — meaning Basis customers still use offshore BPOs. AI for the BPO's execution layer is wide-open.</li>
+<li><strong>Small US firms (Top 500–5000).</strong> Below Basis's Top-150 ICP. Aiwyn/Karbon serve some; the long tail is mostly untouched.</li>
+<li><strong>Non-US, non-India markets.</strong> Canada, UK, AU, EU, Latin America — Basis doesn't ship there.</li>
+<li><strong>Vertical specialists (R&amp;D credit, transfer pricing, expat tax, sales-and-use).</strong> Basis is horizontal — these high-ACV niches are open.</li>
+</ol>
+
+<p>Of these, the three that fit your specific constraints (Indian-based, tech background, bootstrap, 6-month revenue) are: <strong>#1 (Indian SMBs), #2 (Indian CA firms), #3 (India BPOs serving US firms)</strong>. Pick based on which your warm network actually points to — the question we left open in the chat.</p>
+
+<div class="callout user">
+<strong>The single most useful thing Basis tells you about your own play:</strong> A $1.15B AI accounting company exists in the SF/NYC bubble, employs 141 people, and yet has zero presence in any of the markets you can actually reach. That's not a threat. That's a starting gun.
+</div>
+</section>
+
+<!-- ====== Sources ====== -->
+<section id="sources">
+<h2>Sources &amp; Confidence Notes</h2>
+
+<details open>
+<summary>Primary (company-disclosed / founder-on-record)</summary>
+<ul>
+<li><a href="https://www.getbasis.ai/" target="_blank">getbasis.ai homepage</a></li>
+<li><a href="https://www.getbasis.ai/blogs/basis-raises-100m-series-b-led-by-accel-and-google-ventures" target="_blank">Basis blog — Series B announcement</a></li>
+<li><a href="https://www.getbasis.ai/blogs/building-a-company-for-the-agi-era" target="_blank">Basis blog — "Building a Company for the AGI Era"</a></li>
+<li><a href="https://www.getbasis.ai/blogs/were-hiring-agent-managers" target="_blank">Basis blog — "We're Hiring Agent Managers"</a></li>
+<li><a href="https://openai.com/index/basis" target="_blank">OpenAI customer spotlight on Basis</a></li>
+<li><a href="https://www.accel.com/noteworthies/beyond-the-ledger-investing-in-basis" target="_blank">Accel — "Beyond the Ledger: Investing in Basis" (Miles Clements)</a></li>
+<li><a href="https://www.businesswire.com/news/home/20260224020999/en/Basis-Raises-$100M" target="_blank">BusinessWire — Series B press release</a></li>
+</ul>
+</details>
+
+<details>
+<summary>Secondary press</summary>
+<ul>
+<li><a href="https://www.bloomberg.com/news/articles/2026-02-24/ai-for-accounting-startup-basis-hits-1-15-billion-valuation" target="_blank">Bloomberg — Series B unicorn coverage</a></li>
+<li><a href="https://siliconangle.com/2026/02/24/ai-accounting-startup-basis-secures-100m-1-15b-valuation-firms-adopt-agent-based-workflows/" target="_blank">SiliconANGLE — $100M / $1.15B coverage</a></li>
+<li><a href="https://www.cpapracticeadvisor.com/2026/02/24/basis-raises-100-million-to-deploy-ai-agents-for-accounting-firms/178759/" target="_blank">CPA Practice Advisor — Series B coverage</a></li>
+<li><a href="https://www.accountingtoday.com/news/major-ai-players-back-basis-with-34-million-series-a" target="_blank">Accounting Today — Series A coverage</a></li>
+<li><a href="https://www.accountingtoday.com/news/basis-announces-100-million-in-new-funding" target="_blank">Accounting Today — Series B coverage</a></li>
+<li><a href="https://www.prnewswire.com/news-releases/basis-secures-3-6-million-...-301964975.html" target="_blank">PRNewswire — Seed round</a></li>
+<li><a href="https://techfundingnews.com/basis-ai-accounting-100m-1-15b-unicorn/" target="_blank">Tech Funding News — Series B</a></li>
+<li><a href="https://nextplayso.substack.com/p/meet-the-team-that-raised-34m-from" target="_blank">NextPlay Substack — Founder Profile</a></li>
+<li><a href="https://filed-ai.com/2025/08/20/ai-tax-automation-filed-black-ore-basis/" target="_blank">Filed AI — Competitive comparison (Filed / Black Ore / Basis)</a></li>
+</ul>
+</details>
+
+<details>
+<summary>People sources</summary>
+<ul>
+<li><a href="https://www.linkedin.com/in/mitchelltroyanovsky/" target="_blank">Mitchell Troyanovsky — LinkedIn</a></li>
+<li><a href="https://www.linkedin.com/in/matt-harpe/" target="_blank">Matt Harpe — LinkedIn</a></li>
+<li><a href="https://www.linkedin.com/posts/mitchelltroyanovsky_ontologies-evals-deployed-intelligence-activity-7377052375980744704-5YKc" target="_blank">Mitch talk — "Ontologies, Evals &amp; Deployed Intelligence"</a></li>
+<li><a href="https://blog.qflow.ai/post/future-finance-podcast-mitchell-troyanovsky/" target="_blank">Future Finance Podcast — Mitch episode page</a></li>
+</ul>
+</details>
+
+<details>
+<summary>Confidence flags &amp; gaps</summary>
+<ul>
+<li><span class="chip chip-conf-h">HIGH</span> = company-disclosed, founder-on-record, or in major press</li>
+<li><span class="chip chip-conf-m">MEDIUM</span> = secondary press, single-source third-party reporting</li>
+<li><span class="chip chip-conf-l">LOW</span> = inferred from job posts, listing sites, or analyst commentary</li>
+<li><strong>Gaps:</strong> Exact headcount (LinkedIn shows ~141; press varies); no named GV partner; no public pricing; no Reddit content surfaced; Wayback Machine blocked; full podcast transcripts not retrievable via WebFetch; Bloomberg article paywalled; CCH/TR/Karbon/Workday/NetSuite/Intacct integrations not publicly confirmed.</li>
+</ul>
+</details>
+
+</section>
+
+<footer class="container-x py-10 mt-12 border-t border-zinc-800 text-slate-500 text-sm">
+<p>Compiled May 14, 2026 from 2 parallel research streams (product/customer + founder/funding/strategy) plus direct site analysis. Built as a companion deep dive to the broader landscape report at <code>AI-Accounting-Landscape-2026.html</code>.</p>
+<p class="mt-2">Confidence flags throughout the document. Where data is opaque (pricing, integrations, ARR), inferences are clearly marked. Refresh before any strategic decision relying on specific numbers — funding/customer data ages fast.</p>
+</footer>
+
+</main>
+</body>
+</html>
